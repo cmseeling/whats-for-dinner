@@ -1,0 +1,11 @@
+DONE 1. Build out mock api
+2. Finish MVP
+    A. Query recipes cleanup
+    DONE B. Grocery List cleanup
+    C. Recipe CRUD
+    DONE D. Random Recipe
+3. Fork to production repo
+    A. Cloud datastore
+    B. Functions for accessing it
+    C. Deployment of app
+4. React version

@@ -16,12 +16,28 @@
                 <thead>
                     <tr>
                         <th scope="col">Name</th>
+                        <th scope="col">Ingredients</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="item in filteredList" :key="item.id">
                         <td>
                             <a href="#" @click="$emit('recipe-list-click', item.id)">{{item.name}}</a>
+                        </td>
+                        <td colspan="2">
+                            <div class="ingredients-list">
+                                <a class="btn btn-primary font-weight-bold" data-toggle="collapse" :href="`#ingredientsList-${item.id}`" role="button" aria-expanded="false" :aria-controls="`ingredientsList-${item.id}`">
+                                    View Ingredients
+                                </a>
+                                <div class="collapse" :id="`ingredientsList-${item.id}`">
+                                    <ul>
+                                        <li v-for="(ingredient, index) in item.ingredients" :key="index">
+                                            {{ingredient}}
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 </tbody>
@@ -50,26 +66,19 @@ export default class RecipeList extends Vue {
     public get filteredList() {
         return this.getFilteredList(this.searchText);
     }
-
-//   public recipes = [
-//       {
-//           id: 1,
-//           name: 'Green Eggs and Ham'
-//       },
-//       {
-//           id: 2,
-//           name: 'Peanut Butter Jelly Time'
-//       }
-//   ];
-
-    // public get filteredList() {
-    //     if (this.searchText === '') {
-    //         return (this as any).recipes;
-    //     } else {
-    //         return filter((this as any).recipes, (recipe) => {
-    //             return includes(toLower(recipe.name), toLower(this.searchText));
-    //         });
-    //     }
-    // }
 }
 </script>
+
+<style scoped>
+    /* ul{
+        padding: 0px;
+    }
+
+    li {
+        list-style-type: none;
+    } */
+
+    .ingredients-list {
+        text-align: left;
+    }
+</style>

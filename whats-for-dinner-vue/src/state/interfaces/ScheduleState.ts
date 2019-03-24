@@ -21,7 +21,7 @@ export const DefaultScheduleState = (): ScheduleState => {
         } else {
             category = 'Dinner';
         }
-        mealSlots.push({id: i, selected: false, category, recipeIds: [1, 2]});
+        mealSlots.push({id: i, selected: false, category, recipeIds: []});
     }
 
     return {

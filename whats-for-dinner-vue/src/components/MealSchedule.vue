@@ -20,24 +20,27 @@
                 <tbody>
                     <tr>
                         <th scope="row">Breakfast</th>
-                        <td v-for="slot in groupedSlots['Breakfast']" :key="slot.id" @click="setActive(slot.id)" :class="slot.selected ? 'selected' : ''">
-                            <MealSlot :slotId="slot.id" :recipeIds="slot.recipeIds" />
+                        <td v-for="slot in groupedSlots['Breakfast']" :key="slot.id" @click="setActive(slot.id)" class="meal-slot">
+                            <MealSlot :slotId="slot.id" :recipeIds="slot.recipeIds" :class="slot.selected ? 'selected' : ''" />
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Lunch</th>
-                        <td v-for="slot in groupedSlots['Lunch']" :key="slot.id" @click="setActive(slot.id)" :class="slot.selected ? 'selected' : ''">
-                            <MealSlot :slotId="slot.id" :recipeIds="slot.recipeIds" />
+                        <td v-for="slot in groupedSlots['Lunch']" :key="slot.id" @click="setActive(slot.id)" class="meal-slot">
+                            <MealSlot :slotId="slot.id" :recipeIds="slot.recipeIds" :class="slot.selected ? 'selected' : ''" />
                         </td>
                     </tr>
                     <tr>
                         <th scope="row">Dinner</th>
-                        <td v-for="slot in groupedSlots['Dinner']" :key="slot.id" @click="setActive(slot.id)" :class="slot.selected ? 'selected' : ''">
-                            <MealSlot :slotId="slot.id" :recipeIds="slot.recipeIds" />
+                        <td v-for="slot in groupedSlots['Dinner']" :key="slot.id" @click="setActive(slot.id)" class="meal-slot">
+                            <MealSlot :slotId="slot.id" :recipeIds="slot.recipeIds" :class="slot.selected ? 'selected' : ''" />
                         </td>
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="align-right">
+            <router-link to="/grocerylist" class="btn btn-success">Generate Grocery List</router-link>
         </div>
     </div>
 </template>
@@ -62,7 +65,7 @@ import MealSlot from './MealSlot.vue';
     }
 })
 export default class RecipeList extends Vue {
-    public activeSlot: number = -1;
+    public activeSlot: number|null = null;
     public mealSlots!: IMealSlot[];
 
     public get augmentedSlots() {
@@ -90,12 +93,27 @@ export default class RecipeList extends Vue {
     ];
 
     public setActive(mealId: number) {
-        this.activeSlot = mealId;
+        if (mealId === this.activeSlot) {
+            this.activeSlot = null;
+            this.$emit('meal-slot-click', null);
+        } else {
+            this.activeSlot = mealId;
+            this.$emit('meal-slot-click', mealId);
+        }
     }
 }
 </script>
 
-<style>
+<style scoped>
+    .align-right {
+        text-align: right;
+        margin-right: 10px;
+    }
+
+    .meal-slot :hover{
+        background-color: lightblue;
+    }
+
     .selected {
         border: 2px solid green !important;
     }

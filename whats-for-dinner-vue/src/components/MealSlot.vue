@@ -1,7 +1,7 @@
 <template>
   <div>
     <span v-if="recipeIds.length === 0">None selected</span>
-    <table v-else>
+    <table v-else class="table">
         <tbody>
             <tr v-for="recipeId in recipeIds" :key="recipeId">
                 <td>
@@ -9,7 +9,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </td>
-                <td>{{getRecipeName(recipeId)}}</td>
+                <td class="text-left">{{getRecipeName(recipeId)}}</td>
             </tr>
         </tbody>
     </table>
@@ -45,13 +45,3 @@ export default class MealSlot extends Vue {
     }
 }
 </script>
-
-<style scoped>
-    ul{
-        padding: 0px;
-    }
-
-    li {
-        list-style-type: none;
-    }
-</style>

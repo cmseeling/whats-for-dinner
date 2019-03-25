@@ -34,7 +34,7 @@ namespace WhatsForDinnerAPI.Repos
                     "Green Dye"
                 }
             };
-            _recipes.Add(r1.id, r1);
+            _recipes.Add(r1.id.Value, r1);
 
             var r2 = new Recipe
             {
@@ -47,12 +47,13 @@ namespace WhatsForDinnerAPI.Repos
                     "30 Seconds"
                 }
             };
-            _recipes.Add(r2.id, r2);
+            _recipes.Add(r2.id.Value, r2);
         }
 
         public Recipe AddRecipe(Recipe recipe)
         {
-            _recipes.Add(recipe.id, recipe);
+            recipe.id = _recipes.Count + 1;
+            _recipes.Add(recipe.id.Value, recipe);
             return recipe;
         }
 

@@ -1,8 +1,8 @@
 DONE 1. Build out mock api
-2. Finish MVP
-    A. Query recipes cleanup
+DONE 2. Finish MVP
+    DONE A. Query recipes cleanup
     DONE B. Grocery List cleanup
-    C. Recipe CRUD
+    DONE C. Recipe CRUD
     DONE D. Random Recipe
 3. Fork to production repo
     A. Cloud datastore

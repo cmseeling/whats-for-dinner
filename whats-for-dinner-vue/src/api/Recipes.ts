@@ -7,7 +7,10 @@ const create = async (recipe: Recipe) => {
     try {
         const response = await fetch(url, {
             body: JSON.stringify(recipe),
-            method: 'POST'
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
         return response.json();
     } catch (error) {
@@ -28,7 +31,10 @@ const update = async (id: number, recipe: Recipe) => {
     try {
         const response = await fetch(`${url}/${id}`, {
             body: JSON.stringify(recipe),
-            method: 'PUT'
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
         return response.json();
     } catch (error) {

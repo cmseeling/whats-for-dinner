@@ -4,7 +4,7 @@ namespace WhatsForDinnerAPI.Models
 {
     public class Recipe
     {
-        public int id { get; set; }
+        public int? id { get; set; }
         public string Name { get; set; }
         public List<string> Ingredients { get; set; }
 

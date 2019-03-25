@@ -49,7 +49,7 @@ const mutations = {
         if (recipe.id) {
             state.recipes.Upsert(recipe.id.toString(), recipe);
         } else {
-            throw new Error('Recepe Id is null.');
+            throw new Error('Recipe Id is null.');
         }
     },
 
@@ -59,6 +59,10 @@ const mutations = {
                 state.recipes.Upsert(item.id.toString(), item);
             }
         });
+    },
+
+    removeRecipe: (state: IRecipesState, id: number): void => {
+        state.recipes.Remove(id.toString());
     }
 };
 
@@ -76,6 +80,11 @@ const actions = {
             const newRecipe = await Recipes.create(recipe);
             commit('updateRecipe', newRecipe);
         }
+    },
+
+    deleteRecipe: async ({commit}: {commit: Commit}, id: number): Promise<void> => {
+        commit('removeRecipe', id);
+        await Recipes.deleteItem(id);
     }
 };
 

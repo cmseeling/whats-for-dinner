@@ -23,6 +23,18 @@
                                     {{item}}
                                 </td>
                             </tr>
+                            <tr v-if="isAddingIngredient">
+                                <td></td>
+                                <td>
+                                    <div class="input-group">
+                                        <input ref="addItemInput" id="addItemInput" v-model="newItem" class="form-control"/>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-success" @click="addIngredient">Add</button>
+                                            <button class="btn btn-danger" @click="cancelAddIngredient">Cancel</button>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                     <button class="btn btn-primary" @click.prevent="addItem">Add Ingredient</button>

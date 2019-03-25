@@ -18,6 +18,7 @@ namespace WhatsForDinnerAPI.Repos
     public class RecipeRepo : IRecipeRepo
     {
         private Dictionary<int, Recipe> _recipes;
+        private int currentLastId;
 
         public RecipeRepo()
         {
@@ -48,11 +49,13 @@ namespace WhatsForDinnerAPI.Repos
                 }
             };
             _recipes.Add(r2.id.Value, r2);
+
+            currentLastId = 2;
         }
 
         public Recipe AddRecipe(Recipe recipe)
         {
-            recipe.id = _recipes.Count + 1;
+            recipe.id = ++currentLastId;
             _recipes.Add(recipe.id.Value, recipe);
             return recipe;
         }

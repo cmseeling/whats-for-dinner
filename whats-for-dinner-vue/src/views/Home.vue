@@ -1,6 +1,5 @@
 <template>
-  <div class="home container-fluid">
-    <AppNav/>
+  <div class="home">
     <MealSchedule v-on:meal-slot-click="handleMealSlotSelected" />
     <div class="card">
       <div class="card-body">
@@ -30,15 +29,13 @@ import { Component, Vue } from 'vue-property-decorator';
 import RecipeList from '@/components/RecipeList.vue'; // @ is an alias to /src
 import RandomRecipe from '@/components/RandomRecipe.vue';
 import MealSchedule from '@/components/MealSchedule.vue';
-import AppNav from '@/components/AppNav.vue';
 import { mapMutations } from 'vuex';
 
 @Component({
   components: {
     MealSchedule,
     RecipeList,
-    RandomRecipe,
-    AppNav
+    RandomRecipe
   },
   methods: {
     ...mapMutations('schedule', ['addRecipeToMealSlot'])

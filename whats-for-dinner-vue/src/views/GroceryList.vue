@@ -1,6 +1,5 @@
 <template>
-  <div class="grocery-list container-fluid">
-      <AppNav/>
+  <div class="grocery-list">
       <div class="grocery-list card">
           <div class="grocery-list-header card-header">
             <h2 class="card-title float-left">Grocery List</h2>
@@ -49,12 +48,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
-import AppNav from '@/components/AppNav.vue';
 
 @Component({
-    components: {
-        AppNav
-    },
     computed: {
         ...mapGetters('schedule', ['getAllUniqueRecipeIds']),
         ...mapGetters('recipes', ['getIngredientsFromRecipeIds'])

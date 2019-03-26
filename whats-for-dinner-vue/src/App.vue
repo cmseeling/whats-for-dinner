@@ -1,5 +1,6 @@
 <template>
-  <div id="app">
+  <div id="app" class="container-fluid">
+    <AppNav/>
     <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
@@ -7,6 +8,19 @@
     <router-view/>
   </div>
 </template>
+
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator';
+import AppNav from '@/components/AppNav.vue';
+
+@Component({
+  components: {
+    AppNav
+  }
+})
+export default class Home extends Vue {
+}
+</script>
 
 <style>
 #app {

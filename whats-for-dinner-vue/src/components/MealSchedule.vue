@@ -81,17 +81,6 @@ export default class RecipeList extends Vue {
         return groupBy(this.augmentedSlots, 'category');
     }
 
-    public mealRecipes = [
-        {
-            id: 1,
-            name: 'meal 1'
-        },
-        {
-            id: 2,
-            name: 'meal 2'
-        }
-    ];
-
     public setActive(mealId: number) {
         if (mealId === this.activeSlot) {
             this.activeSlot = null;

@@ -1,11 +1,11 @@
 import { IDictionary, Dictionary } from '@/utils/Dictionary';
 import { Recipe } from '@/models/Recipe';
 
-export interface IRecipesState {
+export interface RecipesState {
     recipes: IDictionary<Recipe>;
 }
 
-export const DefaultRecipesState = (): IRecipesState => {
+export const DefaultRecipesState = (): RecipesState => {
     // return {
     //     recipes: new Dictionary<Recipe>()
     // };

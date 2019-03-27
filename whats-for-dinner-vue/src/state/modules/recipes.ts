@@ -1,5 +1,5 @@
 import { Commit } from 'vuex';
-import { DefaultRecipesState, IRecipesState } from '../interfaces/RecipesState';
+import { DefaultRecipesState, RecipesState } from '../interfaces/RecipesState';
 import { Recipe } from '@/models/Recipe';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
@@ -10,7 +10,7 @@ import uniq from 'lodash/uniq';
 import Recipes from '@/api/Recipes';
 
 const getters = {
-    getFilteredList: (state: IRecipesState) => (filterString: string): Recipe[] => {
+    getFilteredList: (state: RecipesState) => (filterString: string): Recipe[] => {
         const recipes = state.recipes.Values();
         if (filterString === '') {
             return recipes;
@@ -21,15 +21,15 @@ const getters = {
         }
     },
 
-    getRecipeById: (state: IRecipesState) => (id: string): Recipe => {
+    getRecipeById: (state: RecipesState) => (id: string): Recipe => {
         return state.recipes.Item(id);
     },
 
-    recipes: (state: IRecipesState): Recipe[] => {
+    recipes: (state: RecipesState): Recipe[] => {
         return state.recipes.Values();
     },
 
-    getIngredientsFromRecipeIds: (state: IRecipesState) => (recipeIds: number[]): string[] => {
+    getIngredientsFromRecipeIds: (state: RecipesState) => (recipeIds: number[]): string[] => {
         return uniq(flatMap(state.recipes.Values(), (recipe: Recipe) => {
             if (includes(recipeIds, recipe.id)) {
                 return recipe.ingredients;
@@ -39,13 +39,13 @@ const getters = {
         }));
     },
 
-    recipeCount: (state: IRecipesState): number => {
+    recipeCount: (state: RecipesState): number => {
         return state.recipes.Count();
     }
 };
 
 const mutations = {
-    updateRecipe: (state: IRecipesState, recipe: Recipe): void => {
+    updateRecipe: (state: RecipesState, recipe: Recipe): void => {
         if (recipe.id) {
             state.recipes.Upsert(recipe.id.toString(), recipe);
         } else {
@@ -53,7 +53,7 @@ const mutations = {
         }
     },
 
-    setRecipes: (state: IRecipesState, recipes: Recipe[]): void => {
+    setRecipes: (state: RecipesState, recipes: Recipe[]): void => {
         forEach(recipes, (item) => {
             if (item.id) {
                 state.recipes.Upsert(item.id.toString(), item);
@@ -61,7 +61,7 @@ const mutations = {
         });
     },
 
-    removeRecipe: (state: IRecipesState, id: number): void => {
+    removeRecipe: (state: RecipesState, id: number): void => {
         state.recipes.Remove(id.toString());
     }
 };

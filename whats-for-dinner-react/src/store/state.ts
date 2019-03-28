@@ -1,5 +1,7 @@
-import { IRecipesState } from './recipes/state';
+import { RecipesState } from './recipes/state';
+import { ScheduleState } from './schedule/state';
 
 export interface AppState {
-    recipes: IRecipesState;
+    RecipesSlice: RecipesState;
+    ScheduleSlice: ScheduleState;
 }

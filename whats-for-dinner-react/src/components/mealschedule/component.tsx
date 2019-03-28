@@ -1,8 +1,53 @@
 import * as React from 'react';
+import groupBy from 'lodash/groupBy';
+import map from 'lodash/map';
+import { IMealSlot } from '../../store/schedule/state';
+import MealSlot from '../mealslot/';
 
-export class MealSchedule extends React.Component<{}, {}> {
-  public render() {
-    return (
+import './style.css';
+
+export interface Props {
+    mealSlots: IMealSlot[];
+}
+
+interface State {
+    activeSlot: number|null;
+    groupedSlots: {[index: string]: IMealSlot[]};
+}
+
+export class MealSchedule extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+
+        this.state = {
+            activeSlot: null,
+            groupedSlots: {}
+        };
+    }
+
+    private getGroupedSlots = (): {[index: string]: IMealSlot[]} => {
+        const augmentedSlots = map(this.props.mealSlots, (slot: IMealSlot) => {
+            return {
+                ...slot,
+                selected: slot.id === this.state.activeSlot
+            };
+        });
+    
+        return groupBy(augmentedSlots, 'category');
+    }
+
+    private setActive = (slotId: number) => {
+        console.log(slotId);
+        this.setState((state: State) => {
+            return {
+                ... state,
+                activeSlot: slotId
+            };
+        });
+    }
+
+    public render() {
+        return (
       <div className="schedule card">
           <div className="schedule-header card-header">
               <h2 className="card-title float-left">Schedule</h2>
@@ -24,27 +69,45 @@ export class MealSchedule extends React.Component<{}, {}> {
                   <tbody>
                       <tr>
                           <th scope="row">Breakfast</th>
-                          <td v-for="slot in groupedSlots['Breakfast']" :key="slot.id" @click="setActive(slot.id)" className="meal-slot">
-                              <MealSlot :slotId="slot.id" :recipeIds="slot.recipeIds" :class="slot.selected ? 'selected' : ''" />
-                          </td>
+                          {
+                              map(this.getGroupedSlots()['Breakfast'], (slot) => {
+                                return (
+                                    <td className="meal-slot" key={slot.id} onClick={() => this.setActive(slot.id)}>
+                                        <MealSlot recipeIds={slot.recipeIds}/>
+                                    </td>
+                                );
+                              })
+                          }
                       </tr>
                       <tr>
                           <th scope="row">Lunch</th>
-                          <td v-for="slot in groupedSlots['Lunch']" :key="slot.id" @click="setActive(slot.id)" className="meal-slot">
-                              <MealSlot :slotId="slot.id" :recipeIds="slot.recipeIds" :class="slot.selected ? 'selected' : ''" />
-                          </td>
+                          {
+                              map(this.getGroupedSlots()['Lunch'], (slot) => {
+                                return (
+                                    <td className="meal-slot" key={slot.id} onClick={() => this.setActive(slot.id)}>
+                                        <MealSlot recipeIds={slot.recipeIds}/>
+                                    </td>
+                                );
+                              })
+                          }
                       </tr>
                       <tr>
                           <th scope="row">Dinner</th>
-                          <td v-for="slot in groupedSlots['Dinner']" :key="slot.id" @click="setActive(slot.id)" className="meal-slot">
-                              <MealSlot :slotId="slot.id" :recipeIds="slot.recipeIds" :class="slot.selected ? 'selected' : ''" />
-                          </td>
+                          {
+                              map(this.getGroupedSlots()['Dinner'], (slot) => {
+                                return (
+                                    <td className="meal-slot" key={slot.id} onClick={() => this.setActive(slot.id)}>
+                                        <MealSlot recipeIds={slot.recipeIds}/>
+                                    </td>
+                                );
+                              })
+                          }
                       </tr>
                   </tbody>
               </table>
           </div>
           <div className="align-right">
-              <router-link to="/grocerylist" className="btn btn-success">Generate Grocery List</router-link>
+              <a href="/grocerylist" className="btn btn-success">Generate Grocery List</a>
           </div>
       </div>
     );

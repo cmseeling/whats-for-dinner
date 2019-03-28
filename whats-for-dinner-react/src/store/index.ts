@@ -1,8 +1,10 @@
 import { configureStore, getDefaultMiddleware } from 'redux-starter-kit'
-import recipeReducer from './recipes/reducer';
+import RecipesSlice from './recipes/reducer';
+import ScheduleSlice from './schedule/reducer';
 
 const rootReducer = {
-  recipeReducer
+  RecipesSlice,
+  ScheduleSlice
 };
 
 export default function configureAppStore(preloadedState: any) {

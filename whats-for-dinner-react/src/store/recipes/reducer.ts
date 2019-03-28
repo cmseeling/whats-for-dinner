@@ -5,7 +5,7 @@ import { Recipe } from '../../models/recipe';
 import { RecipesState, DefaultRecipesState } from './state';
 import recipeActions, { ISetRecipesAction, IUpdateRecipeAction, IRemoveRecipeAction } from './actions';
 
-const recipeReducer = createReducer(DefaultRecipesState(), {
+const RecipesSlice = createReducer(DefaultRecipesState(), {
     [recipeActions.SetRecipesAction.type]: (state: RecipesState, action) => {
         const thisAction = (action as ISetRecipesAction);
         state.recipes = thisAction.payload.recipes;
@@ -25,4 +25,4 @@ const recipeReducer = createReducer(DefaultRecipesState(), {
     }
 });
 
-export default recipeReducer;
+export default RecipesSlice;

@@ -1,10 +1,11 @@
 import * as React from 'react';
+import MealSchedule from '../../components/mealschedule';
 
 export class HomePage extends React.Component {
     public render() {
         return (
             <div className="home">
-                <div>Calendar Placeholder</div>
+                <MealSchedule/>
                 <div className="card">
                 <div className="card-body">
                     <ul className="nav nav-tabs" id="recipeTabs" role="tablist">

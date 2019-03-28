@@ -3,7 +3,7 @@ import without from 'lodash/without';
 import { ScheduleState, DefaultScheduleState } from './state';
 import scheduleActions, { IAddRecipeToMealSlotAction, IRemoveRecipeFromMealSlotAction } from './actions';
 
-const scheduleReducer = createReducer(DefaultScheduleState(), {
+const ScheduleSlice = createReducer(DefaultScheduleState(), {
     [scheduleActions.AddRecipeToMealSlotAction.type]: (state: ScheduleState, action) => {
       const thisAction = (action as IAddRecipeToMealSlotAction);
       state.mealSlots[thisAction.payload.slotId].recipeIds.push(thisAction.payload.recipeId);
@@ -14,4 +14,4 @@ const scheduleReducer = createReducer(DefaultScheduleState(), {
     }
 });
 
-export default scheduleReducer;
+export default ScheduleSlice;

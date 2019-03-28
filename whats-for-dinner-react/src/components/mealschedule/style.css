@@ -1,0 +1,12 @@
+.align-right {
+  text-align: right;
+  margin-right: 10px;
+}
+
+.meal-slot :hover{
+  background-color: lightblue;
+}
+
+.selected {
+  border: 2px solid green !important;
+}

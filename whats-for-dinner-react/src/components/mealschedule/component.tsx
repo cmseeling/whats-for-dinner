@@ -19,29 +19,35 @@ export class MealSchedule extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
 
+        const groupedSlots = this.calculateGroupedSlots(-1);
+
         this.state = {
             activeSlot: null,
-            groupedSlots: {}
+            groupedSlots
         };
     }
 
-    private getGroupedSlots = (): {[index: string]: IMealSlot[]} => {
+    private calculateGroupedSlots = (activeSlotId: number): {[index: string]: IMealSlot[]} => {
         const augmentedSlots = map(this.props.mealSlots, (slot: IMealSlot) => {
             return {
                 ...slot,
-                selected: slot.id === this.state.activeSlot
+                selected: slot.id === activeSlotId
             };
         });
     
+        console.log(augmentedSlots);
+
         return groupBy(augmentedSlots, 'category');
     }
 
     private setActive = (slotId: number) => {
         console.log(slotId);
+        const groupedSlots = this.calculateGroupedSlots(slotId);
         this.setState((state: State) => {
             return {
                 ... state,
-                activeSlot: slotId
+                activeSlot: slotId,
+                groupedSlots: groupedSlots
             };
         });
     }
@@ -70,10 +76,10 @@ export class MealSchedule extends React.Component<Props, State> {
                       <tr>
                           <th scope="row">Breakfast</th>
                           {
-                              map(this.getGroupedSlots()['Breakfast'], (slot) => {
+                              map(this.state.groupedSlots['Breakfast'], (slot) => {
                                 return (
                                     <td className="meal-slot" key={slot.id} onClick={() => this.setActive(slot.id)}>
-                                        <MealSlot recipeIds={slot.recipeIds}/>
+                                        <MealSlot recipeIds={slot.recipeIds} selected={slot.selected}/>
                                     </td>
                                 );
                               })
@@ -82,10 +88,10 @@ export class MealSchedule extends React.Component<Props, State> {
                       <tr>
                           <th scope="row">Lunch</th>
                           {
-                              map(this.getGroupedSlots()['Lunch'], (slot) => {
+                              map(this.state.groupedSlots['Lunch'], (slot) => {
                                 return (
                                     <td className="meal-slot" key={slot.id} onClick={() => this.setActive(slot.id)}>
-                                        <MealSlot recipeIds={slot.recipeIds}/>
+                                        <MealSlot recipeIds={slot.recipeIds} selected={slot.selected}/>
                                     </td>
                                 );
                               })
@@ -94,10 +100,10 @@ export class MealSchedule extends React.Component<Props, State> {
                       <tr>
                           <th scope="row">Dinner</th>
                           {
-                              map(this.getGroupedSlots()['Dinner'], (slot) => {
+                              map(this.state.groupedSlots['Dinner'], (slot) => {
                                 return (
                                     <td className="meal-slot" key={slot.id} onClick={() => this.setActive(slot.id)}>
-                                        <MealSlot recipeIds={slot.recipeIds}/>
+                                        <MealSlot recipeIds={slot.recipeIds} selected={slot.selected}/>
                                     </td>
                                 );
                               })

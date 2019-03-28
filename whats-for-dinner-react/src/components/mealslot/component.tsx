@@ -6,6 +6,7 @@ import { Recipe } from '../../models/recipe';
 export interface Props {
   recipeIds: number[];
   recipes: Recipe[];
+  selected: boolean;
 }
 
 
@@ -20,7 +21,7 @@ export class MealSlot extends React.Component<Props, any> {
 
   public render() {
     return (
-      <div>
+      <div className={this.props.selected ? 'selected' : ''}>
         {
           this.props.recipeIds.length === 0 ?
             <span>None selected</span> :

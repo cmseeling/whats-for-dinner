@@ -40,7 +40,6 @@ export default class MealSlot extends Vue {
     }
 
     public removeFromMealSlot(recipeId: number) {
-        console.log(recipeId);
         this.removeRecipeFromMealSlot({slotId: this.slotId, recipeId});
     }
 }

@@ -7,6 +7,7 @@ import toLower from 'lodash/toLower';
 import flatMap from 'lodash/flatMap';
 import forEach from 'lodash/forEach';
 import uniq from 'lodash/uniq';
+import reduce from 'lodash/reduce';
 import Recipes from '@/api/Recipes';
 
 const getters = {
@@ -16,7 +17,10 @@ const getters = {
             return recipes;
         } else {
             return filter(recipes, (recipe: Recipe) => {
-              return includes(toLower(recipe.name), toLower(filterString));
+                const existsInIngredients = reduce(recipe.ingredients, (prev, ingredient) => {
+                    return prev || includes(toLower(ingredient), toLower(filterString));
+                }, false);
+                return includes(toLower(recipe.name), toLower(filterString)) || existsInIngredients;
           });
         }
     },

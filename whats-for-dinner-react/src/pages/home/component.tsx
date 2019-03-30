@@ -1,11 +1,38 @@
 import * as React from 'react';
 import MealSchedule from '../../components/mealschedule';
+import RecipeList from '../../components/recipelist';
 
-export class HomePage extends React.Component {
+export interface Props {
+    addRecipeToMealSlot: (slotId: number, recipeId: number) => void;
+}
+
+interface State {
+    selectedMealSlot: number|null;
+}
+
+export class HomePage extends React.Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+
+        this.state = {
+            selectedMealSlot: null
+        }
+    }
+
+    private handleMealSlotClicked = (slotId: number) => {
+        this.setState({selectedMealSlot: slotId});
+    }
+
+    private handleRecipeClicked = (recipeId: number|null) => {
+        if (this.state.selectedMealSlot && recipeId) {
+            this.props.addRecipeToMealSlot(this.state.selectedMealSlot, recipeId);
+        }
+    }
+
     public render() {
         return (
             <div className="home">
-                <MealSchedule/>
+                <MealSchedule mealSlotOnClick={this.handleMealSlotClicked}/>
                 <div className="card">
                 <div className="card-body">
                     <ul className="nav nav-tabs" id="recipeTabs" role="tablist">
@@ -18,7 +45,7 @@ export class HomePage extends React.Component {
                     </ul>
                     <div className="tab-content" id="recipeTabsContent">
                     <div className="tab-pane fade show active" id="recipeList" role="tabpanel" aria-labelledby="recipeList-tab">
-                        <div>Recipe List placeholder</div>
+                        <RecipeList recipeOnClick={this.handleRecipeClicked} />
                     </div>
                     <div className="tab-pane fade" id="randomRecipe" role="tabpanel" aria-labelledby="randomRecipe-tab">
                         <div>Recipe Randomizer placeholder</div>

@@ -6,10 +6,10 @@ import { Recipe } from '../../models/recipe';
 export interface Props {
   recipeIds: number[];
   recipes: Recipe[];
+  id: number;
   selected: boolean;
+  removeRecipeFromMealSlot: (slotId: number, recipeId: number) => void;
 }
-
-
 
 export class MealSlot extends React.Component<Props, any> {
   private getRecipeName = (recipeId: number) => {
@@ -25,18 +25,20 @@ export class MealSlot extends React.Component<Props, any> {
         {
           this.props.recipeIds.length === 0 ?
             <span>None selected</span> :
-            <table v-else className="table">
+            <table className="table">
             <tbody>
               {
                 map(this.props.recipeIds, (id: number) => {
-                  <tr key={id}>
-                    <td>
-                        <button type="button" className="close" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </td>
-                    <td className="text-left">{this.getRecipeName(id)}</td>
-                  </tr>
+                  return (
+                    <tr key={id}>
+                      <td>
+                          <button type="button" className="close" aria-label="Close" onClick={() => {this.props.removeRecipeFromMealSlot(this.props.id, id)}}>
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </td>
+                      <td className="text-left">{this.getRecipeName(id)}</td>
+                    </tr>
+                  );
                 })
               }
             </tbody>

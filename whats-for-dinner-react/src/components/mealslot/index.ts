@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { AppState } from '../../store/state';
 import { Action } from 'redux';
 import { MealSlot } from './component';
+import scheduleActions from '../../store/schedule/actions';
 
 const mapStateToProps = (state: AppState) => {
     return {
@@ -12,7 +13,7 @@ const mapStateToProps = (state: AppState) => {
 
 const mapDispatchToProps = (dispatch: Dispatch<Action>) => {
     return {
-        
+      removeRecipeFromMealSlot: (slotId: number, recipeId: number) => {dispatch(scheduleActions.RemoveRecipeFromMealSlotAction({slotId, recipeId}))}
     }
 };
 

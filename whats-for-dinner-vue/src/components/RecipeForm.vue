@@ -27,7 +27,7 @@
                                 <td></td>
                                 <td>
                                     <div class="input-group">
-                                        <input ref="addItemInput" id="addItemInput" v-model="newItem" class="form-control"/>
+                                        <input ref="addItemInput" id="addItemInput" v-model="newIngredient" class="form-control"/>
                                         <div class="input-group-append">
                                             <button class="btn btn-success" @click="addIngredient">Add</button>
                                             <button class="btn btn-danger" @click="cancelAddIngredient">Cancel</button>
@@ -47,7 +47,10 @@
                     <div class="row">
                         <div class="col-md-1">&nbsp;</div>
                     </div>
-                    <div class="row">
+                    <div class="row" v-if="isNewRecipe">
+                        <button class="btn btn-danger col-md-1" @click.prevent="goBack">Cancel</button>
+                    </div>
+                    <div class="row" v-else>
                         <button class="btn btn-danger col-md-1" @click.prevent="removeRecipe">Delete</button>
                     </div>
                 </div>
@@ -75,8 +78,9 @@ import { Route } from 'vue-router';
 })
 export default class RecipeForm extends Vue {
     public recipe: Recipe = new Recipe();
+    public isNewRecipe: boolean = true;
     public isAddingIngredient: boolean = false;
-    public newItem: string = '';
+    public newIngredient: string = '';
     private getRecipeById!: (id: number) => Recipe;
     private saveRecipe!: (recipe: Recipe) => Promise<void>;
     private deleteRecipe!: (id: number) => Promise<void>;
@@ -85,6 +89,7 @@ export default class RecipeForm extends Vue {
     public onRouteChanged(newRoute: Route, oldRoute: Route) {
         if (newRoute.params.id) {
             this.recipe = this.getRecipeById(Number(newRoute.params.id));
+            this.isNewRecipe = false;
         }
     }
 
@@ -97,12 +102,12 @@ export default class RecipeForm extends Vue {
     }
 
     public addIngredient() {
-        this.recipe.ingredients.push(this.newItem);
-        this.clearNewItem();
+        this.recipe.ingredients.push(this.newIngredient);
+        this.clearNewIngredient();
     }
 
     public cancelAddIngredient() {
-        this.clearNewItem();
+        this.clearNewIngredient();
     }
 
     public saveRecipeForm() {
@@ -117,12 +122,16 @@ export default class RecipeForm extends Vue {
         this.$router.push('/recipes');
     }
 
+    public goBack() {
+        this.$router.push('/recipes');
+    }
+
     public removeIngredient(index: number) {
         this.recipe.ingredients.splice(index, 1);
     }
 
-    private clearNewItem() {
-        this.newItem = '';
+    private clearNewIngredient() {
+        this.newIngredient = '';
         this.isAddingIngredient = false;
     }
 }

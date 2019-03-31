@@ -51,7 +51,7 @@ import { mapGetters } from 'vuex';
 
 @Component({
     computed: {
-        ...mapGetters('schedule', ['getAllUniqueRecipeIds']),
+        ...mapGetters('schedule', ['getAllUniqueRecipeIdsFromMealSlots']),
         ...mapGetters('recipes', ['getIngredientsFromRecipeIds'])
     }
 })
@@ -59,11 +59,11 @@ export default class GroceryList extends Vue {
     public ingredientsList: string[] = [];
     public isAddingItem: boolean = false;
     public newItem: string = '';
-    private getAllUniqueRecipeIds!: number[];
+    private getAllUniqueRecipeIdsFromMealSlots!: number[];
     private getIngredientsFromRecipeIds!: (recipeIds: number[]) => string[];
 
     public mounted() {
-        this.ingredientsList = this.getIngredientsFromRecipeIds(this.getAllUniqueRecipeIds);
+        this.ingredientsList = this.getIngredientsFromRecipeIds(this.getAllUniqueRecipeIdsFromMealSlots);
     }
 
     public removeIngredient(index: number) {

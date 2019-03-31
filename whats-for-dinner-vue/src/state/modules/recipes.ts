@@ -29,6 +29,10 @@ const getters = {
         return state.recipes.Item(id);
     },
 
+    getRecipeByIndex: (state: RecipesState) => (index: number): Recipe => {
+        return state.recipes.Values()[index];
+    },
+
     recipes: (state: RecipesState): Recipe[] => {
         return state.recipes.Values();
     },

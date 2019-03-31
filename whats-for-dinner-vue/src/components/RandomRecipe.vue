@@ -46,17 +46,17 @@ import { mapGetters } from 'vuex';
 
 @Component({
     computed: {
-        ...mapGetters('recipes', ['getRecipeById', 'recipeCount'])
+        ...mapGetters('recipes', ['getRecipeByIndex', 'recipeCount'])
     }
 })
 export default class RandomRecipe extends Vue {
     public recipe: Recipe|null = null;
     private recipeCount!: number;
-    private getRecipeById!: (id: number) => Recipe;
+    private getRecipeByIndex!: (id: number) => Recipe;
 
     public nextRecipe() {
-        const nextId = Math.floor(Math.random() * this.recipeCount) + 1;
-        this.recipe = this.getRecipeById(nextId);
+        const nextIndex = Math.floor(Math.random() * this.recipeCount);
+        this.recipe = this.getRecipeByIndex(nextIndex);
     }
 
     public mounted() {

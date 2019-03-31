@@ -95,7 +95,7 @@ export class GroceryListPage extends React.Component<Props, State> {
                           <div className="input-group">
                             <input id="addItemInput" value={this.state.newItem} onChange={this.handleNewItemChanged} className="form-control"/>
                             <div className="input-group-append">
-                              <button className="btn btn-primary" onClick="addIngredient">Add</button>
+                              <button className="btn btn-primary" onClick={this.handleAddIngredient}>Add</button>
                             </div>
                           </div>
                         </td>

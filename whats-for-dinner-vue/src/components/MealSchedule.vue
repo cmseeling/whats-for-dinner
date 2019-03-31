@@ -47,26 +47,25 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import groupBy from 'lodash/groupBy';
 import map from 'lodash/map';
 import toLower from 'lodash/toLower';
-import { mapState } from 'vuex';
 import { IMealSlot } from '@/state/interfaces/ScheduleState';
 import MealSlot from './MealSlot.vue';
+
+const scheduleModule = namespace('schedule');
 
 @Component({
     components: {
         MealSlot
-    },
-    computed: {
-        ...mapState('schedule', ['mealSlots'])
     }
 })
 export default class RecipeList extends Vue {
     public activeSlot: number|null = null;
-    public mealSlots!: IMealSlot[];
+    @scheduleModule.State public mealSlots!: IMealSlot[];
 
     public get augmentedSlots() {
         return map(this.mealSlots, (slot: IMealSlot) => {

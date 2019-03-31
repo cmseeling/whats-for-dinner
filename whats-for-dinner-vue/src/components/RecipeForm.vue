@@ -61,29 +61,24 @@
 
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
 import { Recipe } from '@/models/recipe';
-import { mapGetters, mapActions } from 'vuex';
 import { Route } from 'vue-router';
 
-@Component({
-    computed: {
-        ...mapGetters('recipes', ['getRecipeById'])
-    },
-    methods: {
-        ...mapActions('recipes', ['saveRecipe', 'deleteRecipe'])
-    }
-})
+const recipeModule = namespace('recipes');
+
+@Component
 export default class RecipeForm extends Vue {
     public recipe: Recipe = new Recipe();
     public isNewRecipe: boolean = true;
     public isAddingIngredient: boolean = false;
     public newIngredient: string = '';
-    private getRecipeById!: (id: number) => Recipe;
-    private saveRecipe!: (recipe: Recipe) => Promise<void>;
-    private deleteRecipe!: (id: number) => Promise<void>;
+    @recipeModule.Getter private getRecipeById!: (id: number) => Recipe;
+    @recipeModule.Action private saveRecipe!: (recipe: Recipe) => Promise<void>;
+    @recipeModule.Action private deleteRecipe!: (id: number) => Promise<void>;
 
     @Watch('$route', { deep: true, immediate: true })
     public onRouteChanged(newRoute: Route, oldRoute: Route) {

@@ -37,30 +37,38 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
 import { Recipe } from '@/models/recipe';
-import { mapGetters } from 'vuex';
 
-@Component({
-    computed: {
-        ...mapGetters('recipes', ['getRecipeByIndex', 'recipeCount'])
-    }
-})
+const recipeModule = namespace('recipes');
+
+// This is how to do it without vuex-class
+// @Component({
+//     computed: {
+//         ...mapGetters('recipes', ['getRecipeByIndex', 'recipeCount'])
+//     }
+// })
+@Component
 export default class RandomRecipe extends Vue {
     public recipe: Recipe|null = null;
-    private recipeCount!: number;
-    private getRecipeByIndex!: (id: number) => Recipe;
+    @recipeModule.Getter private recipeCount!: number;
+    @recipeModule.Getter private getRecipeByIndex!: (id: number) => Recipe;
+    @recipeModule.Getter private isInitialized!: boolean;
+
+    @Watch('isInitialized', { immediate: true })
+    public onInitializedChanged(newVal: boolean, oldVal: boolean) {
+        if (newVal) {
+            this.nextRecipe();
+        }
+    }
 
     public nextRecipe() {
         const nextIndex = Math.floor(Math.random() * this.recipeCount);
         this.recipe = this.getRecipeByIndex(nextIndex);
-    }
-
-    public mounted() {
-        this.nextRecipe();
     }
 }
 </script>

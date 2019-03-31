@@ -26,27 +26,26 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import RecipeList from '@/components/RecipeList.vue'; // @ is an alias to /src
 import RandomRecipe from '@/components/RandomRecipe.vue';
 import MealSchedule from '@/components/MealSchedule.vue';
-import { mapMutations } from 'vuex';
+
+const scheduleModule = namespace('schedule');
 
 @Component({
   components: {
     MealSchedule,
     RecipeList,
     RandomRecipe
-  },
-  methods: {
-    ...mapMutations('schedule', ['addRecipeToMealSlot'])
   }
 })
 export default class Home extends Vue {
   public selectedMealSlotId: number|null = null;
-  private addRecipeToMealSlot!: ({slotId, recipeId}: {slotId: number, recipeId: number}) => void;
+  @scheduleModule.Mutation private addRecipeToMealSlot!:
+    ({slotId, recipeId}: {slotId: number, recipeId: number}) => void;
 
   public handleRecipeSelected(recipeId: number) {
-    console.log(recipeId);
     if (this.selectedMealSlotId !== null) {
       this.addRecipeToMealSlot({slotId: this.selectedMealSlotId, recipeId});
     }

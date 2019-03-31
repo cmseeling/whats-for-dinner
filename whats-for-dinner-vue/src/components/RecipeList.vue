@@ -48,20 +48,18 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { namespace } from 'vuex-class';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
 import { Recipe } from '@/models/recipe';
-import { mapGetters } from 'vuex';
 
-@Component({
-    computed: {
-        ...mapGetters('recipes', ['getFilteredList'])
-    }
-})
+const recipeModule = namespace('recipes');
+
+@Component
 export default class RecipeList extends Vue {
     public searchText: string = '';
-    public getFilteredList!: (filterText: string) => Recipe[];
+    @recipeModule.Getter public getFilteredList!: (filterText: string) => Recipe[];
 
     public get filteredList() {
         return this.getFilteredList(this.searchText);
@@ -70,14 +68,6 @@ export default class RecipeList extends Vue {
 </script>
 
 <style scoped>
-    /* ul{
-        padding: 0px;
-    }
-
-    li {
-        list-style-type: none;
-    } */
-
     .ingredients-list {
         text-align: left;
     }

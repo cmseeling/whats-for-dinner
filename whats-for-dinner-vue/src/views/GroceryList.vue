@@ -47,20 +47,18 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import { mapGetters } from 'vuex';
+import { namespace } from 'vuex-class';
 
-@Component({
-    computed: {
-        ...mapGetters('schedule', ['getAllUniqueRecipeIdsFromMealSlots']),
-        ...mapGetters('recipes', ['getIngredientsFromRecipeIds'])
-    }
-})
+const recipeModule = namespace('recipes');
+const scheduleModule = namespace('schedule');
+
+@Component
 export default class GroceryList extends Vue {
     public ingredientsList: string[] = [];
     public isAddingItem: boolean = false;
     public newItem: string = '';
-    private getAllUniqueRecipeIdsFromMealSlots!: number[];
-    private getIngredientsFromRecipeIds!: (recipeIds: number[]) => string[];
+    @scheduleModule.Getter private getAllUniqueRecipeIdsFromMealSlots!: number[];
+    @recipeModule.Getter private getIngredientsFromRecipeIds!: (recipeIds: number[]) => string[];
 
     public mounted() {
         this.ingredientsList = this.getIngredientsFromRecipeIds(this.getAllUniqueRecipeIdsFromMealSlots);

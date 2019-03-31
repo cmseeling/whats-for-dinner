@@ -18,22 +18,19 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { mapGetters, mapMutations } from 'vuex';
+import { namespace } from 'vuex-class';
 import { Recipe } from '@/models/recipe';
 
-@Component({
-    computed: {
-        ...mapGetters('recipes', ['getRecipeById'])
-    },
-    methods: {
-        ...mapMutations('schedule', ['removeRecipeFromMealSlot'])
-    }
-})
+const recipeModule = namespace('recipes');
+const scheduleModule = namespace('schedule');
+
+@Component
 export default class MealSlot extends Vue {
     @Prop() private slotId!: number;
     @Prop() private recipeIds!: number[];
-    private getRecipeById!: (id: string) => Recipe;
-    private removeRecipeFromMealSlot!: ({slotId, recipeId}: {slotId: number, recipeId: number}) => void;
+    @recipeModule.Getter private getRecipeById!: (id: string) => Recipe;
+    @scheduleModule.Mutation private removeRecipeFromMealSlot!:
+        ({slotId, recipeId}: {slotId: number, recipeId: number}) => void;
 
     public getRecipeName(recipeId: string) {
         return this.getRecipeById(recipeId).name;

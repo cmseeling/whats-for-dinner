@@ -49,6 +49,10 @@ const getters = {
 
     recipeCount: (state: RecipesState): number => {
         return state.recipes.Count();
+    },
+
+    isInitialized: (state: RecipesState): boolean => {
+        return state.initialized;
     }
 };
 
@@ -71,6 +75,10 @@ const mutations = {
 
     removeRecipe: (state: RecipesState, id: number): void => {
         state.recipes.Remove(id.toString());
+    },
+
+    setInitialized: (state: RecipesState): void => {
+        state.initialized = true;
     }
 };
 
@@ -78,6 +86,7 @@ const actions = {
     init: async ({commit}: {commit: Commit}): Promise<void> => {
         const recipes = await Recipes.readAll();
         commit('setRecipes', recipes);
+        commit('setInitialized');
     },
 
     saveRecipe: async ({commit}: {commit: Commit}, recipe: Recipe): Promise<void> => {

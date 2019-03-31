@@ -1,6 +1,7 @@
 import * as React from 'react';
 import MealSchedule from '../../components/mealschedule';
 import RecipeList from '../../components/recipelist';
+import RandomRecipe from '../../components/randomrecipe';
 
 export interface Props {
     addRecipeToMealSlot: (slotId: number, recipeId: number) => void;
@@ -48,7 +49,7 @@ export class HomePage extends React.Component<Props, State> {
                         <RecipeList recipeOnClick={this.handleRecipeClicked} />
                     </div>
                     <div className="tab-pane fade" id="randomRecipe" role="tabpanel" aria-labelledby="randomRecipe-tab">
-                        <div>Recipe Randomizer placeholder</div>
+                        <RandomRecipe recipeOnClick={this.handleRecipeClicked} />
                     </div>
                     </div>
                 </div>

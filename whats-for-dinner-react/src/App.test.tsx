@@ -1,9 +1,24 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import Enzyme, { shallow } from 'enzyme'
+import Adapter from 'enzyme-adapter-react-16'
 import App from './App';
+import { Recipe } from './models/recipe';
+
+Enzyme.configure({ adapter: new Adapter() });
+
+const recipe: Recipe = {
+  id: 1,
+  ingredients: [
+    'ingredient 1'
+  ],
+  name: 'test recipe'
+}
+
+const mockGetRecipes = jest.fn().mockImplementation(() => {return [recipe]});
 
 it('renders without crashing', () => {
-  const div = document.createElement('div');
-  ReactDOM.render(<App />, div);
-  ReactDOM.unmountComponentAtNode(div);
+  const props = {
+    getRecipes: mockGetRecipes
+  }
+  const wrapper = shallow(<App {...props}/>);
 });

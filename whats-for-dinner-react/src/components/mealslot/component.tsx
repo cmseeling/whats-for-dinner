@@ -24,7 +24,7 @@ export class MealSlot extends React.Component<Props, any> {
       <div className={this.props.selected ? 'selected' : ''}>
         {
           this.props.recipeIds.length === 0 ?
-            <span>None selected</span> :
+            <span className="no-item">None selected</span> :
             <table className="table">
             <tbody>
               {
@@ -36,7 +36,7 @@ export class MealSlot extends React.Component<Props, any> {
                               <span aria-hidden="true">&times;</span>
                           </button>
                       </td>
-                      <td className="text-left">{this.getRecipeName(id)}</td>
+                      <td className="text-left meal-slot-recipe-name">{this.getRecipeName(id)}</td>
                     </tr>
                   );
                 })

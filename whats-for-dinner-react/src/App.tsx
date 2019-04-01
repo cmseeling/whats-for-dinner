@@ -18,6 +18,7 @@ export interface Props {
 
 class App extends React.Component<Props, any> {
   componentDidMount() {
+    console.log(this.props.getRecipes);
     this.props.getRecipes();
   }
 

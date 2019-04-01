@@ -12,7 +12,7 @@ const mockRecipe: Recipe = {
     'ingredient 1'
   ],
   name: 'test recipe'
-}
+};
 
 const mockGetRecipeById = jest.fn().mockImplementation(() => (id: number): Recipe => {
   return mockRecipe;
@@ -39,12 +39,12 @@ describe('MealSlot.vue', () => {
           }
         }
       }
-    })
-  })
+    });
+  });
 
   it('renders message if recipe array is empty', () => {
     const slotId = 1;
-    const recipeIds: number[] = []
+    const recipeIds: number[] = [];
     const wrapper = shallowMount(MealSlot, {
       propsData: { slotId, recipeIds }
     });
@@ -53,7 +53,7 @@ describe('MealSlot.vue', () => {
 
   it('renders a list of recipes', () => {
     const slotId = 1;
-    const recipeIds: number[] = [1]
+    const recipeIds: number[] = [1];
     const wrapper = shallowMount(MealSlot, {
       propsData: { slotId, recipeIds },
       store,
@@ -65,7 +65,7 @@ describe('MealSlot.vue', () => {
 
   it('removes a recipe from the list', () => {
     const slotId = 1;
-    const recipeIds: number[] = [1]
+    const recipeIds: number[] = [1];
     const wrapper = shallowMount(MealSlot, {
       propsData: { slotId, recipeIds },
       store,

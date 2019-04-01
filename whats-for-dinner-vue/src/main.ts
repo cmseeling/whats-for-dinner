@@ -7,6 +7,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 Vue.config.productionTip = false;
 
+console.log(store);
+
 new Vue({
   router,
   store,

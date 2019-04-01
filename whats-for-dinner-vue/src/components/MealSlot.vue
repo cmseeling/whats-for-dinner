@@ -1,6 +1,6 @@
 <template>
   <div>
-    <span v-if="recipeIds.length === 0">None selected</span>
+    <span class="no-item" v-if="recipeIds.length === 0">None selected</span>
     <table v-else class="table">
         <tbody>
             <tr v-for="recipeId in recipeIds" :key="recipeId">
@@ -9,7 +9,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </td>
-                <td class="text-left">{{getRecipeName(recipeId)}}</td>
+                <td class="text-left meal-slot-recipe-name">{{getRecipeName(recipeId)}}</td>
             </tr>
         </tbody>
     </table>

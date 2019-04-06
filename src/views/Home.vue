@@ -1,8 +1,18 @@
 <template>
   <div class="home">
     <MealSchedule v-on:meal-slot-click="handleMealSlotSelected" />
-    <div class="card">
-      <div class="card-body">
+    <v-card>
+      <v-tabs fixed-tabs>
+        <v-tab>Recipe List</v-tab>
+        <v-tab>Random Recipe</v-tab>
+        <v-tab-item>
+          <RecipeList v-on:recipe-list-click="handleRecipeSelected"/>
+        </v-tab-item>
+        <v-tab-item>
+          <RandomRecipe v-on:recipe-add-click="handleRecipeSelected"/>
+        </v-tab-item>
+      </v-tabs>
+      <!-- <div class="card-body">
         <ul class="nav nav-tabs" id="recipeTabs" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" id="recipeList-tab" data-toggle="tab" href="#recipeList" role="tab" aria-controls="recipeList" aria-selected="true">Recipe List</a>
@@ -19,8 +29,8 @@
             <RandomRecipe v-on:recipe-add-click="handleRecipeSelected"/>
           </div>
         </div>
-      </div>
-    </div>
+      </div> -->
+    </v-card>
   </div>
 </template>
 

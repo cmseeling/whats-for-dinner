@@ -1,24 +1,37 @@
 <template>
-  <div id="app" class="container-fluid">
+  <div id="app">
+    <Layout></Layout>
+  </div>
+  
+  <!-- <div id="app" class="container-fluid">
     <AppNav/>
-    <!-- <div id="nav">
+    <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-    </div> -->
+    </div>
     <router-view/>
-  </div>
+  </div> -->
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import AppNav from '@/components/AppNav.vue';
+import Layout from '@/components/Layout.vue';
 
 @Component({
   components: {
-    AppNav
+    Layout,
   }
 })
 export default class Home extends Vue {
+  public showMenu: boolean|null = null;
+
+  public handleMenuClicked() {
+    if (this.showMenu) {
+      this.showMenu = false;
+    } else {
+      this.showMenu = true;
+    }
+  }
 }
 </script>
 

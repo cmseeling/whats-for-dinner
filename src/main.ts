@@ -1,13 +1,16 @@
 import Vue from 'vue';
+import Vuetify from 'vuetify';
 import App from './App.vue';
 import router from './router';
 import store from './state/store';
-import 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'vuetify/dist/vuetify.min.css';
+import '@fortawesome/fontawesome-free/css/all.css';
 
 Vue.config.productionTip = false;
 
-console.log(store);
+Vue.use(Vuetify, {
+  iconfont: 'fa',
+});
 
 new Vue({
   router,

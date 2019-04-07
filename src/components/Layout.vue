@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-toolbar app dark color="primary" clipped-left>
+    <v-toolbar app dark color="gray" clipped-left>
       <v-toolbar-side-icon @click="visible = !visible"></v-toolbar-side-icon>
       <v-toolbar-title class="white--text">What's For Dinner?</v-toolbar-title>
     </v-toolbar>

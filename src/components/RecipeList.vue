@@ -1,18 +1,20 @@
 <template>
-    <div class="recipes card">
-        <div class="recipes-header card-header">
-            <h2 class="card-title float-left">Recipes</h2>
-            <div class="float-right">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="recipeSearchLabel">Search:</span>
-                    </div>
-                    <input id="recipeSearch" aria-describedby="recipeSearchLabel" v-model="searchText" class="form-control"/>
-                </div>
-            </div>
-        </div>
-        <div class="recipes-list card-body">
-            <table class="table">
+  <v-card>
+    <v-card-title>
+      <v-toolbar>
+        <v-toolbar-title>
+          Recipes
+        </v-toolbar-title>
+        <v-spacer/>
+        <v-text-field
+          hide-details
+          append-icon="fa-search"
+          single-line
+          v-model="searchText"/>
+        </v-toolbar>
+    </v-card-title>
+    <v-card-text>
+      <table class="table">
                 <thead>
                     <tr>
                         <th scope="col">Name</th>
@@ -42,8 +44,8 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-    </div>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -62,6 +64,7 @@ export default class RecipeList extends Vue {
     @recipeModule.Getter public getFilteredList!: (filterText: string) => Recipe[];
 
     public get filteredList() {
+        console.log(this.searchText);
         return this.getFilteredList(this.searchText);
     }
 }

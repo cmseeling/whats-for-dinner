@@ -6,14 +6,14 @@ import camelCase from 'lodash/camelCase';
  */
 
 interface IAction {
-    actions: {
-        init: () => void;
-    };
+  actions: {
+    init: () => void;
+  };
 }
 
 interface IModules {
-     [name: string]: IAction;
- }
+  [name: string]: IAction;
+}
 
 const files = require.context('.', false, /\.ts$/);
 const modules: IModules = {};

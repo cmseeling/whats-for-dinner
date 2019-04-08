@@ -2,15 +2,6 @@
   <div id="app">
     <Layout></Layout>
   </div>
-  
-  <!-- <div id="app" class="container-fluid">
-    <AppNav/>
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
-  </div> -->
 </template>
 
 <script lang="ts">

@@ -36,12 +36,6 @@ import { Recipe } from '@/models/recipe';
 
 const recipeModule = namespace('recipes');
 
-// This is how to do it without vuex-class
-// @Component({
-//     computed: {
-//         ...mapGetters('recipes', ['getRecipeByIndex', 'recipeCount'])
-//     }
-// })
 @Component
 ({
   components: {

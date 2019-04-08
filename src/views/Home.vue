@@ -12,24 +12,6 @@
           <RandomRecipe v-on:recipe-add-click="handleRecipeSelected"/>
         </v-tab-item>
       </v-tabs>
-      <!-- <div class="card-body">
-        <ul class="nav nav-tabs" id="recipeTabs" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active" id="recipeList-tab" data-toggle="tab" href="#recipeList" role="tab" aria-controls="recipeList" aria-selected="true">Recipe List</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" id="randomRecipe-tab" data-toggle="tab" href="#randomRecipe" role="tab" aria-controls="randomRecipe" aria-selected="false">Random Recipe</a>
-          </li>
-        </ul>
-        <div class="tab-content" id="recipeTabsContent">
-          <div class="tab-pane fade show active" id="recipeList" role="tabpanel" aria-labelledby="recipeList-tab">
-            <RecipeList v-on:recipe-list-click="handleRecipeSelected"/>
-          </div>
-          <div class="tab-pane fade" id="randomRecipe" role="tabpanel" aria-labelledby="randomRecipe-tab">
-            <RandomRecipe v-on:recipe-add-click="handleRecipeSelected"/>
-          </div>
-        </div>
-      </div> -->
     </v-card>
   </div>
 </template>

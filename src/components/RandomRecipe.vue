@@ -1,39 +1,28 @@
 <template>
-    <div class="random-recipe card">
-        <div class="random-recipe-header card-header">
-            <h2 class="card-title float-left">Random Recipe</h2>
-        </div>
-        <div class="random-recipe-list card-body">
-            <div class="container">
-                <div class="row" v-if="recipe">
-                    <div class="col-sm text-right">
-                        <h4 class="card-title float-left font-weight-bold">{{recipe.name}}</h4>
-                    </div>
-                    <div class="col-sm"></div>
-                    <div class="col-sm"></div>
-                </div>
-                <div class="row" v-if="recipe">
-                    <div class="col-sm text-right font-weight-bold">Ingredients:</div>
-                    <div class="col-sm">
-                        <ul class="text-left">
-                            <li v-for="(item, index) in recipe.ingredients" :key="index">
-                                {{item}}
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-sm"></div>
-                </div>
-                <div class="row">
-                    <div class="col-sm text-right">
-                        <button class="btn btn-primary" @click="$emit('recipe-add-click', recipe.id)">Add</button>
-                    </div>
-                    <div class="col-sm text-left">
-                        <button class="btn btn-warning" @click="nextRecipe">See next</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+  <v-card>
+    <v-card-title>
+      <v-toolbar flat>
+        <v-toolbar-title>
+          Random Recipe
+        </v-toolbar-title>
+      </v-toolbar>
+    </v-card-title>
+    <v-card-text>
+      <RecipeItem v-if="recipe"
+        :recipe="recipe"
+        v-on:recipe-click="handleRecipeSelected"/>
+      <v-container>
+        <v-layout>
+          <v-flex sm6 class="text-xs-right">
+            <v-btn color="success" @click="$emit('recipe-add-click', recipe.id)">Add</v-btn>
+          </v-flex>
+          <v-flex sm6 class="text-xs-left">
+            <v-btn color="warning" @click="nextRecipe">Next</v-btn>
+          </v-flex>
+        </v-layout>
+      </v-container>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -42,6 +31,7 @@ import { namespace } from 'vuex-class';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
+import RecipeItem from '@/components/RecipeItem.vue';
 import { Recipe } from '@/models/recipe';
 
 const recipeModule = namespace('recipes');
@@ -53,32 +43,41 @@ const recipeModule = namespace('recipes');
 //     }
 // })
 @Component
+({
+  components: {
+    RecipeItem
+  }
+})
 export default class RandomRecipe extends Vue {
-    public recipe: Recipe|null = null;
-    @recipeModule.Getter private recipeCount!: number;
-    @recipeModule.Getter private getRecipeByIndex!: (id: number) => Recipe;
-    @recipeModule.Getter private isInitialized!: boolean;
+  public recipe: Recipe|null = null;
+  @recipeModule.Getter private recipeCount!: number;
+  @recipeModule.Getter private getRecipeByIndex!: (id: number) => Recipe;
+  @recipeModule.Getter private isInitialized!: boolean;
 
-    @Watch('isInitialized', { immediate: true })
-    public onInitializedChanged(newVal: boolean, oldVal: boolean) {
-        if (newVal) {
-            this.nextRecipe();
-        }
+  @Watch('isInitialized', { immediate: true })
+  public onInitializedChanged(newVal: boolean, oldVal: boolean) {
+    if (newVal) {
+      this.nextRecipe();
     }
+  }
 
-    public nextRecipe() {
-        const nextIndex = Math.floor(Math.random() * this.recipeCount);
-        this.recipe = this.getRecipeByIndex(nextIndex);
-    }
+  public handleRecipeSelected(recipeId: number) {
+    this.$emit('recipe-add-click', recipeId);
+  }
+
+  public nextRecipe() {
+    const nextIndex = Math.floor(Math.random() * this.recipeCount);
+    this.recipe = this.getRecipeByIndex(nextIndex);
+  }
 }
 </script>
 
 <style scoped>
-    ul{
-        padding: 0px;
-    }
+  ul{
+    padding: 0px;
+  }
 
-    li {
-        list-style-type: none;
-    }
+  li {
+    list-style-type: none;
+  }
 </style>

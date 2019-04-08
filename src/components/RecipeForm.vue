@@ -1,62 +1,63 @@
 <template>
-    <div class="recipe-form card">
-        <div class="recipe-form-header card-header">
-            <h2 class="card-title float-left">Recipe</h2>
+  <v-card>
+    <v-card-title>
+      <v-toolbar flat>
+        <v-toolbar-title>
+          Recipe
+        </v-toolbar-title>
+      </v-toolbar>
+    </v-card-title>
+    <v-card-text>
+      <v-form>
+        <v-text-field label="Name" v-model="recipe.name" />
+        <div class="text-xs-left">
+          <label class="font-weight-bold">Ingredients</label>
+          <ul>
+            <v-container v-for="(item, index) in recipe.ingredients" :key="index" tag="li" class="pa-0" fill-height>
+              <v-layout align-center>
+                <v-flex shrink>
+                  <v-btn color="error" @click="removeIngredient(index)" icon><v-icon small>fa fa-times</v-icon></v-btn>
+                </v-flex>
+                <v-flex>
+                  {{item}}
+                </v-flex>
+              </v-layout>
+            </v-container>
+           <v-container v-if="isAddingIngredient" tag="li" class="pa-0" fill-height>
+              <v-layout align-center>
+                <v-flex>
+                  <v-text-field v-model="newIngredient" autofocus/>
+                </v-flex>
+                <v-flex shrink>
+                  <v-btn color="success" @click="addIngredient">Add</v-btn>
+                </v-flex>
+                <v-flex shrink>
+                  <v-btn color="error" @click="cancelAddIngredient">Cancel</v-btn>
+                </v-flex>
+              </v-layout>
+            </v-container>
+            <li>
+              <v-btn color="success" @click.prevent="addItem"><v-icon small>fa fa-plus</v-icon>&nbsp;Add Ingredient</v-btn>
+            </li>
+          </ul>
+          <br/>
+          <hr/>
+          <br/>
+          <v-container class="pa-0">
+            <v-layout column>
+              <v-flex>
+                <v-btn color="primary" @click.prevent="saveRecipeForm">Save</v-btn>
+              </v-flex>
+              <v-flex>
+                <v-btn color="error" v-if="isNewRecipe" @click.prevent="goBack">Cancel</v-btn>
+                <v-btn color="error" v-else @click.prevent="removeRecipe">Delete</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-container>
         </div>
-        <div class="recipe-form-list card-body text-left">
-            <form>
-                <div class="form-group">
-                    <label for="recipeName" class="font-weight-bold">Name</label>
-                    <input type="text" id="recipeName" v-model="recipe.name" class="form-control"/>
-                </div>
-                <div class="form-group">
-                    <label class="font-weight-bold">Ingredients</label>
-                    <table class="ml-5 mb-1">
-                        <tbody>
-                            <tr v-for="(item, index) in recipe.ingredients" :key="index">
-                                <td>
-                                    <button type="button" class="close" aria-label="Close" @click="removeIngredient(index)">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </td>
-                                <td>
-                                    {{item}}
-                                </td>
-                            </tr>
-                            <tr v-if="isAddingIngredient">
-                                <td></td>
-                                <td>
-                                    <div class="input-group">
-                                        <input ref="addItemInput" id="addItemInput" v-model="newIngredient" class="form-control"/>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-success" @click="addIngredient">Add</button>
-                                            <button class="btn btn-danger" @click="cancelAddIngredient">Cancel</button>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <button class="btn btn-primary" @click.prevent="addItem">Add Ingredient</button>
-                </div>
-                <hr/>
-                <div class="container-fluid">
-                    <div class="row">
-                        <button type="submit" class="btn btn-primary col-md-1" @click.prevent="saveRecipeForm">Save</button>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1">&nbsp;</div>
-                    </div>
-                    <div class="row" v-if="isNewRecipe">
-                        <button class="btn btn-danger col-md-1" @click.prevent="goBack">Cancel</button>
-                    </div>
-                    <div class="row" v-else>
-                        <button class="btn btn-danger col-md-1" @click.prevent="removeRecipe">Delete</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
+      </v-form>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -72,72 +73,68 @@ const recipeModule = namespace('recipes');
 
 @Component
 export default class RecipeForm extends Vue {
-    public recipe: Recipe = new Recipe();
-    public isNewRecipe: boolean = true;
-    public isAddingIngredient: boolean = false;
-    public newIngredient: string = '';
-    @recipeModule.Getter private getRecipeById!: (id: number) => Recipe;
-    @recipeModule.Action private saveRecipe!: (recipe: Recipe) => Promise<void>;
-    @recipeModule.Action private deleteRecipe!: (id: number) => Promise<void>;
+  public recipe: Recipe = new Recipe();
+  public isNewRecipe: boolean = true;
+  public isAddingIngredient: boolean = false;
+  public newIngredient: string = '';
+  @recipeModule.Getter private getRecipeById!: (id: number) => Recipe;
+  @recipeModule.Action private saveRecipe!: (recipe: Recipe) => Promise<void>;
+  @recipeModule.Action private deleteRecipe!: (id: number) => Promise<void>;
 
-    @Watch('$route', { deep: true, immediate: true })
-    public onRouteChanged(newRoute: Route, oldRoute: Route) {
-        if (newRoute.params.id) {
-            this.recipe = this.getRecipeById(Number(newRoute.params.id));
-            this.isNewRecipe = false;
-        }
+  @Watch('$route', { deep: true, immediate: true })
+  public onRouteChanged(newRoute: Route, oldRoute: Route) {
+    if (newRoute.params.id) {
+      this.recipe = this.getRecipeById(Number(newRoute.params.id));
+      this.isNewRecipe = false;
     }
+  }
 
-    public addItem() {
-        this.isAddingIngredient = true;
-        this.$nextTick(() => {
-            const input: any = this.$refs.addItemInput;
-            input.focus();
-        });
-    }
+  public addItem() {
+    this.isAddingIngredient = true;
+    this.$nextTick(() => {
+      const input: any = this.$refs.addItemInput;
+      input.focus();
+    });
+  }
 
-    public addIngredient() {
-        this.recipe.ingredients.push(this.newIngredient);
-        this.clearNewIngredient();
-    }
+  public addIngredient() {
+    this.recipe.ingredients.push(this.newIngredient);
+    this.clearNewIngredient();
+  }
 
-    public cancelAddIngredient() {
-        this.clearNewIngredient();
-    }
+  public cancelAddIngredient() {
+    this.clearNewIngredient();
+  }
 
-    public saveRecipeForm() {
-        this.saveRecipe(this.recipe);
-        this.$router.push('/recipes');
-    }
+  public saveRecipeForm() {
+    this.saveRecipe(this.recipe);
+    this.$router.push('/recipes');
+  }
 
-    public removeRecipe() {
-        if (this.recipe.id) {
-            this.deleteRecipe(this.recipe.id);
-        }
-        this.$router.push('/recipes');
+  public removeRecipe() {
+    if (this.recipe.id) {
+      this.deleteRecipe(this.recipe.id);
     }
+    this.$router.push('/recipes');
+  }
 
-    public goBack() {
-        this.$router.push('/recipes');
-    }
+  public goBack() {
+    this.$router.push('/recipes');
+  }
 
-    public removeIngredient(index: number) {
-        this.recipe.ingredients.splice(index, 1);
-    }
+  public removeIngredient(index: number) {
+    this.recipe.ingredients.splice(index, 1);
+  }
 
-    private clearNewIngredient() {
-        this.newIngredient = '';
-        this.isAddingIngredient = false;
-    }
+  private clearNewIngredient() {
+    this.newIngredient = '';
+    this.isAddingIngredient = false;
+  }
 }
 </script>
 
 <style scoped>
-    li {
-        list-style-type: none;
-    }
-
-    .ingredient-item {
-        text-align: left;
-    }
+  li {
+    list-style-type: none;
+  }
 </style>

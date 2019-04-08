@@ -1,47 +1,44 @@
 <template>
   <div class="grocery-list">
-      <div class="grocery-list card">
-          <div class="grocery-list-header card-header">
-            <h2 class="card-title float-left">Grocery List</h2>
-        </div>
-        <div class="grocery-list-table card-body">
-            <table class="table">
-                <tbody>
-                    <tr v-for="(ingredient, index) in ingredientsList" :key="index">
-                        <td>
-                            <button type="button" class="close" aria-label="Close" @click="removeIngredient(index)">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </td>
-                        <td colspan="4" class="text-left">
-                            {{ingredient}}
-                        </td>
-                    </tr>
-                    <tr v-if="isAddingItem">
-                        <td class="text-right">
-                            <button type="button" class="btn btn-danger" @click="toggleAddItem">Cancel</button>
-                        </td>
-                        <td>
-                            <div class="input-group">
-                                <input id="addItemInput" v-model="newItem" class="form-control"/>
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary" @click="addIngredient">Add</button>
-                                </div>
-                            </div>
-                        </td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr v-else>
-                        <td colspan="5">
-                            <button type="button" class="btn btn-primary" @click="toggleAddItem">Add Item</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-      </div>
+    <v-card>
+      <v-title>
+        <v-toolbar flat>
+          <v-toolbar-title>
+            Grocery List
+          </v-toolbar-title>
+        </v-toolbar>
+      </v-title>
+      <v-card-text class="text-xs-left">
+        <ul>
+          <v-container v-for="(ingredient, index) in ingredientsList" :key="index" tag="li" class="pa-0" fill-height>
+            <v-layout align-center>
+              <v-flex shrink>
+                <v-btn color="error" @click="removeIngredient(index)" icon><v-icon small>fa fa-times</v-icon></v-btn>
+              </v-flex>
+              <v-flex>
+                {{ingredient}}
+              </v-flex>
+            </v-layout>
+          </v-container>
+          <v-container v-if="isAddingItem" tag="li" class="pa-0" fill-height>
+            <v-layout align-center>
+              <v-flex>
+                <v-text-field v-model="newItem" autofocus/>
+              </v-flex>
+              <v-flex shrink>
+                <v-btn color="success" @click="addIngredient">Add</v-btn>
+              </v-flex>
+              <v-flex shrink>
+                <v-btn color="error" @click="toggleAddItem">Cancel</v-btn>
+              </v-flex>
+            </v-layout>
+          </v-container>
+          <li>
+            <v-btn color="success" @click.prevent="toggleAddItem"><v-icon small>fa fa-plus</v-icon>&nbsp;Add Item</v-btn>
+          </li>
+        </ul>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 
@@ -54,28 +51,34 @@ const scheduleModule = namespace('schedule');
 
 @Component
 export default class GroceryList extends Vue {
-    public ingredientsList: string[] = [];
-    public isAddingItem: boolean = false;
-    public newItem: string = '';
-    @scheduleModule.Getter private getAllUniqueRecipeIdsFromMealSlots!: number[];
-    @recipeModule.Getter private getIngredientsFromRecipeIds!: (recipeIds: number[]) => string[];
+  public ingredientsList: string[] = [];
+  public isAddingItem: boolean = false;
+  public newItem: string = '';
+  @scheduleModule.Getter private getAllUniqueRecipeIdsFromMealSlots!: number[];
+  @recipeModule.Getter private getIngredientsFromRecipeIds!: (recipeIds: number[]) => string[];
 
-    public mounted() {
-        this.ingredientsList = this.getIngredientsFromRecipeIds(this.getAllUniqueRecipeIdsFromMealSlots);
-    }
+  public mounted() {
+    this.ingredientsList = this.getIngredientsFromRecipeIds(this.getAllUniqueRecipeIdsFromMealSlots);
+  }
 
-    public removeIngredient(index: number) {
-        this.ingredientsList.splice(index, 1);
-    }
+  public removeIngredient(index: number) {
+    this.ingredientsList.splice(index, 1);
+  }
 
-    public addIngredient() {
-        this.ingredientsList.push(this.newItem);
-        this.newItem = '';
-        this.isAddingItem = false;
-    }
+  public addIngredient() {
+    this.ingredientsList.push(this.newItem);
+    this.newItem = '';
+    this.isAddingItem = false;
+  }
 
-    public toggleAddItem() {
-        this.isAddingItem = !this.isAddingItem;
-    }
+  public toggleAddItem() {
+    this.isAddingItem = !this.isAddingItem;
+  }
 }
 </script>
+
+<style scoped>
+  li {
+    list-style-type: none;
+  }
+</style>

@@ -1,6 +1,6 @@
 <template>
   <v-list dense class="pt-0">
-    <v-list-tile v-for="item in navItems" :key="item.title" @click="navigate(item.route)">
+    <v-list-tile v-for="item in navItems" :key="item.title" :to="item.route">
       <v-list-tile-action>
         <v-icon>{{ item.icon }}</v-icon>
       </v-list-tile-action>
@@ -21,9 +21,5 @@ export default class AppNav extends Vue {
     { title: 'Recipes', icon: 'fa-file-alt', route: '/recipes' },
     { title: 'Grocery List', icon: 'fa-list', route: '/grocerylist' }
   ];
-
-  public navigate(route: string) {
-    this.$router.push(route);
-  }
 }
 </script>

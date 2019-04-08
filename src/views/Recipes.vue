@@ -1,6 +1,6 @@
 <template>
   <div class="recipes-management">
-    <router-link to="/recipes/item" class="btn btn-primary">Create New</router-link>
+    <v-btn color="success" @click="handleNewClicked"><v-icon small left>fa fa-plus</v-icon>Create New</v-btn>
     <RecipeList v-on:recipe-list-click="handleRecipeSelected"/>
   </div>
 </template>
@@ -19,5 +19,15 @@ export default class Home extends Vue {
   public handleRecipeSelected(recipeId: number) {
     this.$router.push(`/recipes/item/${recipeId}`);
   }
+
+  public handleNewClicked() {
+    this.$router.push('/recipes/item');
+  }
 }
 </script>
+
+<style scoped>
+  .recipes-management {
+    text-align: left;
+  }
+</style>

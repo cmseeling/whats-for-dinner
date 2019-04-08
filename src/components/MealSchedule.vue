@@ -40,7 +40,7 @@
             </table>
         </div>
         <div class="align-right">
-            <router-link to="/grocerylist" class="btn btn-success">Generate Grocery List</router-link>
+            <v-btn to="/grocerylist" color="success">Generate Grocery List<v-icon small right>fa fa-arrow-right</v-icon></v-btn>
         </div>
     </div>
 </template>

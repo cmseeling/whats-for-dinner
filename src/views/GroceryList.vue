@@ -1,13 +1,13 @@
 <template>
   <div class="grocery-list">
     <v-card>
-      <v-title>
+      <v-card-title>
         <v-toolbar flat>
           <v-toolbar-title>
             Grocery List
           </v-toolbar-title>
         </v-toolbar>
-      </v-title>
+      </v-card-title>
       <v-card-text class="text-xs-left">
         <ul>
           <v-container v-for="(ingredient, index) in ingredientsList" :key="index" tag="li" class="pa-0" fill-height>

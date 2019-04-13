@@ -91,10 +91,6 @@ export default class RecipeForm extends Vue {
 
   public addItem() {
     this.isAddingIngredient = true;
-    this.$nextTick(() => {
-      const input: any = this.$refs.addItemInput;
-      input.focus();
-    });
   }
 
   public addIngredient() {

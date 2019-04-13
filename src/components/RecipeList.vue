@@ -44,7 +44,6 @@ export default class RecipeList extends Vue {
   @recipeModule.Getter public getFilteredList!: (filterText: string) => Recipe[];
 
   public get filteredList() {
-    console.log(this.searchText);
     return this.getFilteredList(this.searchText);
   }
 

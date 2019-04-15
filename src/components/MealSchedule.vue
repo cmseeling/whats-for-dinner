@@ -57,20 +57,20 @@ export default class RecipeList extends Vue {
     });
   }
 
-  public setActive(mealId: number) {
-    if (mealId === this.activeSlot) {
+  public setActive(slotId: number) {
+    if (slotId === this.activeSlot) {
       this.activeSlot = null;
       this.$emit('meal-slot-click', null);
     } else {
-      this.activeSlot = mealId;
-      this.$emit('meal-slot-click', mealId);
+      this.activeSlot = slotId;
+      this.$emit('meal-slot-click', slotId);
     }
   }
 }
 </script>
 
 <style>
-  .schedule-block {
+  /* .schedule-block {
     height: 120px;
   }
 
@@ -100,5 +100,5 @@ export default class RecipeList extends Vue {
 
   .selected {
     border: 2px solid green !important;
-  }
+  } */
 </style>

@@ -8,14 +8,14 @@
     </thead>
     <tbody>
       <tr v-for="(meal, mealIndex) in meals" :key="mealIndex">
-        <td style="width: 185px; vertical-align: top">
-          <v-btn style="width: 170px;" @click="toggleRow(meal)">
+        <td class="button-cell">
+          <v-btn class="meal-button" @click="toggleRow(meal)">
             {{meal}}
             <v-icon right small v-if="!panelState[meal]">fa fa-chevron-down</v-icon>
             <v-icon right small v-else>fa fa-chevron-up</v-icon>
           </v-btn>
         </td>
-        <td v-for="(day, dayIndex) in days" :key="dayIndex" style="vertical-align: top">
+        <td v-for="(day, dayIndex) in days" :key="dayIndex" class="slot-cell" width="13%">
           <DesktopSlot
             :expanded="panelState[meal]"
             :mealSlot="groupedSlots[dayIndex][mealIndex]"
@@ -62,8 +62,22 @@ export default class DesktopLayout extends Vue {
 </script>
 
 <style scoped>
+  .button-cell {
+    width: 185px;
+    vertical-align: top;
+  }
+
+  .meal-button {
+    width: 170px;
+  }
+
+  .slot-cell {
+    vertical-align: top;
+  }
+
   table {
     width: 100%;
+    height: 100%;
   }
 
   td {

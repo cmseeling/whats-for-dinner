@@ -68,37 +68,3 @@ export default class RecipeList extends Vue {
   }
 }
 </script>
-
-<style>
-  /* .schedule-block {
-    height: 120px;
-  }
-
-  .schedule-day {
-    height: 25px;
-  }
-
-  .slot-panel {
-    width: 100%;
-    padding-left: 10px;
-    text-align: left;
-  }
-
-  .align-right {
-    text-align: right;
-    margin-right: 10px;
-  }
-
-  .meal-slot {
-    width: 100%;
-    height: 100%;
-  }
-
-  .schedule-block :hover{
-    background-color: lightblue;
-  }
-
-  .selected {
-    border: 2px solid green !important;
-  } */
-</style>

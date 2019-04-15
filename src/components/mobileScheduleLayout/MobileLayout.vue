@@ -2,33 +2,37 @@
   <v-layout column v-touch="{left: goToPrevDay, right: goToNextDay}">
     <v-flex>
       <v-toolbar>
-        <v-btn color="primary" @click="goToPrevDay">
-          <v-icon small>fa fa-arrow-left</v-icon>
-        </v-btn>
         <v-toolbar-title>
           {{days[activeDayIndex]}}
         </v-toolbar-title>
+      </v-toolbar>
+      <v-toolbar>
+        <v-btn color="primary" @click="goToPrevDay">
+          <v-icon small>fa fa-arrow-left</v-icon>
+        </v-btn>
         <v-spacer />
         <v-btn color="primary" @click="goToNextDay">
           <v-icon small>fa fa-arrow-right</v-icon>
         </v-btn>
       </v-toolbar>
     </v-flex>
-    <v-flex class="mobile-meal-slot">
-      <MobileSlot
-        :mealSlot="groupedSlots[activeDayIndex][0]"
-        :setActive="setActive"/>
-    </v-flex>
-    <v-flex>
-      <MobileSlot
-        :mealSlot="groupedSlots[activeDayIndex][1]"
-        :setActive="setActive"/>
-    </v-flex>
-    <v-flex>
-      <MobileSlot
-        :mealSlot="groupedSlots[activeDayIndex][2]"
-        :setActive="setActive"/>
-    </v-flex>
+    <div class="mobile-meal-slot">
+      <v-flex>
+        <MobileSlot
+          :mealSlot="groupedSlots[activeDayIndex][0]"
+          :setActive="setActive"/>
+      </v-flex>
+      <v-flex>
+        <MobileSlot
+          :mealSlot="groupedSlots[activeDayIndex][1]"
+          :setActive="setActive"/>
+      </v-flex>
+      <v-flex>
+        <MobileSlot
+          :mealSlot="groupedSlots[activeDayIndex][2]"
+          :setActive="setActive"/>
+      </v-flex>
+    </div>
   </v-layout>
 </template>
 

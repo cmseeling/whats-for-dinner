@@ -1,14 +1,14 @@
 <template>
-  <div class="elevation-1" style="min-height: 50px;" @click="slotClicked">
-    <v-expand-transition v-if="!expanded">
-      <div v-show="!expanded" style="height: 100%">
+  <div class="elevation-1 slot-container" @click="slotClicked">
+    <v-slide-y-transition>
+      <div v-show="!expanded" class="collapsed-display">
         {{mealSlot.recipeIds.length}}
       </div>
-    </v-expand-transition>
-    <v-expand-transition v-else>
-      <div :class="mealSlot.selected ? 'meal-slot selected' : 'meal-slot'" style="height: 100%">
-        <div v-show="expanded" style="height: 100%">
-          <div style="height: 50px;" v-if="mealSlot.recipeIds.length === 0">None Selected</div>
+    </v-slide-y-transition>
+    <v-slide-y-transition mode="out-in">
+      <div v-show="expanded" :class="mealSlot.selected ? 'meal-slot selected' : 'meal-slot'" style="height: 100%">
+        <div v-show="expanded" class="expanded-display">
+          <div class="empty-slot" v-if="mealSlot.recipeIds.length === 0">None Selected</div>
           <ul class="pa-0" v-else>
             <v-container v-for="recipeId in mealSlot.recipeIds" :key="recipeId" tag="li" class="pa-0 mb-2" style="border-bottom: 1px solid" fill-height>
               <v-layout align-center>
@@ -23,12 +23,12 @@
           </ul>
         </div>
       </div>
-    </v-expand-transition>
+    </v-slide-y-transition>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { namespace } from 'vuex-class';
 import { IMealSlot } from '../../state/interfaces/ScheduleState';
 import { Recipe } from '../../models/recipe';
@@ -40,11 +40,18 @@ const scheduleModule = namespace('schedule');
 export default class DekstopSlot extends Vue {
   @Prop() public mealSlot!: IMealSlot;
   @Prop() public expanded!: boolean;
-  @Prop() public setActive!: (slotId: number) => void;
+  @Prop() public setActive!: (slotId: number|null) => void;
 
   @recipeModule.Getter public getRecipeById!: (id: string) => Recipe;
   @scheduleModule.Mutation public removeRecipeFromMealSlot!:
     ({slotId, recipeId}: {slotId: number, recipeId: number}) => void;
+
+  @Watch('expanded')
+  public onExpandedChanged(newValue: boolean, oldValue: boolean) {
+    if (oldValue) {
+      this.setActive(null);
+    }
+  }
 
   public getRecipeName(recipeId: string) {
     return this.getRecipeById(recipeId).name;
@@ -55,7 +62,7 @@ export default class DekstopSlot extends Vue {
   }
 
   public slotClicked() {
-    if(this.expanded) {
+    if (this.expanded) {
       this.setActive(this.mealSlot.id);
     }
   }
@@ -63,6 +70,24 @@ export default class DekstopSlot extends Vue {
 </script>
 
 <style scoped>
+  .slot-container {
+    min-height: 50px;
+    height: 100%;
+  }
+
+  .collapsed-display {
+    height: 100%;
+  }
+
+  .expanded-display {
+    height: 100%;
+  }
+
+  .empty-slot {
+    min-height: 50px;
+    height: 100%;
+  }
+
   .meal-slot {
     height: 100%;
   }

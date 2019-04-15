@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mobile-meal-slot" @click="setActive(mealSlot.id)">
+  <v-card :class="mealSlot.selected ? 'selected' : ''" @click="setActive(mealSlot.id)">
     <v-card-title>
       {{meals[mealSlot.mealIndex]}}
     </v-card-title>
@@ -53,5 +53,9 @@ export default class MobileSlot extends Vue {
   li {
     list-style-type: none;
     text-align: left;
+  }
+
+  .selected {
+    background-color: lightblue !important;
   }
 </style>

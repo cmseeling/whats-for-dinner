@@ -3,59 +3,43 @@ import { API_URL } from '@/config';
 
 const url = `${API_URL}/recipes`;
 
-const create = async (recipe: Recipe) => {
-    try {
-        const response = await fetch(url, {
-            body: JSON.stringify(recipe),
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        return response.json();
-    } catch (error) {
-        console.log(error);
+const create = async (recipe: Recipe): Promise<Recipe> => {
+  const response = await fetch(url, {
+    body: JSON.stringify(recipe),
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
     }
+  });
+  return await response.json();
 };
 
-const readAll = async () => {
-    try {
-        const response = await fetch(url);
-        return response.json();
-    } catch (error) {
-        console.log(error);
-    }
+const readAll = async (): Promise<Recipe[]> => {
+  const response = await fetch(url);
+  return await response.json();
 };
 
-const update = async (id: number, recipe: Recipe) => {
-    try {
-        const response = await fetch(`${url}/${id}`, {
-            body: JSON.stringify(recipe),
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        return response.json();
-    } catch (error) {
-        console.log(error);
+const update = async (id: number, recipe: Recipe): Promise<Recipe> => {
+  const response = await fetch(`${url}/${id}`, {
+    body: JSON.stringify(recipe),
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json'
     }
+  });
+
+  return await response.json();
 };
 
-const deleteItem = async (id: number) => {
-    try {
-        const response = await fetch(`${url}/${id}`, {
-            method: 'DELETE'
-        });
-        return response.json();
-    } catch (error) {
-        console.log(error);
-    }
+const deleteItem = async (id: number): Promise<void> => {
+  await fetch(`${url}/${id}`, {
+    method: 'DELETE'
+  });
 };
 
 export default {
-    create,
-    readAll,
-    update,
-    deleteItem
+  create,
+  readAll,
+  update,
+  deleteItem
 };

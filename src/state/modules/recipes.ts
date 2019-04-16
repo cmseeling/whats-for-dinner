@@ -9,6 +9,7 @@ import forEach from 'lodash/forEach';
 import uniq from 'lodash/uniq';
 import reduce from 'lodash/reduce';
 import Recipes from '@/api/Recipes';
+import { Dictionary } from '@/utils/Dictionary';
 
 const getters = {
   getFilteredList: (state: RecipesState) => (filterString: string): Recipe[] => {
@@ -65,7 +66,11 @@ const mutations = {
     }
   },
 
-  setRecipes: (state: RecipesState, recipes: Recipe[]): void => {
+  resetRecipes: (state: RecipesState): void => {
+    state.recipes = new Dictionary<Recipe>();
+  },
+
+  addRecipes: (state: RecipesState, recipes: Recipe[]): void => {
     forEach(recipes, (item) => {
       if (item.id) {
         state.recipes.Upsert(item.id.toString(), item);
@@ -85,7 +90,8 @@ const mutations = {
 const actions = {
   init: async ({commit}: {commit: Commit}): Promise<void> => {
     const recipes = await Recipes.readAll();
-    commit('setRecipes', recipes);
+    commit('resetRecipes');
+    commit('addRecipes', recipes);
     commit('setInitialized');
   },
 

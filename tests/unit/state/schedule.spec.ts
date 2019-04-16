@@ -16,20 +16,20 @@ describe('schedule.ts', () => {
   });
 
   it('adds a recipe id to a slot', () => {
-    const expectedState = {... state};
+    const expectedState = {...state};
     expectedState.mealSlots[2].recipeIds.push(3);
 
     schedule.mutations.addRecipeToMealSlot(state, {slotId: 2, recipeId: 3});
 
-    expect(state).toStrictEqual(expectedState);
+    expect(state).toEqual(expectedState);
   });
 
   it('removes a recipe id from a slot', () => {
-    const expectedState = {... state};
+    const expectedState = {...state};
     expectedState.mealSlots[5].recipeIds = [];
 
     schedule.mutations.removeRecipeFromMealSlot(state, {slotId: 5, recipeId: 2});
 
-    expect(state).toStrictEqual(expectedState);
+    expect(state).toEqual(expectedState);
   });
 });

@@ -9,13 +9,13 @@
       <div v-show="expanded" :class="mealSlot.selected ? 'meal-slot selected' : 'meal-slot'" style="height: 100%">
         <div v-show="expanded" class="expanded-display">
           <div class="empty-slot" v-if="mealSlot.recipeIds.length === 0">None Selected</div>
-          <ul class="pa-0" v-else>
+          <ul class="pa-0 recipe-list" v-else>
             <v-container v-for="recipeId in mealSlot.recipeIds" :key="recipeId" tag="li" class="pa-0 mb-2" style="border-bottom: 1px solid" fill-height>
               <v-layout align-center>
                 <v-flex shrink>
                   <v-btn color="error" @click="removeFromMealSlot(recipeId)" small icon><v-icon size="10px">fa fa-times</v-icon></v-btn>
                 </v-flex>
-                <v-flex>
+                <v-flex class="recipe-list-name">
                   {{getRecipeName(recipeId)}}
                 </v-flex>
               </v-layout>

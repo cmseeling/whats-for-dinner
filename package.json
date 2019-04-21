@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "test:unit": "vue-cli-service test:unit"
+    "test:unit": "vue-cli-service test:unit",
+    "test:unit-single": "vue-cli-service test:unit tests/unit/components/DesktopSlot.spec.ts"
   },
   "dependencies": {
     "lodash": "^4.17.11",

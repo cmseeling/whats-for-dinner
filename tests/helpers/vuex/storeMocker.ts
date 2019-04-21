@@ -6,6 +6,10 @@ export interface ModuleMock {
   actions: any;
 }
 
+export interface StoreMock {
+  modules: {[index: string]: ModuleMock};
+}
+
 export function getMockModule(name: string, getters: any, mutations: any, actions: any): ModuleMock {
   return {
     name,
@@ -16,7 +20,7 @@ export function getMockModule(name: string, getters: any, mutations: any, action
   };
 }
 
-export function getMockStore(modules: ModuleMock[]) {
+export function getMockStore(modules: ModuleMock[]): StoreMock {
   const storeModules: {[index: string]: ModuleMock} = {};
   modules.forEach((m) => {
     storeModules[m.name] = m;

@@ -33,29 +33,29 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { namespace } from 'vuex-class';
+import Vue from 'vue';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
 import { Recipe } from '@/models/recipe';
 
-const recipeModule = namespace('recipes');
-
-@Component
-export default class RecipeItem extends Vue {
-  @Prop() public recipe!: Recipe;
-
-  public get layoutBinding() {
-    const binding = {
-      column: true
-    };
-    if (this.$vuetify.breakpoint.mdAndUp) {
-      binding.column = false;
+export default Vue.extend({
+  name: 'RecipeItem',
+  props: {
+    recipe: Recipe
+  },
+  computed: {
+    layoutBinding() {
+      const binding = {
+        column: true
+      };
+      if (this.$vuetify.breakpoint.mdAndUp) {
+        binding.column = false;
+      }
+      return binding;
     }
-    return binding;
   }
-}
+});
 </script>
 
 <style scoped>

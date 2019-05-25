@@ -24,31 +24,39 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { namespace } from 'vuex-class';
+import Vue from 'vue';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
 import RecipeItem from '@/components/RecipeItem.vue';
 import { Recipe } from '@/models/recipe';
 
-const recipeModule = namespace('recipes');
+interface Data {
+  searchText: string;
+}
 
-@Component({
+export default Vue.extend({
+  name: 'RecipeList',
   components: {
     RecipeItem
+  },
+  data(): Data {
+    return {
+      searchText: ''
+    };
+  },
+  computed: {
+    getFilteredList(): (filterText: string) => Recipe[] {
+      return (filterText: string) => this.$store.getters['recipes/getFilteredList'](filterText);
+    },
+    filteredList(): Recipe[] {
+      return this.getFilteredList(this.searchText);
+    }
+  },
+  methods: {
+    handleRecipeSelected(recipeId: number) {
+      this.$emit('recipe-list-click', recipeId);
+    }
   }
-})
-export default class RecipeList extends Vue {
-  public searchText: string = '';
-  @recipeModule.Getter public getFilteredList!: (filterText: string) => Recipe[];
-
-  public get filteredList() {
-    return this.getFilteredList(this.searchText);
-  }
-
-  public handleRecipeSelected(recipeId: number) {
-    this.$emit('recipe-list-click', recipeId);
-  }
-}
+});
 </script>

@@ -6,24 +6,24 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import Vue from 'vue';
 import RecipeList from '@/components/RecipeList.vue'; // @ is an alias to /src
 // import { mapMutations } from 'vuex';
 
-@Component({
+export default Vue.extend({
+  name: 'RecipeListPage',
   components: {
     RecipeList
+  },
+  methods: {
+    handleRecipeSelected(recipeId: number) {
+      this.$router.push(`/recipes/item/${recipeId}`);
+    },
+    handleNewClicked() {
+      this.$router.push('/recipes/item');
+    }
   }
-})
-export default class Home extends Vue {
-  public handleRecipeSelected(recipeId: number) {
-    this.$router.push(`/recipes/item/${recipeId}`);
-  }
-
-  public handleNewClicked() {
-    this.$router.push('/recipes/item');
-  }
-}
+});
 </script>
 
 <style scoped>

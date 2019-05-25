@@ -28,45 +28,46 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { namespace } from 'vuex-class';
+import Vue from 'vue';
 import { IMealSlot } from '../../state/interfaces/ScheduleState';
 import { Recipe } from '../../models/recipe';
 
-const recipeModule = namespace('recipes');
-const scheduleModule = namespace('schedule');
-
-@Component
-export default class DekstopSlot extends Vue {
-  @Prop() public mealSlot!: IMealSlot;
-  @Prop() public expanded!: boolean;
-  @Prop() public setActive!: (slotId: number|null) => void;
-
-  @recipeModule.Getter public getRecipeById!: (id: string) => Recipe;
-  @scheduleModule.Mutation public removeRecipeFromMealSlot!:
-    ({slotId, recipeId}: {slotId: number, recipeId: number}) => void;
-
-  @Watch('expanded')
-  public onExpandedChanged(newValue: boolean, oldValue: boolean) {
-    if (oldValue) {
-      this.setActive(null);
+export default Vue.extend({
+  name: 'DekstopSlot',
+  computed: {
+    getRecipeById(): (id: number) => Recipe {
+      return (id: number) => this.$store.getters['recipes/getRecipeById'](id);
+    }
+  },
+  props: {
+    mealSlot: Object,
+    expanded: Boolean,
+    setActive: Function
+  },
+  watch: {
+    expanded(newValue: boolean, oldValue: boolean) {
+      if (oldValue) {
+        this.setActive(null);
+      }
+    }
+  },
+  methods: {
+    removeRecipeFromMealSlot({slotId, recipeId}: {slotId: number, recipeId: number}) {
+      this.$store.commit('schedule/removeRecipeFromMealSlot', {slotId, recipeId});
+    },
+    getRecipeName(recipeId: number) {
+      return this.getRecipeById(recipeId).name;
+    },
+    removeFromMealSlot(recipeId: number) {
+      this.removeRecipeFromMealSlot({slotId: this.mealSlot.id, recipeId});
+    },
+    slotClicked() {
+      if (this.expanded) {
+        this.setActive(this.mealSlot.id);
+      }
     }
   }
-
-  public getRecipeName(recipeId: string) {
-    return this.getRecipeById(recipeId).name;
-  }
-
-  public removeFromMealSlot(recipeId: number) {
-    this.removeRecipeFromMealSlot({slotId: this.mealSlot.id, recipeId});
-  }
-
-  public slotClicked() {
-    if (this.expanded) {
-      this.setActive(this.mealSlot.id);
-    }
-  }
-}
+});
 </script>
 
 <style scoped>

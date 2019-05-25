@@ -61,72 +61,86 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { namespace } from 'vuex-class';
+import Vue from 'vue';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
 import { Recipe } from '@/models/recipe';
 import { Route } from 'vue-router';
 
-const recipeModule = namespace('recipes');
-
-@Component
-export default class RecipeForm extends Vue {
-  public recipe: Recipe = new Recipe();
-  public isNewRecipe: boolean = true;
-  public isAddingIngredient: boolean = false;
-  public newIngredient: string = '';
-  @recipeModule.Getter private getRecipeById!: (id: number) => Recipe;
-  @recipeModule.Action private saveRecipe!: (recipe: Recipe) => Promise<void>;
-  @recipeModule.Action private deleteRecipe!: (id: number) => Promise<void>;
-
-  @Watch('$route', { deep: true, immediate: true })
-  public onRouteChanged(newRoute: Route, oldRoute: Route) {
-    if (newRoute.params.id) {
-      this.recipe = this.getRecipeById(Number(newRoute.params.id));
-      this.isNewRecipe = false;
-    }
-  }
-
-  public addItem() {
-    this.isAddingIngredient = true;
-  }
-
-  public addIngredient() {
-    this.recipe.ingredients.push(this.newIngredient);
-    this.clearNewIngredient();
-  }
-
-  public cancelAddIngredient() {
-    this.clearNewIngredient();
-  }
-
-  public saveRecipeForm() {
-    this.saveRecipe(this.recipe);
-    this.$router.push('/recipes');
-  }
-
-  public removeRecipe() {
-    if (this.recipe.id) {
-      this.deleteRecipe(this.recipe.id);
-    }
-    this.$router.push('/recipes');
-  }
-
-  public goBack() {
-    this.$router.push('/recipes');
-  }
-
-  public removeIngredient(index: number) {
-    this.recipe.ingredients.splice(index, 1);
-  }
-
-  private clearNewIngredient() {
-    this.newIngredient = '';
-    this.isAddingIngredient = false;
-  }
+interface Data {
+  recipe: Recipe;
+  isNewRecipe: boolean;
+  isAddingIngredient: boolean;
+  newIngredient: string;
 }
+
+export default Vue.extend({
+  name: 'RecipeForm',
+  data(): Data {
+    return {
+      recipe: new Recipe(),
+      isNewRecipe: true,
+      isAddingIngredient: false,
+      newIngredient: ''
+    };
+  },
+  computed: {
+    getRecipeById(): (id: number) => Recipe {
+      return (id: number) => this.$store.getters['recipes/getRecipeById'](id);
+    }
+  },
+  watch: {
+    $route: {
+      immediate: true,
+      deep: true,
+      handler(newRoute: Route, oldRoute: Route) {
+        if (newRoute.params.id) {
+          this.recipe = this.getRecipeById(Number(newRoute.params.id));
+          this.isNewRecipe = false;
+        }
+      }
+    }
+  },
+  methods: {
+    saveRecipe(recipe: Recipe) {
+      this.$store.dispatch('recipes/saveRecipe', recipe);
+    },
+    deleteRecipe(id: number) {
+      this.$store.dispatch('recipes/deleteRecipe', id);
+    },
+    addItem() {
+      this.isAddingIngredient = true;
+    },
+    addIngredient() {
+      this.recipe.ingredients.push(this.newIngredient);
+      this.clearNewIngredient();
+    },
+    cancelAddIngredient() {
+      this.clearNewIngredient();
+    },
+    saveRecipeForm() {
+      this.saveRecipe(this.recipe);
+      this.$router.push('/recipes');
+    },
+    removeRecipe() {
+      if (this.recipe.id) {
+        this.deleteRecipe(this.recipe.id);
+      }
+      this.$router.push('/recipes');
+    },
+    goBack() {
+      this.$router.push('/recipes');
+    },
+    removeIngredient(index: number) {
+      this.recipe.ingredients.splice(index, 1);
+    },
+    clearNewIngredient() {
+      this.newIngredient = '';
+      this.isAddingIngredient = false;
+    }
+  }
+});
 </script>
 
 <style scoped>

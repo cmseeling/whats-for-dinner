@@ -28,43 +28,55 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { namespace } from 'vuex-class';
+import Vue from 'vue';
 import map from 'lodash/map';
 import DesktopLayout from '@/components/desktopScheduleLayout/DesktopLayout.vue';
 import MobileLayout from '@/components/mobileScheduleLayout/MobileLayout.vue';
 import { IMealSlot } from '@/state/interfaces/ScheduleState';
 import { Recipe } from '@/models/recipe';
 
-const scheduleModule = namespace('schedule');
+interface Data {
+  activeSlot: number|null;
+}
 
-@Component({
+interface AugmentedSlot extends IMealSlot {
+  selected: boolean;
+}
+
+export default Vue.extend({
+  name: 'RecipeList',
   components: {
     DesktopLayout,
     MobileLayout
-  }
-})
-export default class RecipeList extends Vue {
-  public activeSlot: number|null = null;
-  @scheduleModule.State public mealSlots!: IMealSlot[];
-
-  public get augmentedSlots() {
-    return map(this.mealSlots, (slot: IMealSlot) => {
-      return {
-        ...slot,
-        selected: slot.id === this.activeSlot
-      };
-    });
-  }
-
-  public setActive(slotId: number) {
-    if (slotId === this.activeSlot) {
-      this.activeSlot = null;
-      this.$emit('meal-slot-click', null);
-    } else {
-      this.activeSlot = slotId;
-      this.$emit('meal-slot-click', slotId);
+  },
+  data(): Data {
+    return {
+      activeSlot: null
+    };
+  },
+  computed: {
+    mealSlots(): IMealSlot[] {
+      return this.$store.state.schedule.mealSlots;
+    },
+    augmentedSlots(): AugmentedSlot[] {
+      return map(this.mealSlots, (slot: IMealSlot) => {
+        return {
+          ...slot,
+          selected: slot.id === this.activeSlot
+        };
+      });
+    }
+  },
+  methods: {
+    setActive(slotId: number) {
+      if (slotId === this.activeSlot) {
+        this.activeSlot = null;
+        this.$emit('meal-slot-click', null);
+      } else {
+        this.activeSlot = slotId;
+        this.$emit('meal-slot-click', slotId);
+      }
     }
   }
-}
+});
 </script>

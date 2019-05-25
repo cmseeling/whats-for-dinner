@@ -17,34 +17,39 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { namespace } from 'vuex-class';
+import Vue from 'vue';
 import RecipeList from '@/components/RecipeList.vue'; // @ is an alias to /src
 import RandomRecipe from '@/components/RandomRecipe.vue';
 import MealSchedule from '@/components/MealSchedule.vue';
 
-const scheduleModule = namespace('schedule');
+interface Data {
+  selectedMealSlotId: number|null;
+}
 
-@Component({
+export default Vue.extend({
+  name: 'Home',
   components: {
     MealSchedule,
     RecipeList,
     RandomRecipe
-  }
-})
-export default class Home extends Vue {
-  public selectedMealSlotId: number|null = null;
-  @scheduleModule.Mutation private addRecipeToMealSlot!:
-    ({slotId, recipeId}: {slotId: number, recipeId: number}) => void;
-
-  public handleRecipeSelected(recipeId: number) {
-    if (this.selectedMealSlotId !== null) {
-      this.addRecipeToMealSlot({slotId: this.selectedMealSlotId, recipeId});
+  },
+  data(): Data {
+    return {
+      selectedMealSlotId: null
+    };
+  },
+  methods: {
+    addRecipeToMealSlot({slotId, recipeId}: {slotId: number, recipeId: number}) {
+      this.$store.commit('schedule/addRecipeToMealSlot', {slotId, recipeId});
+    },
+    handleRecipeSelected(recipeId: number) {
+      if (this.selectedMealSlotId !== null) {
+        this.addRecipeToMealSlot({slotId: this.selectedMealSlotId, recipeId});
+      }
+    },
+    handleMealSlotSelected(id: number|null) {
+      this.selectedMealSlotId = id;
     }
   }
-
-  public handleMealSlotSelected(id: number|null) {
-    this.selectedMealSlotId = id;
-  }
-}
+});
 </script>

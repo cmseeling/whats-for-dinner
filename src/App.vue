@@ -5,25 +5,33 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import Vue from 'vue';
 import Layout from '@/components/Layout.vue';
 
-@Component({
-  components: {
-    Layout,
-  }
-})
-export default class Home extends Vue {
-  public showMenu: boolean|null = null;
+interface Data {
+  showMenu: boolean|null;
+}
 
-  public handleMenuClicked() {
-    if (this.showMenu) {
-      this.showMenu = false;
-    } else {
-      this.showMenu = true;
+export default Vue.extend({
+  name: 'Home',
+  components: {
+    Layout
+  },
+  data(): Data {
+    return {
+      showMenu: null
+    };
+  },
+  methods: {
+    handleMenuClicked() {
+      if (this.showMenu) {
+        this.showMenu = false;
+      } else {
+        this.showMenu = true;
+      }
     }
   }
-}
+});
 </script>
 
 <style>

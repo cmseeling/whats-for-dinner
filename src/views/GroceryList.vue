@@ -43,38 +43,48 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import { namespace } from 'vuex-class';
+import Vue from 'vue';
 
-const recipeModule = namespace('recipes');
-const scheduleModule = namespace('schedule');
-
-@Component
-export default class GroceryList extends Vue {
-  public ingredientsList: string[] = [];
-  public isAddingItem: boolean = false;
-  public newItem: string = '';
-  @scheduleModule.Getter private getAllUniqueRecipeIdsFromMealSlots!: number[];
-  @recipeModule.Getter private getIngredientsFromRecipeIds!: (recipeIds: number[]) => string[];
-
-  public mounted() {
-    this.ingredientsList = this.getIngredientsFromRecipeIds(this.getAllUniqueRecipeIdsFromMealSlots);
-  }
-
-  public removeIngredient(index: number) {
-    this.ingredientsList.splice(index, 1);
-  }
-
-  public addIngredient() {
-    this.ingredientsList.push(this.newItem);
-    this.newItem = '';
-    this.isAddingItem = false;
-  }
-
-  public toggleAddItem() {
-    this.isAddingItem = !this.isAddingItem;
-  }
+interface Data {
+  ingredientsList: string[];
+  isAddingItem: boolean;
+  newItem: string;
 }
+
+export default Vue.extend({
+  name: 'GroceryList',
+  data(): Data {
+    return {
+      ingredientsList: [],
+      isAddingItem: false,
+      newItem: ''
+    };
+  },
+  computed: {
+    getAllUniqueRecipeIdsFromMealSlots(): number[] {
+      return this.$store.getters['schedule/getAllUniqueRecipeIdsFromMealSlots'];
+    },
+    getIngredientsFromRecipeIds(): (recipeIds: number[]) => string[] {
+      return (recipeIds: number[]) => this.$store.getters['recipes/getIngredientsFromRecipeIds'](recipeIds);
+    }
+  },
+  mounted() {
+    this.ingredientsList = this.getIngredientsFromRecipeIds(this.getAllUniqueRecipeIdsFromMealSlots);
+  },
+  methods: {
+    removeIngredient(index: number) {
+      this.ingredientsList.splice(index, 1);
+    },
+    addIngredient() {
+      this.ingredientsList.push(this.newItem);
+      this.newItem = '';
+      this.isAddingItem = false;
+    },
+    toggleAddItem() {
+      this.isAddingItem = !this.isAddingItem;
+    }
+  }
+});
 </script>
 
 <style scoped>

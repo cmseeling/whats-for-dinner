@@ -37,36 +37,47 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import Vue from 'vue';
 import groupBy from 'lodash/groupBy';
+import { Dictionary } from 'lodash';
 import { IMealSlot, dayList } from '@/state/interfaces/ScheduleState';
 import MobileSlot from '@/components/mobileScheduleLayout/MobileSlot.vue';
 
-@Component({
+interface Data {
+  days: string[];
+  activeDayIndex: number;
+}
+
+export default Vue.extend({
+  name: 'MobileLayout',
   components: {
     MobileSlot
+  },
+  data(): Data {
+    return {
+      days: dayList,
+      activeDayIndex: 0
+    };
+  },
+  computed: {
+    groupedSlots(): Dictionary<IMealSlot[]> {
+      return groupBy(this.slots as IMealSlot[], 'dayIndex');
+    }
+  },
+  props: {
+    slots: Array,
+    activeSlot: Number,
+    setActive: Function
+  },
+  methods: {
+    goToNextDay() {
+      this.activeDayIndex = (this.activeDayIndex + 1) % 7;
+    },
+    goToPrevDay() {
+      this.activeDayIndex = ((this.activeDayIndex - 1) + 7) % 7;
+    }
   }
-})
-export default class MobileLayout extends Vue {
-  @Prop() public slots!: IMealSlot[];
-  @Prop() public activeSlot!: number;
-  @Prop() public setActive!: (slotId: number) => void;
-  public days = dayList;
-
-  public activeDayIndex: number = 0;
-
-  public get groupedSlots() {
-    return groupBy(this.slots, 'dayIndex');
-  }
-
-  public goToNextDay() {
-    this.activeDayIndex = (this.activeDayIndex + 1) % 7;
-  }
-
-  public goToPrevDay() {
-    this.activeDayIndex = ((this.activeDayIndex - 1) + 7) % 7;
-  }
-}
+});
 </script>
 
 <style scoped>

@@ -16,15 +16,22 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import Vue from 'vue';
 import AppNavList from '@/components/AppNavList.vue';
 
-@Component({
-  components: {
-    AppNavList,
-  }
-})
-export default class Layout extends Vue {
-  public visible: boolean|null = null;
+interface Data {
+  visible: boolean|null;
 }
+
+export default Vue.extend({
+  name: 'Layout',
+  components: {
+    AppNavList
+  },
+  data(): Data {
+    return {
+      visible: null
+    };
+  }
+});
 </script>

@@ -5,15 +5,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import Vue from 'vue';
 import RecipeForm from '@/components/RecipeForm.vue'; // @ is an alias to /src
 // import { mapMutations } from 'vuex';
 
-@Component({
+export default Vue.extend({
+  name: 'RecipeEditor',
   components: {
     RecipeForm
   }
-})
-export default class Home extends Vue {
-}
+});
 </script>

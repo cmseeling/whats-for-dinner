@@ -12,12 +12,9 @@
   "dependencies": {
     "lodash": "^4.17.11",
     "vue": "^2.6.6",
-    "vue-class-component": "^6.0.0",
-    "vue-property-decorator": "^7.0.0",
     "vue-router": "^3.0.1",
     "vuetify": "^1.5.9",
-    "vuex": "^3.0.1",
-    "vuex-class": "^0.3.2"
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^5.8.1",
@@ -25,7 +22,7 @@
     "@types/lodash": "^4.14.123",
     "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-typescript": "^3.5.0",
-    "@vue/cli-plugin-unit-jest": "^3.5.3",
+    "@vue/cli-plugin-unit-jest": "^3.7.0",
     "@vue/cli-service": "^3.5.3",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",

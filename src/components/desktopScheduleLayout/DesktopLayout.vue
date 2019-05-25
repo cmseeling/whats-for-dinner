@@ -27,38 +27,51 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import Vue from 'vue';
 import groupBy from 'lodash/groupBy';
+import { Dictionary } from 'lodash';
 import DesktopSlot from './DesktopSlot.vue';
 import DesktopDetails from './DesktopDetails.vue';
 import { IMealSlot, dayList, mealList } from '@/state/interfaces/ScheduleState';
 
-@Component({
+interface Data {
+  days: string[];
+  meals: string[];
+  panelState: {[index: string]: boolean};
+}
+
+export default Vue.extend({
+  name: 'DesktopLayout',
   components: {
     DesktopSlot
+  },
+  data(): Data {
+    return {
+      days: dayList,
+      meals: mealList,
+      panelState: {
+        Breakfast: false,
+        Lunch: false,
+        Dinner: true
+      }
+    };
+  },
+  computed: {
+    groupedSlots(): Dictionary<IMealSlot[]> {
+      return groupBy(this.slots as IMealSlot[], 'dayIndex');
+    }
+  },
+  props: {
+    slots: Array,
+    activeSlot: Number,
+    setActive: Function
+  },
+  methods: {
+    toggleRow(meal: string) {
+      this.panelState[meal] = !this.panelState[meal];
+    }
   }
-})
-export default class DesktopLayout extends Vue {
-  @Prop() public slots!: IMealSlot[];
-  @Prop() public activeSlot!: number;
-  @Prop() public setActive!: (slotId: number) => void;
-  public days = dayList;
-  public meals = mealList;
-
-  public panelState: {[index: string]: boolean} = {
-    Breakfast: false,
-    Lunch: false,
-    Dinner: true
-  };
-
-  public get groupedSlots() {
-    return groupBy(this.slots, 'dayIndex');
-  }
-
-  public toggleRow(meal: string) {
-    this.panelState[meal] = !this.panelState[meal];
-  }
-}
+});
 </script>
 
 <style scoped>

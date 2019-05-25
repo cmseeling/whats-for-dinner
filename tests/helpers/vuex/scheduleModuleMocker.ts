@@ -3,7 +3,7 @@ function getMockGetters(recipeIds: number[]) {
     getAllUniqueRecipeIdsFromMealSlots: jest.fn().mockImplementation(() => () => {
       return recipeIds;
     })
-  }
+  };
 }
 
 function getMockMutations() {
@@ -22,5 +22,5 @@ const ScheduleMocks = {
   getMockGetters,
   getMockMutations,
   getMockActions,
-}
+};
 export default ScheduleMocks;

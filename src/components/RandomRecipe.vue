@@ -26,44 +26,58 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import { namespace } from 'vuex-class';
+import Vue from 'vue';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
 import RecipeItem from '@/components/RecipeItem.vue';
 import { Recipe } from '@/models/recipe';
 
-const recipeModule = namespace('recipes');
+interface Data {
+  recipe: Recipe|null;
+}
 
-@Component
-({
+export default Vue.extend({
+  name: 'RandomRecipe',
   components: {
     RecipeItem
-  }
-})
-export default class RandomRecipe extends Vue {
-  public recipe: Recipe|null = null;
-  @recipeModule.Getter private recipeCount!: number;
-  @recipeModule.Getter private getRecipeByIndex!: (id: number) => Recipe;
-  @recipeModule.Getter private isInitialized!: boolean;
-
-  @Watch('isInitialized', { immediate: true })
-  public onInitializedChanged(newVal: boolean, oldVal: boolean) {
-    if (newVal) {
-      this.nextRecipe();
+  },
+  data(): Data {
+    return {
+      recipe: null
+    };
+  },
+  computed: {
+    recipeCount(): number {
+      return this.$store.getters['recipes/recipeCount'];
+    },
+    getRecipeByIndex(): (id: number) => Recipe {
+      return (id: number) => this.$store.getters['recipes/getRecipeByIndex'](id);
+    },
+    isInitialized(): boolean {
+      return this.$store.getters['recipes/isInitialized'];
+    }
+  },
+  watch: {
+    isInitialized: {
+      immediate: true,
+      handler(newVal: boolean, oldVal: boolean) {
+        if (newVal) {
+          this.nextRecipe();
+        }
+      }
+    }
+  },
+  methods: {
+    handleRecipeSelected(recipeId: number) {
+      this.$emit('recipe-add-click', recipeId);
+    },
+    nextRecipe() {
+      const nextIndex = Math.floor(Math.random() * this.recipeCount);
+      this.recipe = this.getRecipeByIndex(nextIndex);
     }
   }
-
-  public handleRecipeSelected(recipeId: number) {
-    this.$emit('recipe-add-click', recipeId);
-  }
-
-  public nextRecipe() {
-    const nextIndex = Math.floor(Math.random() * this.recipeCount);
-    this.recipe = this.getRecipeByIndex(nextIndex);
-  }
-}
+});
 </script>
 
 <style scoped>

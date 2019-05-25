@@ -21,32 +21,42 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
-import { namespace } from 'vuex-class';
+import Vue from 'vue';
 import { Recipe } from '@/models/recipe';
 import { IMealSlot, mealList } from '@/state/interfaces/ScheduleState';
 
-const recipeModule = namespace('recipes');
-const scheduleModule = namespace('schedule');
-
-@Component
-export default class MobileSlot extends Vue {
-  @Prop() public mealSlot!: IMealSlot;
-  @Prop() public setActive!: (slotId: number) => void;
-  public meals = mealList;
-
-  @recipeModule.Getter public getRecipeById!: (id: string) => Recipe;
-  @scheduleModule.Mutation public removeRecipeFromMealSlot!:
-    ({slotId, recipeId}: {slotId: number, recipeId: number}) => void;
-
-  public getRecipeName(recipeId: string) {
-    return this.getRecipeById(recipeId).name;
-  }
-
-  public removeFromMealSlot(recipeId: number) {
-    this.removeRecipeFromMealSlot({slotId: this.mealSlot.id, recipeId});
-  }
+interface Data {
+  meals: string[];
 }
+
+export default Vue.extend({
+  name: 'MobileSlot',
+  data(): Data {
+    return {
+      meals: mealList
+    };
+  },
+  computed: {
+    getRecipeById(): (id: number) => Recipe {
+      return (id: number) => this.$store.getters['recipes/getRecipeById'](id);
+    }
+  },
+  props: {
+    mealSlot: Object,
+    setActive: Function
+  },
+  methods: {
+    removeRecipeFromMealSlot({slotId, recipeId}: {slotId: number, recipeId: number}) {
+      this.$store.commit('schedule/removeRecipeFromMealSlot', {slotId, recipeId});
+    },
+    getRecipeName(recipeId: number) {
+      return this.getRecipeById(recipeId).name;
+    },
+    removeFromMealSlot(recipeId: number) {
+      this.removeRecipeFromMealSlot({slotId: this.mealSlot.id, recipeId});
+    },
+  }
+});
 </script>
 
 <style scoped>

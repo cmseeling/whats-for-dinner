@@ -1,63 +1,40 @@
-import { shallowMount, createLocalVue, mount } from '@vue/test-utils';
-import Vuex, { Store } from 'vuex';
+import { shallowMount, createLocalVue } from '@vue/test-utils';
+import map from 'lodash/map';
 import Vuetify from 'vuetify';
+import DesktopLayout from '@/components/desktopScheduleLayout/DesktopLayout.vue';
 import DesktopSlot from '@/components/desktopScheduleLayout/DesktopSlot.vue';
-import { Recipe } from '@/models/recipe';
-import { IMealSlot } from '@/state/interfaces/ScheduleState';
-import { generateRecipe } from '../../helpers/recipe';
-import { getMockStore, getMockModule, StoreMock } from '../../helpers/vuex/storeMocker';
-import RecipeMocks from '../../helpers/vuex/recipeModuleMocker';
-import ScheduleMocks from '../../helpers/vuex/scheduleModuleMocker';
+import { DefaultScheduleState, AugmentedSlot, IMealSlot } from '@/state/interfaces/ScheduleState';
 
 const localVue = createLocalVue();
-localVue.use(Vuex);
 localVue.use(Vuetify);
 
-let storeMock: StoreMock;
-let store: Store<any>;
-let mealSlot: IMealSlot;
-let setActive: jest.Mock;
-let recipeIds: number[];
-let mockRecipe1: Recipe;
-let mockRecipe2: Recipe;
+let mealSlots: IMealSlot[];
+let slots: AugmentedSlot[];
+let mockSetActive: jest.Mock;
 
-describe('MealSlot.vue', () => {
+describe('DesktopLayout.vue', () => {
   beforeEach(() => {
-    setActive = jest.fn();
-    recipeIds = [1, 2];
+    mealSlots = DefaultScheduleState().mealSlots;
+    slots = map(mealSlots, (slot: IMealSlot) => {
+      return {
+        ...slot,
+        selected: false
+      };
+    });
 
-    mockRecipe1 = generateRecipe(1, 'test recipe', ['ingredient 1']);
-    mockRecipe2 = generateRecipe(2, 'test recipe', ['ingredient 1']);
-
-    storeMock = getMockStore([
-      getMockModule('recipes', RecipeMocks.getMockGetters([mockRecipe1, mockRecipe2], true), null, null),
-      getMockModule('schedule', null, ScheduleMocks.getMockMutations(), null)
-    ]);
-    store = new Vuex.Store(storeMock);
+    mockSetActive = jest.fn();
   });
 
   afterEach(() => {
     jest.resetAllMocks();
   });
 
-  it('renders the count of recipes if collapsed', () => {
-    const expanded = false;
-    mealSlot = {
-      id: 1,
-      dayIndex: 0,
-      mealIndex: 0,
-      recipeIds,
-      selected: false
-    };
-
-    const wrapper = shallowMount(DesktopSlot, {
-      propsData: {mealSlot, expanded, setActive},
-      store,
+  it('renders meal slots', () => {
+    const wrapper = shallowMount(DesktopLayout, {
+      propsData: {slots, setActive: mockSetActive},
       localVue
     });
 
-    expect(wrapper.find('.collapsed-display').isVisible()).toBe(true);
-    expect(wrapper.find('.meal-slot').isVisible()).toBe(false);
-    expect(wrapper.find('.collapsed-display').text()).toMatch(recipeIds.length.toString());
+    expect(wrapper.findAll(DesktopSlot).length).toBe(21);
   });
 });

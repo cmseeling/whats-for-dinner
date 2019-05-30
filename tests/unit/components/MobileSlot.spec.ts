@@ -1,6 +1,6 @@
 import { shallowMount, createLocalVue, mount } from '@vue/test-utils';
 import Vuetify from 'vuetify';
-import DesktopSlot from '@/components/desktopScheduleLayout/DesktopSlot.vue';
+import MobileSlot from '@/components/mobileScheduleLayout/MobileSlot.vue';
 import { Recipe } from '@/models/recipe';
 import { IMealSlot } from '@/state/interfaces/ScheduleState';
 import { generateRecipe } from '../../helpers/recipe';
@@ -15,7 +15,7 @@ let mockRecipe1: Recipe;
 let mockRecipe2: Recipe;
 let mockStore: any;
 
-describe('DesktopSlot.vue', () => {
+describe('MobileSlot.vue', () => {
   beforeEach(() => {
     setActive = jest.fn();
     recipeIds = [1, 2];
@@ -46,8 +46,7 @@ describe('DesktopSlot.vue', () => {
     jest.resetAllMocks();
   });
 
-  it('renders the count of recipes if collapsed', () => {
-    const expanded = false;
+  it('renders the slot name', () => {
     mealSlot = {
       id: 1,
       dayIndex: 0,
@@ -56,42 +55,16 @@ describe('DesktopSlot.vue', () => {
       selected: false
     };
 
-    const wrapper = shallowMount(DesktopSlot, {
-      propsData: {mealSlot, expanded, setActive},
+    const wrapper = shallowMount(MobileSlot, {
+      propsData: {mealSlot, setActive},
       mocks: { $store: mockStore },
       localVue
     });
 
-    expect(wrapper.find('.collapsed-display').isVisible()).toBe(true);
-    expect(wrapper.find('.meal-slot').isVisible()).toBe(false);
-    expect(wrapper.find('.collapsed-display').text()).toMatch(recipeIds.length.toString());
+    expect(wrapper.find('.mobile-slot-title').text()).toBe('Breakfast');
   });
 
-  it('renders a placeholder if expanded but no recipes', () => {
-    const expanded = true;
-    mealSlot = {
-      id: 1,
-      dayIndex: 0,
-      mealIndex: 0,
-      recipeIds: [],
-      selected: false
-    };
-
-    const wrapper = shallowMount(DesktopSlot, {
-      propsData: {mealSlot, expanded, setActive},
-      mocks: { $store: mockStore },
-      localVue
-    });
-
-    expect(wrapper.find('.collapsed-display').isVisible()).toBe(false);
-    expect(wrapper.find('.meal-slot').isVisible()).toBe(true);
-    expect(wrapper.find('.empty-slot').isVisible()).toBe(true);
-    expect(wrapper.contains('.recipe-list')).toBe(false);
-    expect(wrapper.find('.empty-slot').text()).toMatch('None Selected');
-  });
-
-  it('renders the list of recipes when expanded', () => {
-    const expanded = true;
+  it('renders a list of recipes', () => {
     mealSlot = {
       id: 1,
       dayIndex: 0,
@@ -100,23 +73,18 @@ describe('DesktopSlot.vue', () => {
       selected: false
     };
 
-    const wrapper = shallowMount(DesktopSlot, {
-      propsData: {mealSlot, expanded, setActive},
+    const wrapper = shallowMount(MobileSlot, {
+      propsData: {mealSlot, setActive},
       mocks: { $store: mockStore },
       localVue
     });
 
-    expect(wrapper.find('.collapsed-display').isVisible()).toBe(false);
-    expect(wrapper.find('.meal-slot').isVisible()).toBe(true);
-    expect(wrapper.contains('.empty-slot')).toBe(false);
-    expect(wrapper.find('.recipe-list').isVisible()).toBe(true);
     expect(wrapper.findAll('.recipe-list-name').length).toBe(2);
     expect(wrapper.findAll('.recipe-list-name').wrappers[0].text()).toMatch(mockRecipe1.name);
     expect(wrapper.findAll('.recipe-list-name').wrappers[1].text()).toMatch(mockRecipe2.name);
   });
 
   it('applies the selected class', () => {
-    const expanded = true;
     mealSlot = {
       id: 1,
       dayIndex: 0,
@@ -125,30 +93,23 @@ describe('DesktopSlot.vue', () => {
       selected: false
     };
 
-    let wrapper = shallowMount(DesktopSlot, {
-      propsData: {mealSlot, expanded, setActive},
+    let wrapper = shallowMount(MobileSlot, {
+      propsData: {mealSlot, setActive},
       mocks: { $store: mockStore },
       localVue
     });
-
-    expect(wrapper.find('.collapsed-display').isVisible()).toBe(false);
-    expect(wrapper.find('.meal-slot').isVisible()).toBe(true);
     expect(wrapper.contains('.selected')).toBe(false);
 
     mealSlot.selected = true;
-    wrapper = shallowMount(DesktopSlot, {
-      propsData: {mealSlot, expanded, setActive},
+    wrapper = shallowMount(MobileSlot, {
+      propsData: {mealSlot, setActive},
       mocks: { $store: mockStore },
       localVue
     });
-
-    expect(wrapper.find('.collapsed-display').isVisible()).toBe(false);
-    expect(wrapper.find('.meal-slot').isVisible()).toBe(true);
     expect(wrapper.contains('.selected')).toBe(true);
   });
 
-  it('calls setActive if expanded', () => {
-    let expanded = false;
+  it('calls setActive', () => {
     mealSlot = {
       id: 1,
       dayIndex: 0,
@@ -157,28 +118,17 @@ describe('DesktopSlot.vue', () => {
       selected: false
     };
 
-    let wrapper = shallowMount(DesktopSlot, {
-      propsData: {mealSlot, expanded, setActive},
+    const wrapper = mount(MobileSlot, {
+      propsData: {mealSlot, setActive},
       mocks: { $store: mockStore },
       localVue
     });
 
-    wrapper.find('.slot-container').trigger('click');
-    expect(setActive).not.toHaveBeenCalled();
-
-    expanded = true;
-    wrapper = shallowMount(DesktopSlot, {
-      propsData: {mealSlot, expanded, setActive},
-      mocks: { $store: mockStore },
-      localVue
-    });
-
-    wrapper.find('.slot-container').trigger('click');
+    wrapper.trigger('click');
     expect(setActive).toHaveBeenCalled();
   });
 
   it('removes a recipe from the list', () => {
-    const expanded = true;
     mealSlot = {
       id: 1,
       dayIndex: 0,
@@ -187,8 +137,8 @@ describe('DesktopSlot.vue', () => {
       selected: false
     };
 
-    const wrapper = mount(DesktopSlot, {
-      propsData: {mealSlot, expanded, setActive},
+    const wrapper = mount(MobileSlot, {
+      propsData: {mealSlot, setActive},
       mocks: { $store: mockStore },
       localVue
     });

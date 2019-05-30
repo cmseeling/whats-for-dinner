@@ -6,7 +6,7 @@
           Recipes
         </v-toolbar-title>
         <v-spacer/>
-        <v-text-field
+        <v-text-field class="recipe-filter"
           hide-details
           append-icon="fa-search"
           single-line

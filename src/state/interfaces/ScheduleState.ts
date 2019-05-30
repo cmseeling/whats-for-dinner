@@ -6,6 +6,10 @@ export interface IMealSlot {
   recipeIds: number[];
 }
 
+export interface AugmentedSlot extends IMealSlot {
+  selected: boolean;
+}
+
 export interface ScheduleState {
   mealSlots: IMealSlot[];
 }

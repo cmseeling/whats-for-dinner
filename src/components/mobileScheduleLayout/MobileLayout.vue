@@ -2,16 +2,16 @@
   <v-layout column v-touch="{left: goToPrevDay, right: goToNextDay}">
     <v-flex>
       <v-toolbar>
-        <v-toolbar-title>
+        <v-toolbar-title class="mobile-day-label">
           {{days[activeDayIndex]}}
         </v-toolbar-title>
       </v-toolbar>
       <v-toolbar>
-        <v-btn color="primary" @click="goToPrevDay">
+        <v-btn color="primary" class="prev-button" @click="goToPrevDay">
           <v-icon small>fa fa-arrow-left</v-icon>
         </v-btn>
         <v-spacer />
-        <v-btn color="primary" @click="goToNextDay">
+        <v-btn color="primary" class="next-button" @click="goToNextDay">
           <v-icon small>fa fa-arrow-right</v-icon>
         </v-btn>
       </v-toolbar>
@@ -66,14 +66,15 @@ export default Vue.extend({
   },
   props: {
     slots: Array,
-    activeSlot: Number,
     setActive: Function
   },
   methods: {
     goToNextDay() {
+      console.log('goToNext clicked');
       this.activeDayIndex = (this.activeDayIndex + 1) % 7;
     },
     goToPrevDay() {
+      console.log('goToPrev clicked');
       this.activeDayIndex = ((this.activeDayIndex - 1) + 7) % 7;
     }
   }

@@ -63,7 +63,6 @@ export default Vue.extend({
   },
   props: {
     slots: Array,
-    activeSlot: Number,
     setActive: Function
   },
   methods: {

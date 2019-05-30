@@ -2,42 +2,42 @@
   <v-card>
     <v-card-title>
       <v-toolbar flat>
-        <v-toolbar-title>
-          Recipe
+        <v-toolbar-title class="form-header">
+          {{headerText}}
         </v-toolbar-title>
       </v-toolbar>
     </v-card-title>
     <v-card-text>
       <v-form>
-        <v-text-field label="Name" v-model="recipe.name" />
+        <v-text-field class="recipe-name" label="Name" v-model="recipe.name" />
         <div class="text-xs-left">
           <label class="font-weight-bold">Ingredients</label>
           <ul>
-            <v-container v-for="(item, index) in recipe.ingredients" :key="index" tag="li" class="pa-0" fill-height>
+            <v-container v-for="(item, index) in recipe.ingredients" :key="index" tag="li" class="pa-0 recipe-ingredient-item" fill-height>
               <v-layout align-center>
                 <v-flex shrink>
-                  <v-btn color="error" @click="removeIngredient(index)" icon><v-icon small>fa fa-times</v-icon></v-btn>
+                  <v-btn class="remove-ingredient-button" color="error" @click="removeIngredient(index)" icon><v-icon small>fa fa-times</v-icon></v-btn>
                 </v-flex>
                 <v-flex>
                   {{item}}
                 </v-flex>
               </v-layout>
             </v-container>
-           <v-container v-if="isAddingIngredient" tag="li" class="pa-0" fill-height>
+            <v-container v-if="isAddingIngredient" tag="li" class="pa-0 add-ingredient-inputs" fill-height>
               <v-layout align-center>
                 <v-flex>
-                  <v-text-field v-model="newIngredient" autofocus/>
+                  <v-text-field class="add-ingredient-input" v-model="newIngredient" autofocus/>
                 </v-flex>
                 <v-flex shrink>
-                  <v-btn color="success" @click="addIngredient">Add</v-btn>
+                  <v-btn class="add-ingredient-confirm" color="success" @click="addIngredient">Add</v-btn>
                 </v-flex>
                 <v-flex shrink>
-                  <v-btn color="error" @click="cancelAddIngredient">Cancel</v-btn>
+                  <v-btn class="add-ingredient-cancel" color="error" @click="cancelAddIngredient">Cancel</v-btn>
                 </v-flex>
               </v-layout>
             </v-container>
-            <li>
-              <v-btn color="success" @click.prevent="addItem"><v-icon small>fa fa-plus</v-icon>&nbsp;Add Ingredient</v-btn>
+            <li v-if="!isAddingIngredient">
+              <v-btn class="add-ingredient-button" color="success" @click.prevent="addItem"><v-icon small>fa fa-plus</v-icon>&nbsp;Add Ingredient</v-btn>
             </li>
           </ul>
           <br/>
@@ -46,11 +46,11 @@
           <v-container class="pa-0">
             <v-layout column>
               <v-flex>
-                <v-btn color="primary" @click.prevent="saveRecipeForm">Save</v-btn>
+                <v-btn class="save-button" color="primary" @click.prevent="saveRecipeForm">Save</v-btn>
               </v-flex>
               <v-flex>
-                <v-btn color="error" v-if="isNewRecipe" @click.prevent="goBack">Cancel</v-btn>
-                <v-btn color="error" v-else @click.prevent="removeRecipe">Delete</v-btn>
+                <v-btn class="cancel-button" color="error" v-if="isNewRecipe" @click.prevent="goBack">Cancel</v-btn>
+                <v-btn class="delete-button" color="error" v-else @click.prevent="removeRecipe">Delete</v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -88,6 +88,13 @@ export default Vue.extend({
   computed: {
     getRecipeById(): (id: number) => Recipe {
       return (id: number) => this.$store.getters['recipes/getRecipeById'](id);
+    },
+    headerText(): string {
+      if (this.$route.params.id) {
+        return 'Recipe - Edit';
+      } else {
+        return 'Recipe - New';
+      }
     }
   },
   watch: {

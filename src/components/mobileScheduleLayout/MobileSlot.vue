@@ -1,6 +1,6 @@
 <template>
-  <v-card :class="mealSlot.selected ? 'selected' : ''" @click="setActive(mealSlot.id)">
-    <v-card-title>
+  <v-card :class="mealSlot.selected ? 'mobile-slot selected' : 'mobile-slot'" @click="setActive(mealSlot.id)">
+    <v-card-title class="mobile-slot-title">
       {{meals[mealSlot.mealIndex]}}
     </v-card-title>
     <v-card-text>
@@ -8,9 +8,9 @@
         <v-container v-for="recipeId in mealSlot.recipeIds" :key="recipeId" tag="li" class="pa-0" fill-height>
           <v-layout align-center>
             <v-flex shrink>
-              <v-btn color="error" @click="removeFromMealSlot(recipeId)" small icon><v-icon size="10px">fa fa-times</v-icon></v-btn>
+              <v-btn color="error" class="recipe-list-remove-button" @click="removeFromMealSlot(recipeId)" small icon><v-icon size="10px">fa fa-times</v-icon></v-btn>
             </v-flex>
-            <v-flex>
+            <v-flex class="recipe-list-name">
               {{getRecipeName(recipeId)}}
             </v-flex>
           </v-layout>

@@ -7,7 +7,7 @@
         </v-toolbar-title>
       </v-toolbar>
     </v-card-title>
-    <v-card-text>
+    <v-card-text class="random-recipe-body">
       <RecipeItem v-if="recipe"
         :recipe="recipe"
         v-on:recipe-click="handleRecipeSelected"/>
@@ -17,7 +17,7 @@
             <v-btn color="success" @click="$emit('recipe-add-click', recipe.id)">Add</v-btn>
           </v-flex>
           <v-flex sm6 class="text-xs-left">
-            <v-btn color="warning" @click="nextRecipe">Next</v-btn>
+            <v-btn color="warning" class="next-random-recipe" @click="nextRecipe">Next</v-btn>
           </v-flex>
         </v-layout>
       </v-container>

@@ -2,7 +2,7 @@
   <v-card>
     <v-card-title>
       <v-toolbar flat>
-        <v-toolbar-title>
+        <v-toolbar-title class="schedule-title">
           Schedule
         </v-toolbar-title>
       </v-toolbar>
@@ -11,13 +11,11 @@
       <v-container fill-height hidden-sm-and-down>
         <DesktopLayout
           :slots="augmentedSlots"
-          :activeSlot="activeSlot"
           :setActive="setActive"/>
       </v-container>
       <v-container fill-height hidden-md-and-up>
         <MobileLayout
           :slots="augmentedSlots"
-          :activeSlot="activeSlot"
           :setActive="setActive"/>
       </v-container>
       <div class="align-right">
@@ -32,15 +30,11 @@ import Vue from 'vue';
 import map from 'lodash/map';
 import DesktopLayout from '@/components/desktopScheduleLayout/DesktopLayout.vue';
 import MobileLayout from '@/components/mobileScheduleLayout/MobileLayout.vue';
-import { IMealSlot } from '@/state/interfaces/ScheduleState';
+import { IMealSlot, AugmentedSlot } from '@/state/interfaces/ScheduleState';
 import { Recipe } from '@/models/recipe';
 
 interface Data {
   activeSlot: number|null;
-}
-
-interface AugmentedSlot extends IMealSlot {
-  selected: boolean;
 }
 
 export default Vue.extend({

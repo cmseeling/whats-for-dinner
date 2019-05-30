@@ -3,7 +3,7 @@
     <v-layout v-bind="layoutBinding">
       <v-flex md4>
         <div class="recipe-title">
-          <v-btn flat color="primary" @click="$emit('recipe-click', recipe.id)">
+          <v-btn class="recipe-title-button" flat color="primary" @click="$emit('recipe-click', recipe.id)">
             {{recipe.name}}
           </v-btn>
         </div>
@@ -19,7 +19,7 @@
             <v-card>
               <v-card-text>
                 <ul>
-                  <li v-for="(ingredient, index) in recipe.ingredients" :key="index">
+                  <li class="recipe-ingredient-name" v-for="(ingredient, index) in recipe.ingredients" :key="index">
                     {{ingredient}}
                   </li>
                 </ul>
@@ -42,7 +42,7 @@ import { Recipe } from '@/models/recipe';
 export default Vue.extend({
   name: 'RecipeItem',
   props: {
-    recipe: Recipe
+    recipe: Object
   },
   computed: {
     layoutBinding() {

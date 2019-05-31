@@ -45,7 +45,6 @@ describe('RecipeList.vue', () => {
   });
 
   it('renders the list of recipes', () => {
-    // console.log('renders the list of recipes');
     const wrapper = shallowMount(RecipeList, {
       mocks: { $store: mockStore },
       localVue
@@ -55,7 +54,6 @@ describe('RecipeList.vue', () => {
   });
 
   it('renders a filtered list of recipes', () => {
-    // console.log('renders a filtered list of recipes');
     const wrapper = mount(RecipeList, {
       mocks: { $store: mockStore },
       localVue

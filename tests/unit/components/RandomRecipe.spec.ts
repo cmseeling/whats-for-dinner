@@ -38,7 +38,6 @@ describe('RandomRecipe.vue', () => {
   });
 
   it('renders a random recipe', () => {
-    // console.log('renders a random recipe');
     const wrapper = mount(RandomRecipe, {
       mocks: { $store: mockStore },
       localVue
@@ -48,7 +47,6 @@ describe('RandomRecipe.vue', () => {
   });
 
   it('gets the next random recipe', () => {
-    // console.log('gets the next random recipe');
     const wrapper = mount(RandomRecipe, {
       mocks: { $store: mockStore },
       localVue

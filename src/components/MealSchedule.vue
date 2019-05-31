@@ -19,7 +19,7 @@
           :setActive="setActive"/>
       </v-container>
       <div class="align-right">
-            <v-btn to="/grocerylist" color="success">Generate Grocery List<v-icon small right>fa fa-arrow-right</v-icon></v-btn>
+            <v-btn to="/groceries" color="success">Generate Grocery List<v-icon small right>fa fa-arrow-right</v-icon></v-btn>
         </div>
     </v-card-text>
   </v-card>

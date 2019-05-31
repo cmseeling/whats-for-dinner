@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import GroceryList from '@/components/GroceryList.vue'
+import GroceryList from '@/components/GroceryList.vue';
 
 export default Vue.extend({
   name: 'Groceries',

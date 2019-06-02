@@ -10,7 +10,7 @@
         <div v-show="expanded" class="expanded-display">
           <div class="empty-slot" v-if="mealSlot.recipeIds.length === 0">None Selected</div>
           <ul class="pa-0 recipe-list" v-else>
-            <v-container v-for="recipeId in mealSlot.recipeIds" :key="recipeId" tag="li" class="pa-0 mb-2" style="border-bottom: 1px solid" fill-height>
+            <v-container v-for="recipeId in mealSlot.recipeIds" :key="recipeId" tag="li" class="pa-0 mb-2 recipe-item" style="" fill-height>
               <v-layout align-center>
                 <v-flex shrink>
                   <v-btn class="recipe-list-remove-button" color="error" @click="removeFromMealSlot(recipeId)" small icon><v-icon size="10px">fa fa-times</v-icon></v-btn>
@@ -74,6 +74,8 @@ export default Vue.extend({
   .slot-container {
     min-height: 50px;
     height: 100%;
+    font-size: x-small;
+    font-weight: bold;
   }
 
   .collapsed-display {
@@ -97,8 +99,12 @@ export default Vue.extend({
     background-color: lightblue;
   }
 
+  .recipe-item {
+    background-color: lightskyblue !important;
+  }
+
   .selected {
-    border: 2px solid green;
+    border: 2px solid lightseagreen;
   }
 
   li {

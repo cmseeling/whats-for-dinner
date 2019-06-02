@@ -1,0 +1,5 @@
+Data access considerations
+  Data will be stored on a cloud service, most likely NoSql.
+  Cloud services will restrict read/write operations.
+  It may be worth moving toward a progressive web app design with a client-side IndexedDB for intermediate storage.
+  Data store should be configured to support both full data pull and individual item query

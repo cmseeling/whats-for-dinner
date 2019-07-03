@@ -2,16 +2,16 @@ import { createLocalVue, mount } from '@vue/test-utils';
 import Vuetify from 'vuetify';
 import RandomRecipe from '@/components/RandomRecipe.vue';
 import RecipeItem from '@/components/RecipeItem.vue';
-import { IRecipe } from '@/models/recipe';
+import { Recipe } from '@/models/Recipe';
 import { generateRecipe } from '../../helpers/recipe';
 
 const localVue = createLocalVue();
 localVue.use(Vuetify);
 
-let mockRecipe1: IRecipe;
-let mockRecipe2: IRecipe;
+let mockRecipe1: Recipe;
+let mockRecipe2: Recipe;
 let mockStore: any;
-let recipes: IRecipe[];
+let recipes: Recipe[];
 let mockGetRecipeByIndex: jest.Mock;
 
 describe('RandomRecipe.vue', () => {

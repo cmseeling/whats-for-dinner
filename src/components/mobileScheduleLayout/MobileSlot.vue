@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import { IRecipe } from '@/models/recipe';
+import { Recipe } from '@/models/Recipe';
 import { IMealSlot, mealList } from '@/state/interfaces/ScheduleState';
 
 interface Data {
@@ -37,7 +37,7 @@ export default Vue.extend({
     };
   },
   computed: {
-    getRecipeById(): (id: number) => IRecipe {
+    getRecipeById(): (id: number) => Recipe {
       return (id: number) => this.$store.getters['recipes/getRecipeById'](id);
     }
   },

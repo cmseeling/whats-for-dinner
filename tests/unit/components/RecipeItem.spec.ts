@@ -1,13 +1,13 @@
 import { shallowMount, createLocalVue, mount } from '@vue/test-utils';
 import Vuetify from 'vuetify';
 import RecipeItem from '@/components/RecipeItem.vue';
-import { IRecipe } from '@/models/recipe';
+import { Recipe } from '@/models/Recipe';
 import { generateRecipe } from '../../helpers/recipe';
 
 const localVue = createLocalVue();
 localVue.use(Vuetify);
 
-let mockRecipe: IRecipe;
+let mockRecipe: Recipe;
 
 describe('RecipeItem.vue', () => {
   beforeEach(() => {

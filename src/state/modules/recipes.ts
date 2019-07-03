@@ -1,6 +1,6 @@
 import { Commit } from 'vuex';
 import { DefaultRecipesState, RecipesState } from '../interfaces/RecipesState';
-import { IRecipe } from '@/models/recipe';
+import { Recipe } from '@/models/Recipe';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
@@ -12,12 +12,12 @@ import Recipes from '@/api/Recipes';
 import { Dictionary } from '@/utils/Dictionary';
 
 const getters = {
-  getFilteredList: (state: RecipesState) => (filterString: string): IRecipe[] => {
+  getFilteredList: (state: RecipesState) => (filterString: string): Recipe[] => {
     const recipes = state.recipes.Values();
     if (filterString === '') {
       return recipes;
     } else {
-      return filter(recipes, (recipe: IRecipe) => {
+      return filter(recipes, (recipe: Recipe) => {
         const existsInIngredients = reduce(recipe.ingredients, (prev, ingredient) => {
           return prev || includes(toLower(ingredient), toLower(filterString));
         }, false);
@@ -26,20 +26,20 @@ const getters = {
     }
   },
 
-  getRecipeById: (state: RecipesState) => (id: string): IRecipe => {
+  getRecipeById: (state: RecipesState) => (id: string): Recipe => {
     return state.recipes.Item(id);
   },
 
-  getRecipeByIndex: (state: RecipesState) => (index: number): IRecipe => {
+  getRecipeByIndex: (state: RecipesState) => (index: number): Recipe => {
     return state.recipes.Values()[index];
   },
 
-  recipes: (state: RecipesState): IRecipe[] => {
+  recipes: (state: RecipesState): Recipe[] => {
     return state.recipes.Values();
   },
 
   getIngredientsFromRecipeIds: (state: RecipesState) => (recipeIds: number[]): string[] => {
-    return uniq(flatMap(state.recipes.Values(), (recipe: IRecipe) => {
+    return uniq(flatMap(state.recipes.Values(), (recipe: Recipe) => {
       if (includes(recipeIds, recipe.id)) {
         return recipe.ingredients;
       } else {
@@ -58,7 +58,7 @@ const getters = {
 };
 
 const mutations = {
-  updateRecipe: (state: RecipesState, recipe: IRecipe): void => {
+  updateRecipe: (state: RecipesState, recipe: Recipe): void => {
     if (recipe.id) {
       state.recipes.Upsert(recipe.id.toString(), recipe);
     } else {
@@ -67,10 +67,10 @@ const mutations = {
   },
 
   resetRecipes: (state: RecipesState): void => {
-    state.recipes = new Dictionary<IRecipe>();
+    state.recipes = new Dictionary<Recipe>();
   },
 
-  addRecipes: (state: RecipesState, recipes: IRecipe[]): void => {
+  addRecipes: (state: RecipesState, recipes: Recipe[]): void => {
     forEach(recipes, (item) => {
       if (item.id) {
         state.recipes.Upsert(item.id.toString(), item);
@@ -95,7 +95,7 @@ const actions = {
     commit('setInitialized');
   },
 
-  saveRecipe: async ({commit}: {commit: Commit}, recipe: IRecipe): Promise<void> => {
+  saveRecipe: async ({commit}: {commit: Commit}, recipe: Recipe): Promise<void> => {
     if (recipe.id) {
       const updatedRecipe = await Recipes.update(recipe.id, recipe);
       commit('updateRecipe', updatedRecipe);

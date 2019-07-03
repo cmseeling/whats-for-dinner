@@ -1,13 +1,13 @@
 import { IDictionary, Dictionary } from '@/utils/Dictionary';
-import { IRecipe } from '@/models/recipe';
+import { Recipe } from '@/models/Recipe';
 
 export interface RecipesState {
   initialized: boolean;
-  recipes: IDictionary<IRecipe>;
+  recipes: IDictionary<Recipe>;
 }
 
 export const DefaultRecipesState = (): RecipesState => {
-  const recipes = new Dictionary<IRecipe>();
+  const recipes = new Dictionary<Recipe>();
 
   return {
     initialized: false,

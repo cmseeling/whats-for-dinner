@@ -2,14 +2,14 @@ import { createLocalVue, mount } from '@vue/test-utils';
 import Vuetify from 'vuetify';
 import flatten from 'lodash/flatten';
 import GroceryList from '@/components/GroceryList.vue';
-import { IRecipe } from '@/models/recipe';
+import { Recipe } from '@/models/Recipe';
 import { generateRecipe } from '../../helpers/recipe';
 
 const localVue = createLocalVue();
 localVue.use(Vuetify);
 
-let mockRecipe1: IRecipe;
-let mockRecipe2: IRecipe;
+let mockRecipe1: Recipe;
+let mockRecipe2: Recipe;
 let mockStore: any;
 let recipeIds: number[];
 

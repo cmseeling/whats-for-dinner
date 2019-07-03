@@ -6,14 +6,14 @@ import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
 import reduce from 'lodash/reduce';
-import { IRecipe } from '@/models/recipe';
+import { Recipe } from '@/models/Recipe';
 import { generateRecipe } from '../../helpers/recipe';
 
 const localVue = createLocalVue();
 localVue.use(Vuetify);
 
-let mockRecipe1: IRecipe;
-let mockRecipe2: IRecipe;
+let mockRecipe1: Recipe;
+let mockRecipe2: Recipe;
 let mockStore: any;
 
 describe('RecipeList.vue', () => {
@@ -28,7 +28,7 @@ describe('RecipeList.vue', () => {
           if (filterText === '') {
             return recipes;
           } else {
-            return filter(recipes, (recipe: IRecipe) => {
+            return filter(recipes, (recipe: Recipe) => {
               const existsInIngredients = reduce(recipe.ingredients, (prev, ingredient) => {
                 return prev || includes(toLower(ingredient), toLower(filterText));
               }, false);

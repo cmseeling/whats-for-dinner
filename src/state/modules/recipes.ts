@@ -1,6 +1,6 @@
 import { Commit } from 'vuex';
 import { DefaultRecipesState, RecipesState } from '../interfaces/RecipesState';
-import { IRecipe } from '@/models/Recipe';
+import { IRecipe } from '@/models/recipe';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';

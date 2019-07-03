@@ -1,5 +1,5 @@
 import { IDictionary, Dictionary } from '@/utils/Dictionary';
-import { Recipe } from '@/models/Recipe';
+import { Recipe } from '../../models/Recipe';
 
 export interface RecipesState {
   initialized: boolean;

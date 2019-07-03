@@ -30,7 +30,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { IMealSlot } from '../../state/interfaces/ScheduleState';
-import { Recipe } from '../../models/recipe';
+import { Recipe } from '@/models/Recipe';
 
 export default Vue.extend({
   name: 'DekstopSlot',

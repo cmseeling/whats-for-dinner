@@ -31,7 +31,6 @@ import map from 'lodash/map';
 import DesktopLayout from '@/components/desktopScheduleLayout/DesktopLayout.vue';
 import MobileLayout from '@/components/mobileScheduleLayout/MobileLayout.vue';
 import { IMealSlot, AugmentedSlot } from '@/state/interfaces/ScheduleState';
-import { Recipe } from '@/models/recipe';
 
 interface Data {
   activeSlot: number|null;

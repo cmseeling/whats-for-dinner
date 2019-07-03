@@ -1,9 +1,9 @@
-import { Recipe } from '@/models/recipe';
+import { IRecipe } from '@/models/recipe';
 import { API_URL } from '@/config';
 
 const url = `${API_URL}/recipes`;
 
-const create = async (recipe: Recipe): Promise<Recipe> => {
+const create = async (recipe: IRecipe): Promise<IRecipe> => {
   const response = await fetch(url, {
     body: JSON.stringify(recipe),
     method: 'POST',
@@ -14,12 +14,12 @@ const create = async (recipe: Recipe): Promise<Recipe> => {
   return await response.json();
 };
 
-const readAll = async (): Promise<Recipe[]> => {
+const readAll = async (): Promise<IRecipe[]> => {
   const response = await fetch(url);
   return await response.json();
 };
 
-const update = async (id: number, recipe: Recipe): Promise<Recipe> => {
+const update = async (id: number, recipe: IRecipe): Promise<IRecipe> => {
   const response = await fetch(`${url}/${id}`, {
     body: JSON.stringify(recipe),
     method: 'PUT',

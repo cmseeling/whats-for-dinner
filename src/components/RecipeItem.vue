@@ -37,7 +37,6 @@ import Vue from 'vue';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
-import { Recipe } from '@/models/recipe';
 
 export default Vue.extend({
   name: 'RecipeItem',

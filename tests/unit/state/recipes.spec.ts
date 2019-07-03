@@ -1,12 +1,12 @@
 import recipes from '@/state/modules/recipes';
 import Recipes from '@/api/Recipes';
 import { DefaultRecipesState, RecipesState } from '@/state/interfaces/RecipesState';
-import { Recipe } from '@/models/recipe';
+import { IRecipe } from '@/models/recipe';
 import { Dictionary } from '@/utils/Dictionary';
 
 let state: RecipesState;
-let testRecipe1: Recipe;
-let testRecipe2: Recipe;
+let testRecipe1: IRecipe;
+let testRecipe2: IRecipe;
 let mockReadAll: jest.SpyInstance;
 let commit: jest.Mock;
 
@@ -96,7 +96,7 @@ describe('recipes.ts', () => {
 
   it('resets the recipe list', () => {
     const expectedState = {...state};
-    expectedState.recipes = new Dictionary<Recipe>();
+    expectedState.recipes = new Dictionary<IRecipe>();
 
     recipes.mutations.resetRecipes(state);
 
@@ -104,12 +104,12 @@ describe('recipes.ts', () => {
   });
 
   it('adds recipes from a list', () => {
-    const newRecipe1: Recipe = {
+    const newRecipe1: IRecipe = {
       id: 3,
       ingredients: [],
       name: 'new recipe 1'
     };
-    const newRecipe2: Recipe = {
+    const newRecipe2: IRecipe = {
       id: 4,
       ingredients: [],
       name: 'new recipe 2'
@@ -157,7 +157,7 @@ describe('recipes.ts', () => {
   });
 
   it('saves a new recipe', async () => {
-    const newRecipe: Recipe = {
+    const newRecipe: IRecipe = {
       id: null,
       ingredients: [],
       name: 'new recipe'

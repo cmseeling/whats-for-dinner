@@ -3,14 +3,14 @@ import { mount, shallowMount } from '@vue/test-utils';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import RecipeForm from '@/components/RecipeForm.vue';
-import { Recipe } from '@/models/recipe';
+import { IRecipe } from '@/models/recipe';
 import { generateRecipe } from '../../helpers/recipe';
 
 // this should really be localVue but Vuetify pollutes the Vue prototype and causes the tests to throw bad exceptions.
 // See https://github.com/vuetifyjs/vuetify/issues/4861 and https://github.com/vuetifyjs/vuetify/issues/6046
 Vue.use(Vuetify);
 
-let mockRecipe: Recipe;
+let mockRecipe: IRecipe;
 let mockStore: any;
 let mockDispatch: jest.Mock;
 let mockRouter: any;

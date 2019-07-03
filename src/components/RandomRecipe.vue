@@ -31,10 +31,10 @@ import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
 import RecipeItem from '@/components/RecipeItem.vue';
-import { Recipe } from '@/models/recipe';
+import { IRecipe } from '@/models/recipe';
 
 interface Data {
-  recipe: Recipe|null;
+  recipe: IRecipe|null;
 }
 
 export default Vue.extend({
@@ -51,7 +51,7 @@ export default Vue.extend({
     recipeCount(): number {
       return this.$store.getters['recipes/recipeCount'];
     },
-    getRecipeByIndex(): (id: number) => Recipe {
+    getRecipeByIndex(): (id: number) => IRecipe {
       return (id: number) => this.$store.getters['recipes/getRecipeByIndex'](id);
     },
     isInitialized(): boolean {
@@ -73,6 +73,7 @@ export default Vue.extend({
       this.$emit('recipe-add-click', recipeId);
     },
     nextRecipe() {
+      console.log(this.recipeCount);
       const nextIndex = Math.floor(Math.random() * this.recipeCount);
       this.recipe = this.getRecipeByIndex(nextIndex);
     }

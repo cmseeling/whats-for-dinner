@@ -29,7 +29,7 @@ import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
 import RecipeItem from '@/components/RecipeItem.vue';
-import { Recipe } from '@/models/recipe';
+import { IRecipe } from '@/models/recipe';
 
 interface Data {
   searchText: string;
@@ -46,10 +46,10 @@ export default Vue.extend({
     };
   },
   computed: {
-    getFilteredList(): (filterText: string) => Recipe[] {
+    getFilteredList(): (filterText: string) => IRecipe[] {
       return (filterText: string) => this.$store.getters['recipes/getFilteredList'](filterText);
     },
-    filteredList(): Recipe[] {
+    filteredList(): IRecipe[] {
       return this.getFilteredList(this.searchText);
     }
   },

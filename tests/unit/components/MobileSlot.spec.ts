@@ -1,7 +1,7 @@
 import { shallowMount, createLocalVue, mount } from '@vue/test-utils';
 import Vuetify from 'vuetify';
 import MobileSlot from '@/components/mobileScheduleLayout/MobileSlot.vue';
-import { Recipe } from '@/models/recipe';
+import { IRecipe } from '@/models/recipe';
 import { IMealSlot } from '@/state/interfaces/ScheduleState';
 import { generateRecipe } from '../../helpers/recipe';
 
@@ -11,8 +11,8 @@ localVue.use(Vuetify);
 let mealSlot: IMealSlot;
 let setActive: jest.Mock;
 let recipeIds: number[];
-let mockRecipe1: Recipe;
-let mockRecipe2: Recipe;
+let mockRecipe1: IRecipe;
+let mockRecipe2: IRecipe;
 let mockStore: any;
 
 describe('MobileSlot.vue', () => {

@@ -65,11 +65,11 @@ import Vue from 'vue';
 import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
-import { Recipe } from '@/models/recipe';
+import { IRecipe, ConstructRecipe } from '@/models/recipe';
 import { Route } from 'vue-router';
 
 interface Data {
-  recipe: Recipe;
+  recipe: IRecipe;
   isNewRecipe: boolean;
   isAddingIngredient: boolean;
   newIngredient: string;
@@ -79,14 +79,14 @@ export default Vue.extend({
   name: 'RecipeForm',
   data(): Data {
     return {
-      recipe: new Recipe(),
+      recipe: ConstructRecipe(),
       isNewRecipe: true,
       isAddingIngredient: false,
       newIngredient: ''
     };
   },
   computed: {
-    getRecipeById(): (id: number) => Recipe {
+    getRecipeById(): (id: number) => IRecipe {
       return (id: number) => this.$store.getters['recipes/getRecipeById'](id);
     },
     headerText(): string {
@@ -110,7 +110,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    saveRecipe(recipe: Recipe) {
+    saveRecipe(recipe: IRecipe) {
       this.$store.dispatch('recipes/saveRecipe', recipe);
     },
     deleteRecipe(id: number) {

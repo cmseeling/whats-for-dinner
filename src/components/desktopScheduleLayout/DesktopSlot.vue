@@ -30,12 +30,12 @@
 <script lang="ts">
 import Vue from 'vue';
 import { IMealSlot } from '../../state/interfaces/ScheduleState';
-import { Recipe } from '../../models/recipe';
+import { IRecipe } from '../../models/recipe';
 
 export default Vue.extend({
   name: 'DekstopSlot',
   computed: {
-    getRecipeById(): (id: number) => Recipe {
+    getRecipeById(): (id: number) => IRecipe {
       return (id: number) => this.$store.getters['recipes/getRecipeById'](id);
     }
   },

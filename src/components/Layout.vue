@@ -5,7 +5,7 @@
       <v-toolbar-title class="white--text">What's For Dinner?</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down" v-if="isLoggedIn">
-        <v-btn disabled>{{userEmail}}</v-btn>
+        <v-btn disabled>{{userName}}</v-btn>
         <v-btn flat @click="triggerNetlifyIdentityAction('logout')">Log Out</v-btn>
       </v-toolbar-items>
       <v-toolbar-items class="hidden-sm-and-down" v-else>
@@ -26,7 +26,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import netlifyIdentity from 'netlify-identity-widget';
+import netlifyIdentity, { User } from 'netlify-identity-widget';
 import AppNavList from '@/components/AppNavList.vue';
 
 netlifyIdentity.init();
@@ -44,8 +44,8 @@ export default Vue.extend({
     isLoggedIn(): boolean {
       return this.$store.getters['identity/isLoggedIn'];
     },
-    userEmail(): string {
-      return this.$store.getters['identity/userEmail'];
+    userName(): string {
+      return this.$store.getters['identity/userName'];
     }
   },
   data(): Data {
@@ -54,13 +54,18 @@ export default Vue.extend({
     };
   },
   methods: {
+    setUser(user: User|null) {
+      this.$store.commit('identity/setUser', user);
+    },
     triggerNetlifyIdentityAction(action: string) {
       if (action === 'login' || action === 'signup') {
         netlifyIdentity.open(action);
         netlifyIdentity.on('login', (user) => {
+          this.setUser(user);
           netlifyIdentity.close();
         });
       } else if (action === 'logout') {
+        this.setUser(null);
         netlifyIdentity.logout();
         this.$router.push({name: 'home'});
       }

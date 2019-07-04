@@ -1,12 +1,16 @@
 <template>
   <v-app>
-    <v-toolbar app dark color="gray" clipped-left>
+    <v-toolbar app dark color="gray" clipped-left dense>
       <v-toolbar-side-icon @click="visible = !visible"></v-toolbar-side-icon>
       <v-toolbar-title class="white--text">What's For Dinner?</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat>Log In</v-btn>
-        <v-btn flat>Sign Up</v-btn>
+      <v-toolbar-items class="hidden-sm-and-down" v-if="isLoggedIn">
+        <v-btn disabled>{{userEmail}}</v-btn>
+        <v-btn flat @click="triggerNetlifyIdentityAction('logout')">Log Out</v-btn>
+      </v-toolbar-items>
+      <v-toolbar-items class="hidden-sm-and-down" v-else>
+        <v-btn flat @click="triggerNetlifyIdentityAction('login')">Log In</v-btn>
+        <v-btn flat @click="triggerNetlifyIdentityAction('signup')">Sign Up</v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-navigation-drawer app clipped v-model="visible">
@@ -35,6 +39,14 @@ export default Vue.extend({
   name: 'Layout',
   components: {
     AppNavList
+  },
+  computed: {
+    isLoggedIn(): boolean {
+      return this.$store.getters['identity/isLoggedIn'];
+    },
+    userEmail(): string {
+      return this.$store.getters['identity/userEmail'];
+    }
   },
   data(): Data {
     return {

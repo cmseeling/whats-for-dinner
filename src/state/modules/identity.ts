@@ -1,3 +1,4 @@
+import { Commit } from 'vuex';
 import { DefaultIdentityState, IdentityState } from '../interfaces/Identity';
 import { User } from 'netlify-identity-widget';
 
@@ -12,12 +13,30 @@ const getters = {
 
   userEmail: (state: IdentityState): string => {
     return state.user ? state.user.email : '';
+  },
+
+  userName: (state: IdentityState): string => {
+    return state.user
+      ? state.user.user_metadata
+        ? state.user.user_metadata.full_name
+        : ''
+      : '';
   }
 };
 
 const mutations = {
-  setUser: (state: IdentityState, user: User): void => {
+  setUser: (state: IdentityState, user: User|null): void => {
     state.user = user;
+  }
+};
+
+const actions = {
+  init: async ({commit}: {commit: Commit}): Promise<void> => {
+    const json = window.localStorage.getItem('gotrue.user');
+    if (json) {
+      const user = JSON.parse(json);
+      commit('setUser', user);
+    }
   }
 };
 
@@ -25,5 +44,6 @@ export default {
   state: DefaultIdentityState(),
   namespaced: true,
   getters,
-  mutations
+  mutations,
+  actions
 };

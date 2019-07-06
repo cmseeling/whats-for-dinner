@@ -1,13 +1,14 @@
 import { shallowMount, createLocalVue } from '@vue/test-utils';
 import Vuetify from 'vuetify';
 import MealSchedule from '@/components/MealSchedule.vue';
-import { DefaultScheduleState, IMealSlot } from '@/state/interfaces/ScheduleState';
+import { DefaultScheduleState } from '@/state/interfaces/ScheduleState';
+import { MealSlot } from '@/models/MealSlot';
 
 const localVue = createLocalVue();
 localVue.use(Vuetify);
 
 let mockStore: any;
-let mealSlots: IMealSlot[];
+let mealSlots: MealSlot[];
 
 describe('MealSchedule.vue', () => {
   beforeEach(() => {

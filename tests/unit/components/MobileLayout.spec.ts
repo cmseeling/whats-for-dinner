@@ -3,19 +3,21 @@ import map from 'lodash/map';
 import Vuetify from 'vuetify';
 import MobileLayout from '@/components/mobileScheduleLayout/MobileLayout.vue';
 import MobileSlot from '@/components/mobileScheduleLayout/MobileSlot.vue';
-import { DefaultScheduleState, AugmentedSlot, IMealSlot } from '@/state/interfaces/ScheduleState';
+import { DefaultScheduleState } from '@/state/interfaces/ScheduleState';
+import { MealSlot } from '@/models/MealSlot';
+import { AugmentedSlot } from '@/models/AugmentedSlot';
 
 const localVue = createLocalVue();
 localVue.use(Vuetify);
 
-let mealSlots: IMealSlot[];
+let mealSlots: MealSlot[];
 let slots: AugmentedSlot[];
 let mockSetActive: jest.Mock;
 
 describe('MobileLayout.vue', () => {
   beforeEach(() => {
     mealSlots = DefaultScheduleState().mealSlots;
-    slots = map(mealSlots, (slot: IMealSlot) => {
+    slots = map(mealSlots, (slot: MealSlot) => {
       return {
         ...slot,
         selected: false

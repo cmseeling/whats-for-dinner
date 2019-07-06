@@ -1,17 +1,7 @@
-export interface IMealSlot {
-  id: number;
-  selected: boolean;
-  dayIndex: number;
-  mealIndex: number;
-  recipeIds: number[];
-}
-
-export interface AugmentedSlot extends IMealSlot {
-  selected: boolean;
-}
+import { MealSlot } from '@/models/MealSlot';
 
 export interface ScheduleState {
-  mealSlots: IMealSlot[];
+  mealSlots: MealSlot[];
 }
 
 export const dayList: string[] = [
@@ -23,7 +13,7 @@ export const mealList: string[] = [
 ];
 
 export const DefaultScheduleState = (): ScheduleState => {
-  const mealSlots: IMealSlot[] = [];
+  const mealSlots: MealSlot[] = [];
   let i;
   for (i = 0; i < 21; i++) {
     const dayIndex = (i % 7);
@@ -38,7 +28,6 @@ export const DefaultScheduleState = (): ScheduleState => {
 
     mealSlots.push({
       id: i,
-      selected: false,
       dayIndex,
       mealIndex,
       recipeIds: []

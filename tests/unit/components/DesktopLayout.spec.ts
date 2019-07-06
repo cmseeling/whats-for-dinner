@@ -3,19 +3,21 @@ import map from 'lodash/map';
 import Vuetify from 'vuetify';
 import DesktopLayout from '@/components/desktopScheduleLayout/DesktopLayout.vue';
 import DesktopSlot from '@/components/desktopScheduleLayout/DesktopSlot.vue';
-import { DefaultScheduleState, AugmentedSlot, IMealSlot } from '@/state/interfaces/ScheduleState';
+import { DefaultScheduleState } from '@/state/interfaces/ScheduleState';
+import { MealSlot } from '@/models/MealSlot';
+import { AugmentedSlot } from '@/models/AugmentedSlot';
 
 const localVue = createLocalVue();
 localVue.use(Vuetify);
 
-let mealSlots: IMealSlot[];
+let mealSlots: MealSlot[];
 let slots: AugmentedSlot[];
 let mockSetActive: jest.Mock;
 
 describe('DesktopLayout.vue', () => {
   beforeEach(() => {
     mealSlots = DefaultScheduleState().mealSlots;
-    slots = map(mealSlots, (slot: IMealSlot) => {
+    slots = map(mealSlots, (slot: MealSlot) => {
       return {
         ...slot,
         selected: false

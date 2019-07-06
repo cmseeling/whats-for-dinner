@@ -32,7 +32,8 @@ import groupBy from 'lodash/groupBy';
 import { Dictionary } from 'lodash';
 import DesktopSlot from './DesktopSlot.vue';
 import DesktopDetails from './DesktopDetails.vue';
-import { IMealSlot, dayList, mealList } from '@/state/interfaces/ScheduleState';
+import { dayList, mealList } from '@/state/interfaces/ScheduleState';
+import { MealSlot } from '@/models/MealSlot';
 
 interface Data {
   days: string[];
@@ -57,8 +58,8 @@ export default Vue.extend({
     };
   },
   computed: {
-    groupedSlots(): Dictionary<IMealSlot[]> {
-      return groupBy(this.slots as IMealSlot[], 'dayIndex');
+    groupedSlots(): Dictionary<MealSlot[]> {
+      return groupBy(this.slots as MealSlot[], 'dayIndex');
     }
   },
   props: {

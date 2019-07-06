@@ -1,4 +1,5 @@
-import { DefaultScheduleState, ScheduleState, IMealSlot } from '../interfaces/ScheduleState';
+import { DefaultScheduleState, ScheduleState } from '../interfaces/ScheduleState';
+import { MealSlot } from '@/models/MealSlot';
 import flatMap from 'lodash/flatMap';
 import includes from 'lodash/includes';
 import uniq from 'lodash/uniq';
@@ -6,7 +7,7 @@ import without from 'lodash/without';
 
 const getters = {
   getAllUniqueRecipeIdsFromMealSlots: (state: ScheduleState): number[] => {
-    return uniq(flatMap(state.mealSlots, (slot: IMealSlot) => {
+    return uniq(flatMap(state.mealSlots, (slot: MealSlot) => {
       return slot.recipeIds;
     }));
   }

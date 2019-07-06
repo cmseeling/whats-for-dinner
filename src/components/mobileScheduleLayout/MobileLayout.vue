@@ -40,7 +40,8 @@
 import Vue from 'vue';
 import groupBy from 'lodash/groupBy';
 import { Dictionary } from 'lodash';
-import { IMealSlot, dayList } from '@/state/interfaces/ScheduleState';
+import { dayList } from '@/state/interfaces/ScheduleState';
+import { MealSlot } from '@/models/MealSlot';
 import MobileSlot from '@/components/mobileScheduleLayout/MobileSlot.vue';
 
 interface Data {
@@ -60,8 +61,8 @@ export default Vue.extend({
     };
   },
   computed: {
-    groupedSlots(): Dictionary<IMealSlot[]> {
-      return groupBy(this.slots as IMealSlot[], 'dayIndex');
+    groupedSlots(): Dictionary<MealSlot[]> {
+      return groupBy(this.slots as MealSlot[], 'dayIndex');
     }
   },
   props: {

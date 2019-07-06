@@ -23,7 +23,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Recipe } from '@/models/Recipe';
-import { IMealSlot, mealList } from '@/state/interfaces/ScheduleState';
+import { mealList } from '@/state/interfaces/ScheduleState';
 
 interface Data {
   meals: string[];

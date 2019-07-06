@@ -2,13 +2,13 @@ import { shallowMount, createLocalVue, mount } from '@vue/test-utils';
 import Vuetify from 'vuetify';
 import DesktopSlot from '@/components/desktopScheduleLayout/DesktopSlot.vue';
 import { Recipe } from '@/models/Recipe';
-import { IMealSlot } from '@/state/interfaces/ScheduleState';
+import { AugmentedSlot } from '@/models/AugmentedSlot';
 import { generateRecipe } from '../../helpers/recipe';
 
 const localVue = createLocalVue();
 localVue.use(Vuetify);
 
-let mealSlot: IMealSlot;
+let mealSlot: AugmentedSlot;
 let setActive: jest.Mock;
 let recipeIds: number[];
 let mockRecipe1: Recipe;

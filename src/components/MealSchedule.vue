@@ -30,7 +30,8 @@ import Vue from 'vue';
 import map from 'lodash/map';
 import DesktopLayout from '@/components/desktopScheduleLayout/DesktopLayout.vue';
 import MobileLayout from '@/components/mobileScheduleLayout/MobileLayout.vue';
-import { IMealSlot, AugmentedSlot } from '@/state/interfaces/ScheduleState';
+import { MealSlot } from '@/models/MealSlot';
+import { AugmentedSlot } from '@/models/AugmentedSlot';
 
 interface Data {
   activeSlot: number|null;
@@ -48,11 +49,11 @@ export default Vue.extend({
     };
   },
   computed: {
-    mealSlots(): IMealSlot[] {
+    mealSlots(): MealSlot[] {
       return this.$store.state.schedule.mealSlots;
     },
     augmentedSlots(): AugmentedSlot[] {
-      return map(this.mealSlots, (slot: IMealSlot) => {
+      return map(this.mealSlots, (slot: MealSlot) => {
         return {
           ...slot,
           selected: slot.id === this.activeSlot

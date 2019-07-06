@@ -7,7 +7,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "test:unit-single": "vue-cli-service test:unit tests/unit/state/identity.spec.ts"
+    "test:unit-single": "vue-cli-service test:unit tests/unit/components/Layout.spec.ts"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.8.1",

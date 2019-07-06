@@ -70,11 +70,9 @@ export default Vue.extend({
   },
   methods: {
     goToNextDay() {
-      console.log('goToNext clicked');
       this.activeDayIndex = (this.activeDayIndex + 1) % 7;
     },
     goToPrevDay() {
-      console.log('goToPrev clicked');
       this.activeDayIndex = ((this.activeDayIndex - 1) + 7) % 7;
     }
   }

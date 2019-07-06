@@ -73,7 +73,6 @@ export default Vue.extend({
       this.$emit('recipe-add-click', recipeId);
     },
     nextRecipe() {
-      console.log(this.recipeCount);
       const nextIndex = Math.floor(Math.random() * this.recipeCount);
       this.recipe = this.getRecipeByIndex(nextIndex);
     }

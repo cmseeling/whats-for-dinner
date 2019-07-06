@@ -8,14 +8,47 @@
         <v-list-tile-title>{{ item.title }}</v-list-tile-title>
       </v-list-tile-content>
     </v-list-tile>
+    <div class="hidden-lg-and-up">
+      <hr/>
+      <div v-if="isLoggedIn" >
+        <v-list-tile @click="triggerNetlifyIdentityAction('logout')">
+          <v-list-tile-action>
+            <v-icon>fa-user</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            Log Out
+          </v-list-tile-content>
+        </v-list-tile>
+      </div>
+      <div v-else>
+        <v-list-tile @click="triggerNetlifyIdentityAction('login')">
+          <v-list-tile-action>
+            <v-icon>fa-user</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            Log In
+          </v-list-tile-content>
+        </v-list-tile>
+      </div>
+    </div>
   </v-list>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import netlifyIdentity, { User } from 'netlify-identity-widget';
+import { CallNetlifyIdentityWidget } from '@/utils/netlifyIdentityHelper';
 
 export default Vue.extend({
   name: 'AppNav',
+  computed: {
+    isLoggedIn(): boolean {
+      return this.$store.getters['identity/isLoggedIn'];
+    },
+    userName(): string {
+      return this.$store.getters['identity/userName'];
+    }
+  },
   data() {
     return {
       navItems: [
@@ -24,6 +57,14 @@ export default Vue.extend({
         { title: 'Grocery List', icon: 'fa-list', route: '/groceries' }
       ]
     };
+  },
+  methods: {
+    setUser(user: User|null) {
+      this.$store.commit('identity/setUser', user);
+    },
+    triggerNetlifyIdentityAction(action: string) {
+      CallNetlifyIdentityWidget(this, action);
+    }
   }
 });
 </script>

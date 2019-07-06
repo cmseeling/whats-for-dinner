@@ -32,9 +32,9 @@ const mutations = {
 
 const actions = {
   init: async ({commit}: {commit: Commit}): Promise<void> => {
-    let json = window.localStorage.getItem('gotrue.user');
-    if(json) {
-      let user = JSON.parse(json);
+    const json = window.localStorage.getItem('gotrue.user');
+    if (json) {
+      const user = JSON.parse(json);
       commit('setUser', user);
     }
   }

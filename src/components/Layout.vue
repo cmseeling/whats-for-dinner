@@ -2,15 +2,15 @@
   <v-app>
     <v-toolbar app dark color="gray" clipped-left dense>
       <v-toolbar-side-icon @click="visible = !visible"></v-toolbar-side-icon>
-      <v-toolbar-title class="white--text">What's For Dinner?</v-toolbar-title>
+      <v-toolbar-title class="white-text">What's For Dinner?</v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-sm-and-down" v-if="isLoggedIn">
-        <v-btn disabled>{{userName}}</v-btn>
-        <v-btn flat @click="triggerNetlifyIdentityAction('logout')">Log Out</v-btn>
+      <v-toolbar-items class="hidden-md-and-down" v-if="isLoggedIn">
+        <v-btn class="wfd-user-name" disabled>{{userName}}</v-btn>
+        <v-btn class="logout-button" flat @click="triggerNetlifyIdentityAction('logout')">Log Out</v-btn>
       </v-toolbar-items>
-      <v-toolbar-items class="hidden-sm-and-down" v-else>
-        <v-btn flat @click="triggerNetlifyIdentityAction('login')">Log In</v-btn>
-        <v-btn flat @click="triggerNetlifyIdentityAction('signup')">Sign Up</v-btn>
+      <v-toolbar-items class="hidden-md-and-down" v-else>
+        <v-btn class="login-button" flat @click="triggerNetlifyIdentityAction('login')">Log In</v-btn>
+        <v-btn class="signup-button" flat @click="triggerNetlifyIdentityAction('signup')">Sign Up</v-btn>
       </v-toolbar-items>
     </v-toolbar>
     <v-navigation-drawer app clipped v-model="visible">
@@ -28,8 +28,7 @@
 import Vue from 'vue';
 import netlifyIdentity, { User } from 'netlify-identity-widget';
 import AppNavList from '@/components/AppNavList.vue';
-
-netlifyIdentity.init();
+import { CallNetlifyIdentityWidget } from '@/utils/netlifyIdentityHelper';
 
 interface Data {
   visible: boolean|null;
@@ -58,17 +57,7 @@ export default Vue.extend({
       this.$store.commit('identity/setUser', user);
     },
     triggerNetlifyIdentityAction(action: string) {
-      if (action === 'login' || action === 'signup') {
-        netlifyIdentity.open(action);
-        netlifyIdentity.on('login', (user) => {
-          this.setUser(user);
-          netlifyIdentity.close();
-        });
-      } else if (action === 'logout') {
-        this.setUser(null);
-        netlifyIdentity.logout();
-        this.$router.push({name: 'home'});
-      }
+      CallNetlifyIdentityWidget(this, action);
     }
   }
 });

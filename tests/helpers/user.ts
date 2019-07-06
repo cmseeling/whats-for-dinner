@@ -31,4 +31,4 @@ export function generateUser({id = 'userId1', email = 'test@test.com', fullName 
       full_name: fullName
     }
   };
-};
+}

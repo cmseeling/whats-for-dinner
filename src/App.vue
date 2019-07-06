@@ -7,6 +7,9 @@
 <script lang="ts">
 import Vue from 'vue';
 import Layout from '@/components/Layout.vue';
+import netlifyIdentity from 'netlify-identity-widget';
+
+netlifyIdentity.init();
 
 interface Data {
   showMenu: boolean|null;

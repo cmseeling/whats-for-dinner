@@ -88,11 +88,21 @@ const mutations = {
 };
 
 const actions = {
-  init: async ({commit}: {commit: Commit}): Promise<void> => {
-    const recipes = await Recipes.readAll();
+  // init: async ({commit}: {commit: Commit}): Promise<void> => {
+  //   const recipes = await Recipes.readAll();
+  //   commit('resetRecipes');
+  //   commit('addRecipes', recipes);
+  //   commit('setInitialized');
+  // },
+
+  setRecipes: ({commit}: {commit: Commit}, recipes: Recipe[]): void => {
     commit('resetRecipes');
     commit('addRecipes', recipes);
     commit('setInitialized');
+  },
+
+  clearRecipes: ({commit}: {commit: Commit}): void => {
+    commit('resetRecipes');
   },
 
   saveRecipe: async ({commit}: {commit: Commit}, recipe: Recipe): Promise<void> => {

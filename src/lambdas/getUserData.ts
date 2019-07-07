@@ -1,9 +1,22 @@
-import { Context, APIGatewayEvent } from 'aws-lambda';
+import { APIGatewayEvent } from 'aws-lambda';
 
-export async function handler(event: APIGatewayEvent, context: Context) {
+export async function handler(event: APIGatewayEvent, context: any) {
+  if (!context.clientContext && !context.clientContext.identity) {
+    return {
+      statusCode: 500,
+      body: JSON.stringify({
+        msg:
+          'No identity instance detected. Did you enable it?'
+      }) // Could be a custom message or object i.e. JSON.stringify(err)
+    };
+  }
+  const { identity, user } = context.clientContext;
+
   return {
     statusCode: 200,
     body: JSON.stringify({
+      identity,
+      user,
       recipes: [
         {
           id: 1,

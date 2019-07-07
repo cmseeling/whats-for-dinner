@@ -1,6 +1,7 @@
-import { Commit } from 'vuex';
+import { Commit, Dispatch } from 'vuex';
 import { DefaultIdentityState, IdentityState } from '../interfaces/Identity';
 import { User } from 'netlify-identity-widget';
+import { getData } from '@/api/LambdaAPI';
 
 const getters = {
   isLoggedIn: (state: IdentityState): boolean => {
@@ -31,11 +32,28 @@ const mutations = {
 };
 
 const actions = {
-  init: async ({commit}: {commit: Commit}): Promise<void> => {
+  init: async ({commit, dispatch}: {commit: Commit, dispatch: Dispatch}): Promise<void> => {
     const json = window.localStorage.getItem('gotrue.user');
     if (json) {
       const user = JSON.parse(json);
       commit('setUser', user);
+      dispatch('loadUserData');
+    }
+  },
+
+  updateUser: async ({commit, dispatch}: {commit: Commit, dispatch: Dispatch}, user: User|null): Promise<void> => {
+    commit('setUser', user);
+    if (user) {
+      dispatch('loadUserData');
+    } else {
+      dispatch('recipes/clearRecipes', null, {root: true});
+    }
+  },
+
+  loadUserData: async ({state, dispatch}: {state: IdentityState, dispatch: Dispatch}): Promise<void> => {
+    if (state.user) {
+      const data = await getData(state.user);
+      dispatch('recipes/setRecipes', data.recipes, {root: true});
     }
   }
 };

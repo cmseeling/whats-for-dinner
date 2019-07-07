@@ -60,7 +60,7 @@ export default Vue.extend({
   },
   methods: {
     setUser(user: User|null) {
-      this.$store.commit('identity/setUser', user);
+      this.$store.dispatch('identity/updateUser', user);
     },
     triggerNetlifyIdentityAction(action: string) {
       CallNetlifyIdentityWidget(this, action);

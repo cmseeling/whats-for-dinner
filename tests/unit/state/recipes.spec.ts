@@ -7,7 +7,6 @@ import { Dictionary } from '@/utils/Dictionary';
 let state: RecipesState;
 let testRecipe1: Recipe;
 let testRecipe2: Recipe;
-let mockReadAll: jest.SpyInstance;
 let commit: jest.Mock;
 
 describe('recipes.ts', () => {
@@ -141,20 +140,6 @@ describe('recipes.ts', () => {
 
     expect(state).toEqual(expectedState);
   });
-
-  // it('initializes the state', async () => {
-  //   mockReadAll = jest.spyOn(Recipes, 'readAll').mockImplementation(async () => {
-  //     return [testRecipe1, testRecipe2];
-  //   });
-
-  //   await recipes.actions.init({commit});
-
-  //   expect(mockReadAll).toBeCalledTimes(1);
-  //   expect(commit).toBeCalledTimes(3);
-  //   expect(commit).toHaveBeenNthCalledWith(1, 'resetRecipes');
-  //   expect(commit).toHaveBeenNthCalledWith(2, 'addRecipes', [testRecipe1, testRecipe2]);
-  //   expect(commit).toHaveBeenNthCalledWith(3, 'setInitialized');
-  // });
 
   it('sets recipes', async () => {
     const recipeArray = [testRecipe1, testRecipe2];

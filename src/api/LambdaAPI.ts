@@ -13,4 +13,4 @@ const createRequest = (user: User): Request => {
     headers.append('authorization', `Bearer ${user.token.access_token}`);
   }
   return new Request('/.netlify/functions/getUserData', {headers});
-}
+};

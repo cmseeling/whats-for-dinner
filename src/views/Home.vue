@@ -6,7 +6,7 @@
         <v-tab>Recipe List</v-tab>
         <v-tab>Random Recipe</v-tab>
         <v-tab-item>
-          <RecipeList v-on:recipe-list-click="handleRecipeSelected"/>
+          <RecipeList v-on:recipe-list-click="handleRecipeSelected" :showEmptyPlaceholder="true"/>
         </v-tab-item>
         <v-tab-item>
           <RandomRecipe v-on:recipe-add-click="handleRecipeSelected"/>

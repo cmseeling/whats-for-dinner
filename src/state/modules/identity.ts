@@ -1,11 +1,15 @@
 import { Commit, Dispatch } from 'vuex';
 import { DefaultIdentityState, IdentityState } from '../interfaces/Identity';
 import { User } from 'netlify-identity-widget';
-import { getData } from '@/api/LambdaAPI';
+import LambdaAPI from '@/api/LambdaAPI';
 
 const getters = {
   isLoggedIn: (state: IdentityState): boolean => {
     return state.user !== null;
+  },
+
+  user: (state: IdentityState): User|null => {
+    return state.user;
   },
 
   userId: (state: IdentityState): string => {
@@ -52,8 +56,17 @@ const actions = {
 
   loadUserData: async ({state, dispatch}: {state: IdentityState, dispatch: Dispatch}): Promise<void> => {
     if (state.user) {
-      const data = await getData(state.user);
-      dispatch('recipes/setRecipes', data.recipes, {root: true});
+      try {
+        const data = await LambdaAPI.getData(state.user);
+        dispatch('recipes/setRecipes', data.recipes, {root: true});
+      } catch (error) {
+        let message = 'Could not retrieve your data. ';
+        if (error.response) {
+          message = message + 
+            `Server responded with a ${error.response.status} status code and message "${error.response.data.message}"`;
+        }
+        dispatch('app/setNewErrorMessage', message, {root: true});
+      }
     }
   }
 };

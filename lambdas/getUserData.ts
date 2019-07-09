@@ -1,54 +1,41 @@
 import { APIGatewayEvent } from 'aws-lambda';
-import { clientOptions } from './dynamodb/config';
+import { NetlifyFunctionContext } from './models/NetlifyFunctionContext';
+import { getItem } from './dynamodb/getItem';
+import { UserEntry } from './models/UserEntry';
 
-export async function handler(event: APIGatewayEvent, context: any) {
+export async function handler(event: APIGatewayEvent, context: NetlifyFunctionContext) {
   if (!context.clientContext && !context.clientContext.identity) {
+    console.log('could not find identity context');
     return {
       statusCode: 500,
       body: JSON.stringify({
-        msg:
-          'No identity instance detected. Did you enable it?'
+        message: 'No identity instance detected. Did you enable it?'
       })
     };
   }
-  const { identity, user } = context.clientContext;
+  const user = context.clientContext.user;
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({
-      identity,
-      user,
-      clientOptions,
-      recipes: [
-        {
-          id: 1,
-          name: 'recipe 1',
-          ingredients: [
-            'milk',
-            'eggs'
-          ]
-        },
-        {
-          id: 2,
-          name: 'recipe 2',
-          ingredients: [
-            'butter',
-            'sugar'
-          ]
-        }
-      ],
-      mealPlans: [
-        {
-          id: 1,
-          created: '2019-05-31',
-          slots: [
-            {
-              id: 5,
-              recipeIds: [1, 2]
-            }
-          ]
-        }
-      ]
-    })
-  };
+  try {
+    const rawResult = await getItem(user.sub);
+    const result: UserEntry = {UserId: (rawResult as any).UserId};
+    if (rawResult.recipes) {
+      result.recipes = JSON.parse(rawResult.recipes);
+    }
+    if (rawResult.mealPlans) {
+      result.mealPlans = JSON.parse(rawResult.mealPlans);
+    }
+
+    console.log(result);
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(result)
+    };
+  } catch (err) {
+    console.log(err);
+    return {
+      statusCode: 500,
+      body: JSON.stringify(err)
+    };
+  }
 }

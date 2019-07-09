@@ -21,6 +21,16 @@
         <router-view></router-view>
       </v-container>
     </v-content>
+    <v-snackbar
+      v-model="hasError"
+      :bottom="true"
+      :timeout="0"
+    >
+      {{errorMessage}}
+      <v-btn color="pink" flat @click="dismissErrorMessage">
+        <v-icon small>fa fa-times</v-icon>
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -45,6 +55,12 @@ export default Vue.extend({
     },
     userName(): string {
       return this.$store.getters['identity/userName'];
+    },
+    hasError(): boolean {
+      return this.$store.getters['app/hasError'];
+    },
+    errorMessage(): string {
+      return this.$store.getters['app/errorMessage'];
     }
   },
   data(): Data {
@@ -58,6 +74,9 @@ export default Vue.extend({
     },
     triggerNetlifyIdentityAction(action: string) {
       CallNetlifyIdentityWidget(this, action);
+    },
+    dismissErrorMessage() {
+      this.$store.dispatch('app/dismissErrorMessage');
     }
   }
 });

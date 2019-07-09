@@ -61,4 +61,8 @@ export default Vue.extend({
   .recipe-title {
     text-align: left;
   }
+
+  .recipe-title-button {
+    text-transform: none;
+  }
 </style>

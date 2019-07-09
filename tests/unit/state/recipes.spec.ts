@@ -1,5 +1,5 @@
 import recipes from '@/state/modules/recipes';
-import Recipes from '@/api/Recipes';
+import LambdaAPI from '@/api/LambdaAPI';
 import { DefaultRecipesState, RecipesState } from '@/state/interfaces/RecipesState';
 import { Recipe } from '@/models/Recipe';
 import { Dictionary } from '@/utils/Dictionary';
@@ -8,6 +8,8 @@ let state: RecipesState;
 let testRecipe1: Recipe;
 let testRecipe2: Recipe;
 let commit: jest.Mock;
+let rootGetters: any;
+let mockUser: any;
 
 describe('recipes.ts', () => {
   beforeEach(() => {
@@ -34,6 +36,14 @@ describe('recipes.ts', () => {
     state.recipes.Upsert('2', testRecipe2);
 
     commit = jest.fn();
+
+    mockUser = {
+      email: 'test@test.com'
+    };
+
+    rootGetters = {
+      ['identity/user']: mockUser
+    };
   });
 
   afterEach(() => {
@@ -152,6 +162,13 @@ describe('recipes.ts', () => {
     expect(commit).toHaveBeenNthCalledWith(3, 'setInitialized');
   });
 
+  it('clears recipes', async () => {
+    await recipes.actions.clearRecipes({commit});
+
+    expect(commit).toBeCalledTimes(1);
+    expect(commit).toHaveBeenCalledWith('resetRecipes');
+  });
+
   it('saves a new recipe', async () => {
     const newRecipe: Recipe = {
       id: null,
@@ -164,37 +181,32 @@ describe('recipes.ts', () => {
       id: 3
     };
 
-    const mockCreate = jest.spyOn(Recipes, 'create').mockImplementation(async () => {
-      return expectedRecipe;
-    });
+    const mockSave = jest.spyOn(LambdaAPI, 'saveRecipes').mockImplementation();
 
-    await recipes.actions.saveRecipe({commit}, newRecipe);
+    await recipes.actions.saveRecipe({commit, state, rootGetters}, newRecipe);
 
-    expect(mockCreate).toHaveBeenCalledTimes(1);
+    expect(mockSave).toHaveBeenCalledTimes(1);
     expect(commit).toHaveBeenCalledTimes(1);
     expect(commit).toHaveBeenCalledWith('updateRecipe', expectedRecipe);
   });
 
   it('saves an updated recipe', async () => {
-    const mockUpdate = jest.spyOn(Recipes, 'update').mockImplementation(async () => {
-      return testRecipe1;
-    });
+    const mockSave = jest.spyOn(LambdaAPI, 'saveRecipes').mockImplementation();
 
-    await recipes.actions.saveRecipe({commit}, testRecipe1);
+    await recipes.actions.saveRecipe({commit, state, rootGetters}, testRecipe1);
 
-    expect(mockUpdate).toHaveBeenCalledTimes(1);
+    expect(mockSave).toHaveBeenCalledTimes(1);
     expect(commit).toHaveBeenCalledTimes(1);
     expect(commit).toHaveBeenCalledWith('updateRecipe', testRecipe1);
   });
 
   it('deletes a recipe by id', async () => {
-    const mockDelete = jest.spyOn(Recipes, 'deleteItem')
-      .mockImplementation(async () => { console.log('mock delete'); });
+    const mockSave = jest.spyOn(LambdaAPI, 'saveRecipes').mockImplementation();
 
-    await recipes.actions.deleteRecipe({commit}, 1);
+    await recipes.actions.deleteRecipe({commit, state, rootGetters}, 1);
 
     expect(commit).toHaveBeenCalledTimes(1);
     expect(commit).toHaveBeenCalledWith('removeRecipe', 1);
-    expect(mockDelete).toHaveBeenCalledTimes(1);
+    expect(mockSave).toHaveBeenCalledTimes(1);
   });
 });

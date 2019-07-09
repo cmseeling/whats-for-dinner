@@ -1,7 +1,7 @@
 import { getDocumentClient } from './DynamoDbClient';
 import { DbConstants } from './DbConstants';
 
-export const upsertItem = async (key: string, data: any): Promise<void> => {
+export const upsertItem = async (key: string, property: string, data: any): Promise<object> => {
   const docClient = getDocumentClient();
 
   // params is supposed to of type AWS.DynamoDB.UpdateItemInput but the Key property type appears to be incorrect
@@ -10,18 +10,17 @@ export const upsertItem = async (key: string, data: any): Promise<void> => {
     Key: {
       [DbConstants.UserId] : key
     },
-    UpdateExpression: 'set recipes = :r, mealPlans = :m',
+    UpdateExpression: `set ${property} = :p`,
     ExpressionAttributeValues: {
-      ':r': data.recipes,
-      ':m': data.mealPlans
+      ':p': data
     },
     ReturnValues: 'ALL_NEW'
   };
 
   try {
     const result = await docClient.update(params).promise();
-    console.log(`Added item: ${JSON.stringify(result, null, 2)}`);
+    return result.Attributes ? result.Attributes : {};
   } catch (err) {
-    console.log(`Unable to add item. Error JSON: ${JSON.stringify(err, null, 2)}`);
+    throw err;
   }
 };

@@ -62,7 +62,7 @@ const actions = {
       } catch (error) {
         let message = 'Could not retrieve your data. ';
         if (error.response) {
-          message = message + 
+          message = message +
             `Server responded with a ${error.response.status} status code and message "${error.response.data.message}"`;
         }
         dispatch('app/setNewErrorMessage', message, {root: true});

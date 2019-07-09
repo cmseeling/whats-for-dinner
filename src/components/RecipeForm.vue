@@ -16,9 +16,11 @@
             <v-container v-for="(item, index) in recipe.ingredients" :key="index" tag="li" class="pa-0 recipe-ingredient-item" fill-height>
               <v-layout align-center>
                 <v-flex shrink>
-                  <v-btn class="remove-ingredient-button" color="error" @click="removeIngredient(index)" icon><v-icon small>fa fa-times</v-icon></v-btn>
+                  <v-btn class="remove-ingredient-button" color="error" @click="removeIngredient(index)" flat icon>
+                    <v-icon small>fa fa-times</v-icon>
+                  </v-btn>
                 </v-flex>
-                <v-flex>
+                <v-flex class="ingredient-text">
                   {{item}}
                 </v-flex>
               </v-layout>
@@ -26,18 +28,20 @@
             <v-container v-if="isAddingIngredient" tag="li" class="pa-0 add-ingredient-inputs" fill-height>
               <v-layout align-center>
                 <v-flex>
-                  <v-text-field class="add-ingredient-input" v-model="newIngredient" autofocus/>
+                  <v-text-field class="add-ingredient-input" v-model="newIngredient" autofocus @keyup.enter="addIngredient"/>
                 </v-flex>
                 <v-flex shrink>
-                  <v-btn class="add-ingredient-confirm" color="success" @click="addIngredient">Add</v-btn>
+                  <v-btn class="add-ingredient-confirm" color="success" @click="addIngredient" small>Add</v-btn>
                 </v-flex>
                 <v-flex shrink>
-                  <v-btn class="add-ingredient-cancel" color="error" @click="cancelAddIngredient">Cancel</v-btn>
+                  <v-btn class="add-ingredient-cancel" color="error" @click="cancelAddIngredient" small>Cancel</v-btn>
                 </v-flex>
               </v-layout>
             </v-container>
             <li v-if="!isAddingIngredient">
-              <v-btn class="add-ingredient-button" color="success" @click.prevent="addItem"><v-icon small>fa fa-plus</v-icon>&nbsp;Add Ingredient</v-btn>
+              <v-btn class="add-ingredient-button" color="success" @click.prevent="addItem" small>
+                <v-icon small class="mr-2">fa fa-plus</v-icon>Add Ingredient
+              </v-btn>
             </li>
           </ul>
           <br/>
@@ -46,7 +50,7 @@
           <v-container class="pa-0">
             <v-layout column>
               <v-flex>
-                <v-btn class="save-button" color="primary" @click.prevent="saveRecipeForm">Save</v-btn>
+                <v-btn class="save-button" color="primary" @click.prevent="saveRecipeForm" small>Save</v-btn>
               </v-flex>
               <v-flex>
                 <v-btn class="cancel-button" color="error" v-if="isNewRecipe" @click.prevent="goBack">Cancel</v-btn>
@@ -153,5 +157,9 @@ export default Vue.extend({
 <style scoped>
   li {
     list-style-type: none;
+  }
+
+  .ingredient-text {
+    padding-bottom: 2px;
   }
 </style>

@@ -1,6 +1,8 @@
 import { APIGatewayEvent } from 'aws-lambda';
 import { NetlifyFunctionContext } from '../models/NetlifyFunctionContext';
 import { upsertItem } from '../dynamodb/upsertItem';
+import { CreateTable } from '../dynamodb/config';
+import { ensureTableExists } from '../dynamodb/ensureTableExists';
 
 export function createSaveFunctionHandler(dynamoTopLevelAttribute: string) {
   return async function handler(event: APIGatewayEvent, context: NetlifyFunctionContext) {
@@ -21,6 +23,10 @@ export function createSaveFunctionHandler(dynamoTopLevelAttribute: string) {
     const user = context.clientContext.user;
 
     try {
+      if (CreateTable) {
+        ensureTableExists();
+      }
+
       const result = await upsertItem(user.sub, dynamoTopLevelAttribute, event.body);
       console.log(result);
       return {

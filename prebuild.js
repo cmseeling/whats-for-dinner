@@ -1,6 +1,8 @@
 require('dotenv').config();
 const fs = require('fs');
 
+console.log('Prebuild started. Gathering environment variables.');
+
 const clientOptions = {
   region: process.env.REGION,
   accessKeyId: process.env.ACCESS_KEY_ID,

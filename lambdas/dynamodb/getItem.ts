@@ -1,7 +1,8 @@
 import { getDocumentClient } from './DynamoDbClient';
 import { DbConstants } from './DbConstants';
+import { UserEntry } from '../models/UserEntry';
 
-export const getItem = async (key: string): Promise<void> => {
+export const getItem = async (key: string): Promise<UserEntry> => {
   const docClient = getDocumentClient();
 
   // params is supposed to of type AWS.DynamoDB.GetItemInput but the Key property type appears to be incorrect
@@ -14,8 +15,8 @@ export const getItem = async (key: string): Promise<void> => {
 
   try {
     const result = await docClient.get(params).promise();
-    console.log(`Retrieved item: ${JSON.stringify(result, null, 2)}`);
+    return result.Item ? result.Item : {};
   } catch (err) {
-    console.log(`Unable to read item. Error JSON: ${JSON.stringify(err, null, 2)}`);
+    throw err;
   }
 };

@@ -13,6 +13,12 @@
           v-model="searchText"/>
       </v-toolbar>
     </v-card-title>
+    <v-card-text v-if="!isInitialized">
+      You are not logged in. Please log in to see your recipes.
+    </v-card-text>
+    <v-card-text v-else-if="showEmptyPlaceholder && recipeCount === 0">
+      You don't have any recipes yet. Click <router-link to="/recipes">here</router-link> to add one.
+    </v-card-text>
     <v-card-text>
       <RecipeItem
         v-for="recipe in filteredList"
@@ -40,6 +46,9 @@ export default Vue.extend({
   components: {
     RecipeItem
   },
+  props: {
+    showEmptyPlaceholder: Boolean
+  },
   data(): Data {
     return {
       searchText: ''
@@ -51,6 +60,12 @@ export default Vue.extend({
     },
     filteredList(): Recipe[] {
       return this.getFilteredList(this.searchText);
+    },
+    isInitialized(): boolean {
+      return this.$store.getters['recipes/isInitialized'];
+    },
+    recipeCount(): number {
+      return this.$store.getters['recipes/recipeCount'];
     }
   },
   methods: {

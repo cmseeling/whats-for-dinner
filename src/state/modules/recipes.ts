@@ -6,10 +6,11 @@ import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
 import flatMap from 'lodash/flatMap';
 import forEach from 'lodash/forEach';
+import max from 'lodash/max';
 import uniq from 'lodash/uniq';
 import reduce from 'lodash/reduce';
-import Recipes from '@/api/Recipes';
 import { Dictionary } from '@/utils/Dictionary';
+import LambdaAPI from '@/api/LambdaAPI';
 
 const getters = {
   getFilteredList: (state: RecipesState) => (filterString: string): Recipe[] => {
@@ -88,13 +89,6 @@ const mutations = {
 };
 
 const actions = {
-  // init: async ({commit}: {commit: Commit}): Promise<void> => {
-  //   const recipes = await Recipes.readAll();
-  //   commit('resetRecipes');
-  //   commit('addRecipes', recipes);
-  //   commit('setInitialized');
-  // },
-
   setRecipes: ({commit}: {commit: Commit}, recipes: Recipe[]): void => {
     commit('resetRecipes');
     commit('addRecipes', recipes);
@@ -105,19 +99,34 @@ const actions = {
     commit('resetRecipes');
   },
 
-  saveRecipe: async ({commit}: {commit: Commit}, recipe: Recipe): Promise<void> => {
+  saveRecipe: async (
+      {commit, state, rootGetters}: {commit: Commit, state: RecipesState, rootGetters: any},
+      recipe: Recipe
+  ): Promise<void> => {
+    let recipeData;
     if (recipe.id) {
-      const updatedRecipe = await Recipes.update(recipe.id, recipe);
-      commit('updateRecipe', updatedRecipe);
+      recipeData = {...recipe};
     } else {
-      const newRecipe = await Recipes.create(recipe);
-      commit('updateRecipe', newRecipe);
+      const maxId = max(state.recipes.Keys());
+      let newId;
+      if (maxId) {
+        newId = +maxId + 1;
+      } else {
+        newId = 1;
+      }
+      recipeData = {...recipe, id: newId};
     }
+
+    commit('updateRecipe', recipeData);
+    await LambdaAPI.saveRecipes(rootGetters['identity/user'], state.recipes.Values());
   },
 
-  deleteRecipe: async ({commit}: {commit: Commit}, id: number): Promise<void> => {
+  deleteRecipe: async (
+    {commit, state, rootGetters}: {commit: Commit, state: RecipesState, rootGetters: any},
+    id: number
+  ): Promise<void> => {
     commit('removeRecipe', id);
-    await Recipes.deleteItem(id);
+    await LambdaAPI.saveRecipes(rootGetters['identity/user'], state.recipes.Values());
   }
 };
 

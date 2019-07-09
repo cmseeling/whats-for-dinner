@@ -3,10 +3,19 @@ import { DefaultIdentityState, IdentityState } from '@/state/interfaces/Identity
 import { generateUser } from '../../helpers/user';
 
 let state: IdentityState;
+let commit: jest.Mock;
+let dispatch: jest.Mock;
 
 describe('identity.ts', () => {
   beforeEach(() => {
+    commit = jest.fn();
+    dispatch = jest.fn();
+
     state = DefaultIdentityState();
+  });
+
+  afterEach(() => {
+    jest.resetAllMocks();
   });
 
   it('returns false if user is not logged in', () => {
@@ -41,6 +50,25 @@ describe('identity.ts', () => {
     const expectedState = {user} as IdentityState;
     identity.mutations.setUser(state, user);
     expect(state).toEqual(expectedState);
+  });
+
+  it('updates the user', () => {
+    const user = generateUser();
+    identity.actions.updateUser({commit, dispatch}, user);
+
+    expect(commit).toHaveBeenCalledTimes(1);
+    expect(commit).toHaveBeenCalledWith('setUser', user);
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledWith('loadUserData');
+  });
+
+  it('clears the user', () => {
+    identity.actions.updateUser({commit, dispatch}, null);
+
+    expect(commit).toHaveBeenCalledTimes(1);
+    expect(commit).toHaveBeenCalledWith('setUser', null);
+    expect(dispatch).toHaveBeenCalledTimes(1);
+    expect(dispatch).toHaveBeenCalledWith('recipes/clearRecipes', null, {root: true});
   });
 });
 

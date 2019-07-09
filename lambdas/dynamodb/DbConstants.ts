@@ -1,4 +1,6 @@
 export const DbConstants = {
   TableName: 'GroceryPlanner',
-  UserId: 'UserId'
+  UserId: 'UserId',
+  Recipes: 'recipes',
+  MealPlans: 'mealPlans'
 };

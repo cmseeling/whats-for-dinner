@@ -1,7 +1,7 @@
 <template>
   <v-layout column v-touch="{left: goToPrevDay, right: goToNextDay}">
     <v-flex>
-      <v-toolbar>
+      <v-toolbar dense>
         <v-toolbar-title class="mobile-day-label">
           {{days[activeDayIndex]}}
         </v-toolbar-title>

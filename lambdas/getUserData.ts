@@ -19,7 +19,7 @@ export async function handler(event: APIGatewayEvent, context: NetlifyFunctionCo
 
   try {
     if (CreateTable) {
-      ensureTableExists();
+      await ensureTableExists();
     }
 
     const rawResult = await getItem(user.sub);

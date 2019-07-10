@@ -24,7 +24,7 @@ export function createSaveFunctionHandler(dynamoTopLevelAttribute: string) {
 
     try {
       if (CreateTable) {
-        ensureTableExists();
+        await ensureTableExists();
       }
 
       const result = await upsertItem(user.sub, dynamoTopLevelAttribute, event.body);

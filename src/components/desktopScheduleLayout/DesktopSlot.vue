@@ -6,14 +6,18 @@
       </div>
     </v-slide-y-transition>
     <v-slide-y-transition mode="out-in">
-      <div v-show="expanded" :class="mealSlot.selected ? 'meal-slot selected' : 'meal-slot'" style="height: 100%">
+      <div v-show="expanded" :class="mealSlot.selected ? 'meal-slot selected' : 'meal-slot'">
         <div v-show="expanded" class="expanded-display">
           <div class="empty-slot" v-if="mealSlot.recipeIds.length === 0">None Selected</div>
           <ul class="pa-0 recipe-list" v-else>
-            <v-container v-for="recipeId in mealSlot.recipeIds" :key="recipeId" tag="li" class="pa-0 mb-2 recipe-item" style="" fill-height>
+            <v-container v-for="(recipeId, index) in mealSlot.recipeIds" :key="recipeId"
+                  tag="li" fill-height
+                  :class="(index % 2 === 0) ? 'pa-0 recipe-item' : 'pa-0 recipe-item-striped'">
               <v-layout align-center>
                 <v-flex shrink>
-                  <v-btn class="recipe-list-remove-button" color="error" @click="removeFromMealSlot(recipeId)" small icon><v-icon size="10px">fa fa-times</v-icon></v-btn>
+                  <v-btn class="recipe-list-remove-button" color="error" @click="removeFromMealSlot(recipeId)" small flat icon>
+                    <v-icon size="14">fa fa-times</v-icon>
+                  </v-btn>
                 </v-flex>
                 <v-flex class="recipe-list-name">
                   {{getRecipeName(recipeId)}}
@@ -92,14 +96,32 @@ export default Vue.extend({
 
   .meal-slot {
     height: 100%;
+    border: 2px solid white;
   }
 
   .meal-slot :hover {
-    background-color: lightblue;
+    background-color: gray;
+  }
+
+  .recipe-list {
+    min-height: 50px;
+    background-color: lightskyblue;
+  }
+
+  .recipe-list:hover, .recipe-list:hover li {
+    background-color: gray;
   }
 
   .recipe-item {
-    background-color: lightskyblue !important;
+    background-color: lightskyblue;
+  }
+
+  .recipe-item-striped {
+    background-color: lightblue;
+  }
+
+  .recipe-list-name {
+    padding-bottom: 2px;
   }
 
   .selected {

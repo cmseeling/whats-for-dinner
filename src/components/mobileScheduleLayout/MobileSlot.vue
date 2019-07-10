@@ -8,7 +8,9 @@
         <v-container v-for="recipeId in mealSlot.recipeIds" :key="recipeId" tag="li" class="pa-0" fill-height>
           <v-layout align-center>
             <v-flex shrink>
-              <v-btn color="error" class="recipe-list-remove-button" @click="removeFromMealSlot(recipeId)" small icon><v-icon size="10px">fa fa-times</v-icon></v-btn>
+              <v-btn color="error" class="recipe-list-remove-button" @click="removeFromMealSlot(recipeId)" small flat icon>
+                <v-icon size="14">fa fa-times</v-icon>
+              </v-btn>
             </v-flex>
             <v-flex class="recipe-list-name">
               {{getRecipeName(recipeId)}}

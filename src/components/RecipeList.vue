@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      <v-toolbar flat>
+      <v-toolbar flat v-if="!showMobileHeader">
         <v-toolbar-title>
           Recipes
         </v-toolbar-title>
@@ -12,8 +12,20 @@
           single-line
           v-model="searchText"/>
       </v-toolbar>
+      <v-toolbar flat extended v-else>
+        <v-toolbar-title>
+          Recipes
+        </v-toolbar-title>
+        <template v-slot:extension>
+          <v-text-field class="recipe-filter"
+            hide-details
+            append-icon="fa-search"
+            single-line
+            v-model="searchText"/>
+        </template>
+      </v-toolbar>
     </v-card-title>
-    <v-card-text v-if="!isInitialized">
+    <v-card-text v-if="!isLoggedIn">
       You are not logged in. Please log in to see your recipes.
     </v-card-text>
     <v-card-text v-else-if="showEmptyPlaceholder && recipeCount === 0">
@@ -55,14 +67,17 @@ export default Vue.extend({
     };
   },
   computed: {
+    showMobileHeader(): boolean {
+      return this.$vuetify.breakpoint.smAndDown;
+    },
     getFilteredList(): (filterText: string) => Recipe[] {
       return (filterText: string) => this.$store.getters['recipes/getFilteredList'](filterText);
     },
     filteredList(): Recipe[] {
       return this.getFilteredList(this.searchText);
     },
-    isInitialized(): boolean {
-      return this.$store.getters['recipes/isInitialized'];
+    isLoggedIn(): boolean {
+      return this.$store.getters['identity/isLoggedIn'];
     },
     recipeCount(): number {
       return this.$store.getters['recipes/recipeCount'];

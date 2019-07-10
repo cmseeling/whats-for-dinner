@@ -1,6 +1,6 @@
 import { Commit, Dispatch } from 'vuex';
 import { DefaultIdentityState, IdentityState } from '../interfaces/Identity';
-import { User } from 'netlify-identity-widget';
+import { User, logout } from 'netlify-identity-widget';
 import LambdaAPI from '@/api/LambdaAPI';
 
 const getters = {
@@ -39,9 +39,14 @@ const actions = {
   init: async ({commit, dispatch}: {commit: Commit, dispatch: Dispatch}): Promise<void> => {
     const json = window.localStorage.getItem('gotrue.user');
     if (json) {
-      const user = JSON.parse(json);
-      commit('setUser', user);
-      dispatch('loadUserData');
+      const user: User = JSON.parse(json);
+      if (user.token && user.token.expires_at > Date.now()) {
+        commit('setUser', user);
+        dispatch('loadUserData');
+      } else {
+        commit('setUser', null);
+        logout();
+      }
     }
   },
 
@@ -62,7 +67,7 @@ const actions = {
       } catch (error) {
         let message = 'Could not retrieve your data. ';
         if (error.response) {
-          message = message + 
+          message = message +
             `Server responded with a ${error.response.status} status code and message "${error.response.data.message}"`;
         }
         dispatch('app/setNewErrorMessage', message, {root: true});

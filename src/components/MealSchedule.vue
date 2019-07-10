@@ -1,13 +1,13 @@
 <template>
   <v-card>
-    <v-card-title>
-      <v-toolbar flat>
+    <v-card-title class="pb-0">
+      <v-toolbar flat dense>
         <v-toolbar-title class="schedule-title">
           Schedule
         </v-toolbar-title>
       </v-toolbar>
     </v-card-title>
-    <v-card-text>
+    <v-card-text class="pt-0">
       <v-container fill-height hidden-sm-and-down>
         <DesktopLayout
           :slots="augmentedSlots"

@@ -2,6 +2,8 @@ import { APIGatewayEvent } from 'aws-lambda';
 import { NetlifyFunctionContext } from './models/NetlifyFunctionContext';
 import { getItem } from './dynamodb/getItem';
 import { UserEntry } from './models/UserEntry';
+import { CreateTable } from './dynamodb/config';
+import { ensureTableExists } from './dynamodb/ensureTableExists';
 
 export async function handler(event: APIGatewayEvent, context: NetlifyFunctionContext) {
   if (!context.clientContext && !context.clientContext.identity) {
@@ -16,6 +18,10 @@ export async function handler(event: APIGatewayEvent, context: NetlifyFunctionCo
   const user = context.clientContext.user;
 
   try {
+    if (CreateTable) {
+      await ensureTableExists();
+    }
+
     const rawResult = await getItem(user.sub);
     const result: UserEntry = {UserId: (rawResult as any).UserId};
     if (rawResult.recipes) {

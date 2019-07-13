@@ -2,18 +2,23 @@
   <v-layout column v-touch="{left: goToPrevDay, right: goToNextDay}">
     <v-flex>
       <v-toolbar dense>
-        <v-toolbar-title class="mobile-day-label">
-          {{days[activeDayIndex]}}
-        </v-toolbar-title>
-      </v-toolbar>
-      <v-toolbar>
-        <v-btn color="primary" class="prev-button" @click="goToPrevDay">
-          <v-icon small>fa fa-arrow-left</v-icon>
-        </v-btn>
-        <v-spacer />
-        <v-btn color="primary" class="next-button" @click="goToNextDay">
-          <v-icon small>fa fa-arrow-right</v-icon>
-        </v-btn>
+        <v-layout row>
+          <v-flex xs2>
+            <v-btn color="primary" class="prev-button" @click="goToPrevDay" small flat icon>
+              <v-icon small>fa fa-arrow-left</v-icon>
+            </v-btn>
+          </v-flex>
+          <v-flex xs8>
+            <v-toolbar-title class="mobile-day-label">
+              {{days[activeDayIndex]}}
+            </v-toolbar-title>
+          </v-flex>
+          <v-flex xs2>
+            <v-btn color="primary" class="next-button" @click="goToNextDay" small flat icon>
+              <v-icon small>fa fa-arrow-right</v-icon>
+            </v-btn>
+          </v-flex>
+        </v-layout>
       </v-toolbar>
     </v-flex>
     <div class="mobile-meal-slot">

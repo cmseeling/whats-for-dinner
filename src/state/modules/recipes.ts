@@ -13,6 +13,10 @@ import { Dictionary } from '@/utils/Dictionary';
 import LambdaAPI from '@/api/LambdaAPI';
 
 const getters = {
+  recipes: (state: RecipesState): Recipe[] => {
+    return state.recipes.Values();
+  },
+
   getFilteredList: (state: RecipesState) => (filterString: string): Recipe[] => {
     const recipes = state.recipes.Values();
     if (filterString === '') {
@@ -33,10 +37,6 @@ const getters = {
 
   getRecipeByIndex: (state: RecipesState) => (index: number): Recipe => {
     return state.recipes.Values()[index];
-  },
-
-  recipes: (state: RecipesState): Recipe[] => {
-    return state.recipes.Values();
   },
 
   getIngredientsFromRecipeIds: (state: RecipesState) => (recipeIds: number[]): string[] => {

@@ -5,10 +5,10 @@
   "scripts": {
     "clean": "rimraf dist functions",
     "serve:app": "vue-cli-service serve",
-    "serve:functions": "netlify-lambda serve lambdas",
+    "serve:functions": "netlify-lambda serve src/lambdas",
     "prebuild": "node ./prebuild.js",
     "build:app": "vue-cli-service build",
-    "build:functions": "netlify-lambda build lambdas",
+    "build:functions": "netlify-lambda build src/lambdas",
     "build": "npm run prebuild & npm run build:functions && npm run build:app",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",

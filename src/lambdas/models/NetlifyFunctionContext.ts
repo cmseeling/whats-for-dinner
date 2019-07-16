@@ -2,8 +2,10 @@ import { Identity } from './NetlifyFunctionContextIdentity';
 import { User } from './NetlifyFunctionContextUser';
 
 export interface NetlifyFunctionContext {
-  clientContext: {
-    identity: Identity,
-    user: User
-  };
+  clientContext: ClientContext;
+}
+
+interface ClientContext {
+  identity: Identity;
+  user: User;
 }

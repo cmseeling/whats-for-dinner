@@ -7,7 +7,7 @@ node_modules
 .env.local
 .env.*.local
 .env
-/lambdas/dynamodb/config.ts
+/src/lambdas/dynamodb/config.ts
 
 # Log files
 npm-debug.log*

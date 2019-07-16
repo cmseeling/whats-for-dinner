@@ -64,13 +64,16 @@ const actions = {
     if (state.user) {
       try {
         const data = await LambdaAPI.getData(state.user);
+        console.log(data);
         if (data.recipes) {
+          console.log('dispatching recipes');
           dispatch('recipes/setRecipes', data.recipes, {root: true});
         }
         if (data.mealPlans) {
           dispatch('mealPlans/setMealPlans', data.mealPlans, {root: true});
         }
       } catch (error) {
+        console.log(error);
         let message = 'Could not retrieve your data. ';
         if (error.response) {
           message = message +

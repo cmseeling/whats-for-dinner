@@ -22,12 +22,11 @@ const mutations = {
 };
 
 const actions = {
-  setNewErrorMessage: ({commit}: {commit: Commit}, errorMessage: string): void => {
+  setNewErrorMessage: ({commit, dispatch}: {commit: Commit, dispatch: Dispatch}, errorMessage: string): void => {
     commit('setHasError', true);
     commit('setErrorMessage', errorMessage);
     setTimeout(() => {
-      commit('setHasError', false);
-      commit('setErrorMessage', '');
+      dispatch('dismissErrorMessage');
     }, 10000);
   },
 

@@ -26,9 +26,13 @@ export async function handler(event: APIGatewayEvent, context: NetlifyFunctionCo
     const result: UserEntry = {UserId: (rawResult as any).UserId};
     if (rawResult.recipes) {
       result.recipes = JSON.parse(rawResult.recipes);
+    } else {
+      result.recipes = [];
     }
     if (rawResult.mealPlans) {
       result.mealPlans = JSON.parse(rawResult.mealPlans);
+    } else {
+      result.mealPlans = [];
     }
 
     console.log(result);

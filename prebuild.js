@@ -17,4 +17,6 @@ fs.writeFileSync('./src/lambdas/dynamodb/config.ts', `export const clientOptions
 
 if (process.env.CREATE_TABLE) {
   fs.appendFileSync('./src/lambdas/dynamodb/config.ts', `\nexport const CreateTable = true;`);
+} else {
+  fs.appendFileSync('./src/lambdas/dynamodb/config.ts', `\nexport const CreateTable = false;`);
 }

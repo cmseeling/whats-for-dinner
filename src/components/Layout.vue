@@ -24,9 +24,8 @@
     <v-snackbar
       v-model="hasError"
       :bottom="true"
-      :timeout="0"
-    >
-      {{errorMessage}}
+      :timeout="0">
+      <span class="application-error-message">{{errorMessage}}</span>
       <v-btn color="pink" flat @click="dismissErrorMessage">
         <v-icon small>fa fa-times</v-icon>
       </v-btn>

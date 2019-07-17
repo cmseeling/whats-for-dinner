@@ -10,7 +10,6 @@ describe('identity.ts', () => {
   beforeEach(() => {
     commit = jest.fn();
     dispatch = jest.fn();
-
     state = DefaultIdentityState();
   });
 
@@ -27,8 +26,15 @@ describe('identity.ts', () => {
     expect(identity.getters.isLoggedIn(state)).toBe(true);
   });
 
+  it('gets the user object', () => {
+    const id = 'testUserId';
+    const expectedUser = generateUser({id});
+    state.user = expectedUser;
+    expect(identity.getters.user(state)).toBe(expectedUser);
+  });
+
   it('gets the user\'s id', () => {
-    const id = 'testUsderId';
+    const id = 'testUserId';
     state.user = generateUser({id});
     expect(identity.getters.userId(state)).toBe(id);
   });
@@ -67,8 +73,9 @@ describe('identity.ts', () => {
 
     expect(commit).toHaveBeenCalledTimes(1);
     expect(commit).toHaveBeenCalledWith('setUser', null);
-    expect(dispatch).toHaveBeenCalledTimes(1);
-    expect(dispatch).toHaveBeenCalledWith('recipes/clearRecipes', null, {root: true});
+    expect(dispatch).toHaveBeenCalledTimes(2);
+    expect(dispatch).toHaveBeenNthCalledWith(1, 'recipes/clearRecipes', null, {root: true});
+    expect(dispatch).toHaveBeenNthCalledWith(2, 'mealPlans/clearMealPlans', null, {root: true});
   });
 });
 

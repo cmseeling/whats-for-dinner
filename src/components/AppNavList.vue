@@ -54,7 +54,8 @@ export default Vue.extend({
       navItems: [
         { title: 'Home', icon: 'fa-home', route: '/' },
         { title: 'Recipes', icon: 'fa-file-alt', route: '/recipes' },
-        { title: 'Grocery List', icon: 'fa-list', route: '/groceries' }
+        { title: 'Grocery List', icon: 'fa-list', route: '/groceries' },
+        { title: 'About', icon: 'fa-question-circle', route: '/about' }
       ]
     };
   },

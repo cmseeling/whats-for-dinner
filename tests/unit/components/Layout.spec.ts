@@ -13,12 +13,14 @@ localVue.use(Router);
 let mockStore: any;
 let identityState: IdentityState;
 
-const createMockStore = () => {
+const createMockStore = (hasError = false, errorMessage = '') => {
   return {
     commit: jest.fn(),
     getters: {
       'identity/isLoggedIn': identity.getters.isLoggedIn(identityState),
-      'identity/userName': identity.getters.userName(identityState)
+      'identity/userName': identity.getters.userName(identityState),
+      'app/hasError': hasError,
+      'app/errorMessage': errorMessage
     }
   };
 };
@@ -64,5 +66,18 @@ describe('Layout.vue', () => {
 
     expect(wrapper.contains('.wfd-user-name')).toBe(true);
     expect(wrapper.contains('.logout-button')).toBe(true);
+  });
+
+  it('shows error message', () => {
+    const message = 'test message';
+    mockStore = createMockStore(true, message);
+
+    const wrapper = shallowMount(Layout, {
+      mocks: { $store: mockStore },
+      localVue
+    });
+
+    expect(wrapper.contains('.application-error-message')).toBe(true);
+    expect(wrapper.find('.application-error-message').text()).toBe(message);
   });
 });

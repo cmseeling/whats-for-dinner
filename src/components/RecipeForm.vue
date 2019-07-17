@@ -54,12 +54,17 @@
               </v-flex>
               <v-flex>
                 <v-btn class="cancel-button" color="error" v-if="isNewRecipe" @click.prevent="goBack">Cancel</v-btn>
-                <v-btn class="delete-button" color="error" v-else @click.prevent="removeRecipe">Delete</v-btn>
+                <v-btn class="delete-button" color="error" v-else @click.prevent="showModel = true">Delete</v-btn>
               </v-flex>
             </v-layout>
           </v-container>
         </div>
       </v-form>
+      <ConfirmDeleteDialog
+        :isOpen="showModel"
+        itemTypeText="recipe"
+        v-on:dialog:cancel="showModel = false"
+        v-on:dialog:confirm="removeRecipe"/>
     </v-card-text>
   </v-card>
 </template>
@@ -71,22 +76,28 @@ import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
 import { Recipe } from '@/models/Recipe';
 import { Route } from 'vue-router';
+import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
 
 interface Data {
   recipe: Recipe;
   isNewRecipe: boolean;
   isAddingIngredient: boolean;
   newIngredient: string;
+  showModel: boolean;
 }
 
 export default Vue.extend({
   name: 'RecipeForm',
+  components: {
+    ConfirmDeleteDialog
+  },
   data(): Data {
     return {
       recipe: new Recipe(),
       isNewRecipe: true,
       isAddingIngredient: false,
-      newIngredient: ''
+      newIngredient: '',
+      showModel: false
     };
   },
   computed: {
@@ -114,12 +125,6 @@ export default Vue.extend({
     }
   },
   methods: {
-    saveRecipe(recipe: Recipe) {
-      this.$store.dispatch('recipes/saveRecipe', recipe);
-    },
-    deleteRecipe(id: number) {
-      this.$store.dispatch('recipes/deleteRecipe', id);
-    },
     addItem() {
       this.isAddingIngredient = true;
     },
@@ -131,12 +136,13 @@ export default Vue.extend({
       this.clearNewIngredient();
     },
     saveRecipeForm() {
-      this.saveRecipe(this.recipe);
+      this.$store.dispatch('recipes/saveRecipe', this.recipe);
       this.$router.push('/recipes');
     },
     removeRecipe() {
+      this.showModel = false;
       if (this.recipe.id) {
-        this.deleteRecipe(this.recipe.id);
+        this.$store.dispatch('recipes/deleteRecipe', this.recipe.id);
       }
       this.$router.push('/recipes');
     },

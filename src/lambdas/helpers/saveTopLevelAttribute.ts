@@ -11,7 +11,7 @@ export function createSaveFunctionHandler(dynamoTopLevelAttribute: string) {
         statusCode: 404
       };
     }
-    if (!context.clientContext && !context.clientContext.identity) {
+    if (!context.clientContext || !context.clientContext.identity) {
       console.log('could not find identity context');
       return {
         statusCode: 500,

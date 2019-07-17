@@ -1,9 +1,10 @@
-import { getDynamoDbClient } from './DynamoDbClient';
+import DynamoDbClient from './DynamoDbClient';
 import { DbConstants } from './DbConstants';
 import { DynamoDB } from 'aws-sdk';
 
+// this should only ever be run in a development environment
 export const ensureTableExists = async (): Promise<void> => {
-  const dynamodb = getDynamoDbClient();
+  const dynamodb = DynamoDbClient.getManagementClient();
 
   const descriptionParams: DynamoDB.DescribeTableInput = {
     TableName: DbConstants.TableName

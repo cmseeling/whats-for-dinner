@@ -13,8 +13,8 @@ if (process.env.ENDPOINT) {
   clientOptions.endpoint = process.env.ENDPOINT;
 }
 
-fs.writeFileSync('./lambdas/dynamodb/config.ts', `export const clientOptions = ${JSON.stringify(clientOptions)};`);
+fs.writeFileSync('./src/lambdas/dynamodb/config.ts', `export const clientOptions = ${JSON.stringify(clientOptions)};`);
 
 if (process.env.CREATE_TABLE) {
-  fs.appendFileSync('./lambdas/dynamodb/config.ts', `\nexport const CreateTable = true;`);
+  fs.appendFileSync('./src/lambdas/dynamodb/config.ts', `\nexport const CreateTable = true;`);
 }

@@ -1,5 +1,4 @@
-import { mount, shallowMount } from '@vue/test-utils';
-// import Router from 'vue-router';
+import { mount } from '@vue/test-utils';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import RecipeForm from '@/components/RecipeForm.vue';
@@ -9,6 +8,9 @@ import { generateRecipe } from '../../helpers/recipe';
 // this should really be localVue but Vuetify pollutes the Vue prototype and causes the tests to throw bad exceptions.
 // See https://github.com/vuetifyjs/vuetify/issues/4861 and https://github.com/vuetifyjs/vuetify/issues/6046
 Vue.use(Vuetify);
+// suppress warning about data-app attribute:
+// https://forum.vuejs.org/t/vuetify-data-app-true-and-problems-rendering-v-dialog-in-unit-tests/27495/9
+document.body.setAttribute('data-app', 'true');
 
 let mockRecipe: Recipe;
 let mockStore: any;
@@ -131,6 +133,10 @@ describe('RecipeList.vue', () => {
     });
 
     wrapper.find('.delete-button').trigger('click');
+
+    expect(wrapper.contains('.confirmation-dialog')).toBe(true);
+
+    wrapper.find('.dialog-confirmation-button').trigger('click');
 
     expect(mockDispatch).toHaveBeenCalledWith('recipes/deleteRecipe', mockRecipe.id);
   });

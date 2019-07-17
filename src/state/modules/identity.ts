@@ -56,6 +56,7 @@ const actions = {
       dispatch('loadUserData');
     } else {
       dispatch('recipes/clearRecipes', null, {root: true});
+      dispatch('mealPlans/clearMealPlans', null, {root: true});
     }
   },
 
@@ -63,7 +64,12 @@ const actions = {
     if (state.user) {
       try {
         const data = await LambdaAPI.getData(state.user);
-        dispatch('recipes/setRecipes', data.recipes, {root: true});
+        if (data.recipes) {
+          dispatch('recipes/setRecipes', data.recipes, {root: true});
+        }
+        if (data.mealPlans) {
+          dispatch('mealPlans/setMealPlans', data.mealPlans, {root: true});
+        }
       } catch (error) {
         let message = 'Could not retrieve your data. ';
         if (error.response) {

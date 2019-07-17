@@ -4,6 +4,7 @@ import flatMap from 'lodash/flatMap';
 import includes from 'lodash/includes';
 import uniq from 'lodash/uniq';
 import without from 'lodash/without';
+import { Commit } from 'vuex';
 
 const getters = {
   getAllUniqueRecipeIdsFromMealSlots: (state: ScheduleState): number[] => {
@@ -14,6 +15,10 @@ const getters = {
 };
 
 const mutations = {
+  setSchedule: (state: ScheduleState, mealSlots: MealSlot[]): void => {
+    state.mealSlots = mealSlots;
+  },
+
   addRecipeToMealSlot: (state: ScheduleState, {slotId, recipeId}: {slotId: number, recipeId: number}): void => {
     // cheating a little since we know the Ids are already sequential
     if (!includes(state.mealSlots[slotId].recipeIds, recipeId)) {
@@ -38,6 +43,9 @@ const mutations = {
 };
 
 const actions = {
+  setSchedule: ({commit}: {commit: Commit}, mealSlots: MealSlot[]): void => {
+    commit('setSchedule', mealSlots);
+  }
 };
 
 export default {

@@ -12,7 +12,7 @@ export const mealList: string[] = [
   'Breakfast', 'Lunch', 'Dinner'
 ];
 
-export const DefaultScheduleState = (): ScheduleState => {
+export const CreateEmptySchedule = (): MealSlot[] => {
   const mealSlots: MealSlot[] = [];
   let i;
   for (i = 0; i < 21; i++) {
@@ -33,6 +33,12 @@ export const DefaultScheduleState = (): ScheduleState => {
       recipeIds: []
     });
   }
+
+  return mealSlots;
+};
+
+export const DefaultScheduleState = (): ScheduleState => {
+  const mealSlots: MealSlot[] = CreateEmptySchedule();
 
   return {
     mealSlots

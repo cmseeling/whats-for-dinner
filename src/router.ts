@@ -29,6 +29,11 @@ export default new Router({
       path: '/recipes/item/:id?',
       name: 'recipeitem',
       component: () => import(/* webpackChunkName: "recipe" */ './views/Recipe.vue')
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     }
   ],
 });

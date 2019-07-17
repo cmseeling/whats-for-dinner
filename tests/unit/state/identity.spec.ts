@@ -31,7 +31,7 @@ describe('identity.ts', () => {
     const expectedUser = generateUser({id});
     state.user = expectedUser;
     expect(identity.getters.user(state)).toBe(expectedUser);
-  })
+  });
 
   it('gets the user\'s id', () => {
     const id = 'testUserId';

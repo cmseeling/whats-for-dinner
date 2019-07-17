@@ -46,11 +46,12 @@
                 item-text="name"
                 item-value="id"
                 v-model="selectedPlanId"
-                @change="loadMealPlan"/>
+                @change="loadMealPlan"
+                class="mealplan-select"/>
             </v-flex>
             <v-flex xs-2>
-              <v-btn color="success" @click="saveMealPlan">Save</v-btn>
-              <v-btn color="error" :disabled="selectedPlanId === -1" @click.prevent="showModel = true">Delete</v-btn>
+              <v-btn class="schedule-save-button" color="success" @click="saveMealPlan">Save</v-btn>
+              <v-btn class="schedule-delete-button" color="error" :disabled="selectedPlanId === -1" @click.prevent="showModel = true">Delete</v-btn>
             </v-flex>
           </v-layout>
         </v-flex>

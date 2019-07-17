@@ -2,6 +2,7 @@ import { getDynamoDbClient } from './DynamoDbClient';
 import { DbConstants } from './DbConstants';
 import { DynamoDB } from 'aws-sdk';
 
+// this should only ever be run in a development environment
 export const ensureTableExists = async (): Promise<void> => {
   const dynamodb = getDynamoDbClient();
 

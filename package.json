@@ -12,7 +12,7 @@
     "build": "npm run prebuild & npm run build:functions && npm run build:app",
     "lint": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit",
-    "test:unit-single": "vue-cli-service test:unit tests/unit/state/identity.spec.ts"
+    "test:unit-single": "vue-cli-service test:unit tests/unit/lambdas/upsertItem.spec.ts"
   },
   "dependencies": {
     "@babel/preset-typescript": "^7.3.3",

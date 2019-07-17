@@ -1,8 +1,8 @@
-import { getDocumentClient } from './DynamoDbClient';
+import DynamoDbClient from './DynamoDbClient';
 import { DbConstants } from './DbConstants';
 
 export const upsertItem = async (key: string, property: string, data: any): Promise<object> => {
-  const docClient = getDocumentClient();
+  const docClient = DynamoDbClient.getDocumentClient();
 
   // params is supposed to of type AWS.DynamoDB.UpdateItemInput but the Key property type appears to be incorrect
   const params = {

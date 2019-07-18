@@ -121,7 +121,7 @@ export default Vue.extend({
       const placeholderPlan = {
         id: -1,
         created: new Date(),
-        name: 'New...',
+        name: 'New plan...',
         slots: CreateEmptySchedule()
       };
       return [placeholderPlan, ...this.$store.getters['mealPlans/mealPlans']];

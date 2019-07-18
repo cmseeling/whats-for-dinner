@@ -13,7 +13,7 @@
               </v-btn>
             </v-flex>
             <v-flex class="recipe-list-name">
-              {{getRecipeName(recipeId)}}
+              <router-link :to="{path: `recipes/item/${recipeId}`}">{{getRecipeName(recipeId)}}</router-link>
             </v-flex>
           </v-layout>
         </v-container>

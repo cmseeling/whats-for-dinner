@@ -3,16 +3,16 @@
     <v-card-title class="pb-0">
       <v-toolbar flat dense>
         <v-layout row>
-          <v-flex xs4 md2>
+          <v-flex md2 hidden-sm-and-down>
             <v-toolbar-title class="schedule-title text-xs-left">Meal Plan</v-toolbar-title>
           </v-flex>
-          <v-flex xs4 md2 offset-xs1>
+          <v-flex xs8 md2 offset-xs1>
             <v-text-field class="schedule-name"
               v-model="scheduleName"
               :disabled="!editScheduleName" />
           </v-flex>
-          <v-flex xs1 class="pt-1">
-            <v-btn class="toggle-schedule-name-button" flat right @click="toggleScheduleNameEdit">
+          <v-flex xs1 class="pt-2">
+            <v-btn class="toggle-schedule-name-button" flat right icon @click="toggleScheduleNameEdit">
               <v-icon small>fa fa-edit</v-icon>
             </v-btn>
           </v-flex>
@@ -121,7 +121,7 @@ export default Vue.extend({
       const placeholderPlan = {
         id: -1,
         created: new Date(),
-        name: 'New...',
+        name: 'New plan...',
         slots: CreateEmptySchedule()
       };
       return [placeholderPlan, ...this.$store.getters['mealPlans/mealPlans']];

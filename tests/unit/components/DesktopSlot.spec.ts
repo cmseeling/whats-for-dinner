@@ -59,7 +59,8 @@ describe('DesktopSlot.vue', () => {
     const wrapper = shallowMount(DesktopSlot, {
       propsData: {mealSlot, expanded, setActive},
       mocks: { $store: mockStore },
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
 
     expect(wrapper.find('.collapsed-display').isVisible()).toBe(true);
@@ -80,7 +81,8 @@ describe('DesktopSlot.vue', () => {
     const wrapper = shallowMount(DesktopSlot, {
       propsData: {mealSlot, expanded, setActive},
       mocks: { $store: mockStore },
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
 
     expect(wrapper.find('.collapsed-display').isVisible()).toBe(false);
@@ -103,7 +105,8 @@ describe('DesktopSlot.vue', () => {
     const wrapper = shallowMount(DesktopSlot, {
       propsData: {mealSlot, expanded, setActive},
       mocks: { $store: mockStore },
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
 
     expect(wrapper.find('.collapsed-display').isVisible()).toBe(false);
@@ -128,7 +131,8 @@ describe('DesktopSlot.vue', () => {
     let wrapper = shallowMount(DesktopSlot, {
       propsData: {mealSlot, expanded, setActive},
       mocks: { $store: mockStore },
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
 
     expect(wrapper.find('.collapsed-display').isVisible()).toBe(false);
@@ -139,7 +143,8 @@ describe('DesktopSlot.vue', () => {
     wrapper = shallowMount(DesktopSlot, {
       propsData: {mealSlot, expanded, setActive},
       mocks: { $store: mockStore },
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
 
     expect(wrapper.find('.collapsed-display').isVisible()).toBe(false);
@@ -160,7 +165,8 @@ describe('DesktopSlot.vue', () => {
     let wrapper = shallowMount(DesktopSlot, {
       propsData: {mealSlot, expanded, setActive},
       mocks: { $store: mockStore },
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
 
     wrapper.find('.slot-container').trigger('click');
@@ -170,7 +176,8 @@ describe('DesktopSlot.vue', () => {
     wrapper = shallowMount(DesktopSlot, {
       propsData: {mealSlot, expanded, setActive},
       mocks: { $store: mockStore },
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
 
     wrapper.find('.slot-container').trigger('click');
@@ -190,7 +197,8 @@ describe('DesktopSlot.vue', () => {
     const wrapper = mount(DesktopSlot, {
       propsData: {mealSlot, expanded, setActive},
       mocks: { $store: mockStore },
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
 
     const expectedValue = {

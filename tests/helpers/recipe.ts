@@ -4,6 +4,7 @@ export function generateRecipe(id: number = 1, name: string = 'test recipe', ing
   return {
     id,
     name,
-    ingredients
+    ingredients,
+    instructions: ''
   };
 }

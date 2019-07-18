@@ -19,7 +19,8 @@ describe('recipes.ts', () => {
         'ingredient 1',
         'special ingredient 2'
       ],
-      name: 'recipe one'
+      name: 'recipe one',
+      instructions: ''
     };
 
     testRecipe2 = {
@@ -28,7 +29,8 @@ describe('recipes.ts', () => {
         'ingredient 3',
         'ingredient 4'
       ],
-      name: 'recipe two'
+      name: 'recipe two',
+      instructions: ''
     };
 
     state = DefaultRecipesState();
@@ -116,12 +118,14 @@ describe('recipes.ts', () => {
     const newRecipe1: Recipe = {
       id: 3,
       ingredients: [],
-      name: 'new recipe 1'
+      name: 'new recipe 1',
+      instructions: ''
     };
     const newRecipe2: Recipe = {
       id: 4,
       ingredients: [],
-      name: 'new recipe 2'
+      name: 'new recipe 2',
+      instructions: ''
     };
 
     const expectedState = {...state};
@@ -173,7 +177,8 @@ describe('recipes.ts', () => {
     const newRecipe: Recipe = {
       id: null,
       ingredients: [],
-      name: 'new recipe'
+      name: 'new recipe',
+      instructions: ''
     };
 
     const expectedRecipe = {

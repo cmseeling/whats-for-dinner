@@ -47,6 +47,16 @@
           <br/>
           <hr/>
           <br/>
+          <v-container>
+            <v-layout row>
+              <v-flex>
+                <v-textarea label="Instructions" auto-grow v-model="recipe.instructions"/>
+              </v-flex>
+            </v-layout>
+          </v-container>
+          <br/>
+          <hr/>
+          <br/>
           <v-container class="pa-0">
             <v-layout column>
               <v-flex>

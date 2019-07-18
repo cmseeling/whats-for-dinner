@@ -34,7 +34,8 @@ describe('MobileLayout.vue', () => {
   it('renders meal slots', () => {
     const wrapper = shallowMount(MobileLayout, {
       propsData: {slots, setActive: mockSetActive},
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
 
     expect(wrapper.findAll(MobileSlot).length).toBe(3);
@@ -43,7 +44,8 @@ describe('MobileLayout.vue', () => {
   it('goes forward a day', () => {
     const wrapper = mount(MobileLayout, {
       propsData: {slots, setActive: mockSetActive},
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
 
     expect(wrapper.find('.mobile-day-label').text()).toBe('Sunday');
@@ -54,7 +56,8 @@ describe('MobileLayout.vue', () => {
   it('goes forward a day', () => {
     const wrapper = mount(MobileLayout, {
       propsData: {slots, setActive: mockSetActive},
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
 
     expect(wrapper.find('.mobile-day-label').text()).toBe('Sunday');

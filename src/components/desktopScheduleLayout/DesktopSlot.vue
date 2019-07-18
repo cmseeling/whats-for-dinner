@@ -20,7 +20,7 @@
                   </v-btn>
                 </v-flex>
                 <v-flex class="recipe-list-name">
-                  {{getRecipeName(recipeId)}}
+                  <router-link :to="{path: `recipes/item/${recipeId}`}">{{getRecipeName(recipeId)}}</router-link>
                 </v-flex>
               </v-layout>
             </v-container>
@@ -122,6 +122,10 @@ export default Vue.extend({
 
   .recipe-list-name {
     padding-bottom: 2px;
+  }
+
+  .recipe-list-name a {
+    text-decoration: none;
   }
 
   .selected {

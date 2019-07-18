@@ -9,7 +9,7 @@
     </v-card-title>
     <v-card-text>
       <v-form>
-        <v-text-field class="recipe-name" label="Name" v-model="recipe.name" />
+        <v-text-field class="recipe-name" label="Recipe Name" v-model="recipe.name" />
         <div class="text-xs-left">
           <label class="font-weight-bold">Ingredients</label>
           <ul>
@@ -26,9 +26,9 @@
               </v-layout>
             </v-container>
             <v-container v-if="isAddingIngredient" tag="li" class="pa-0 add-ingredient-inputs" fill-height>
-              <v-layout align-center>
+              <v-layout align-center row wrap>
                 <v-flex>
-                  <v-text-field class="add-ingredient-input" v-model="newIngredient" autofocus @keyup.enter="addIngredient"/>
+                  <v-text-field class="add-ingredient-input" label="Ingredient Name" v-model="newIngredient" autofocus @keyup.enter="addIngredient"/>
                 </v-flex>
                 <v-flex shrink>
                   <v-btn class="add-ingredient-confirm" color="success" @click="addIngredient" small>Add</v-btn>

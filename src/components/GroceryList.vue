@@ -14,9 +14,9 @@
         </v-layout>
       </v-container>
       <v-container v-if="isAddingItem" tag="li" class="pa-0 add-ingredient-inputs" fill-height>
-        <v-layout align-center>
+        <v-layout align-center row wrap>
           <v-flex>
-            <v-text-field class="add-ingredient-input" v-model="newItem" autofocus/>
+            <v-text-field class="add-ingredient-input" label="Ingredient Name" v-model="newItem" autofocus/>
           </v-flex>
           <v-flex shrink>
             <v-btn class="add-ingredient-confirm" color="success" @click="addIngredient" small>Add</v-btn>

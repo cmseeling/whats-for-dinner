@@ -92,7 +92,6 @@ const actions = {
     {commit, state, rootGetters}: {commit: Commit, state: MealPlansState, rootGetters: any},
     id: number
   ): Promise<void> => {
-    console.log(id);
     commit('removeMealPlan', id);
     await LambdaAPI.saveMealPlans(rootGetters['identity/user'], state.mealPlans.Values());
   }

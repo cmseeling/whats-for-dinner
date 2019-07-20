@@ -20,41 +20,34 @@
       </v-toolbar>
     </v-card-title>
     <v-card-text class="pt-0">
-      <v-container fill-height hidden-sm-and-down>
+      <v-layout>
+        <v-flex sm12 md4>
+          <v-select :items="mealPlans"
+            item-text="name"
+            item-value="id"
+            v-model="selectedPlanId"
+            @change="loadMealPlan"
+            class="mealplan-select"/>
+        </v-flex>
+      </v-layout>
+      <v-container fill-height hidden-sm-and-down class="pb-0">
         <DesktopLayout
           :slots="augmentedSlots"
           :setActive="setActive"/>
       </v-container>
-      <v-container fill-height hidden-md-and-up>
+      <v-container fill-height hidden-md-and-up class="pb-0">
         <MobileLayout
           :slots="augmentedSlots"
           :setActive="setActive"/>
       </v-container>
-      <v-layout row wrap>
-        <v-flex xs-12 md-6>
-          <v-layout row>
-            <v-flex xs-1 class="pt-4">
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on }">
-                  <v-icon v-on="on">fa fa-info-circle</v-icon>
-                </template>
-                <span>You can save up to 10 meal plans.</span>
-              </v-tooltip>
-            </v-flex>
-            <v-flex>
-              <v-select :items="mealPlans"
-                item-text="name"
-                item-value="id"
-                v-model="selectedPlanId"
-                @change="loadMealPlan"
-                class="mealplan-select"/>
-            </v-flex>
-            <v-flex xs-2>
-              <v-btn class="schedule-save-button" color="success" @click="saveMealPlan">Save</v-btn>
-              <v-btn class="schedule-delete-button" color="error" :disabled="selectedPlanId === -1" @click.prevent="showModel = true">Delete</v-btn>
-            </v-flex>
-          </v-layout>
+      <v-layout row>
+        <v-flex>
+          <small class="text-xs-center">Don't forget to save your plan! You can save up to 10.</small>
         </v-flex>
+      </v-layout>
+      <v-layout row wrap>
+        <v-btn class="schedule-save-button" color="primary" @click="saveMealPlan">Save</v-btn>
+        <v-btn class="schedule-delete-button" color="error" :disabled="selectedPlanId === -1" @click.prevent="showModel = true">Delete</v-btn>
         <v-spacer></v-spacer>
         <v-btn to="/groceries" color="success">Generate Grocery List<v-icon small right>fa fa-arrow-right</v-icon></v-btn>
       </v-layout>
@@ -180,8 +173,8 @@ export default Vue.extend({
 
     removePlan() {
       this.showModel = false;
-      this.selectedPlanId = -1;
       this.$store.dispatch('mealPlans/deleteMealPlan', this.selectedPlanId);
+      this.selectedPlanId = -1;
     }
   }
 });

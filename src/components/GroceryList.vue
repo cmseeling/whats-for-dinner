@@ -1,18 +1,6 @@
 <template>
   <v-card-text class="text-xs-left">
     <ul>
-      <v-container v-for="(ingredient, index) in ingredientsList" :key="index" tag="li" class="pa-0 ingredient-container" fill-height>
-        <v-layout align-center>
-          <v-flex shrink>
-            <v-btn class="remove-ingredient-button" color="error" @click="removeIngredient(index)" flat icon>
-              <v-icon small>fa fa-times</v-icon>
-            </v-btn>
-          </v-flex>
-          <v-flex class="ingredient-name">
-            {{ingredient}}
-          </v-flex>
-        </v-layout>
-      </v-container>
       <v-container v-if="isAddingItem" tag="li" class="pa-0 add-ingredient-inputs" fill-height>
         <v-layout align-center row wrap>
           <v-flex>
@@ -31,6 +19,18 @@
           <v-icon small class="mr-2">fa fa-plus</v-icon>Add Item
         </v-btn>
       </li>
+      <v-container v-for="(ingredient, index) in ingredientsList" :key="index" tag="li" class="pa-0 ingredient-container" fill-height>
+        <v-layout align-center>
+          <v-flex shrink>
+            <v-btn class="remove-ingredient-button" color="error" @click="removeIngredient(index)" flat icon>
+              <v-icon small>fa fa-times</v-icon>
+            </v-btn>
+          </v-flex>
+          <v-flex class="ingredient-name">
+            {{ingredient}}
+          </v-flex>
+        </v-layout>
+      </v-container>
     </ul>
   </v-card-text>
 </template>

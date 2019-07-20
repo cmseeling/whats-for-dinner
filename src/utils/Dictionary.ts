@@ -35,7 +35,7 @@ export class Dictionary<T> implements IDictionary<T> {
     let fillCache = false;
     if (!this.cache) {
       this.cache = {
-        keys: [],
+        keys: null,
         values: null,
         count: null
       };
@@ -77,7 +77,7 @@ export class Dictionary<T> implements IDictionary<T> {
     let fillCache = false;
     if (!this.cache) {
       this.cache = {
-        keys: [],
+        keys: null,
         values: null,
         count: null
       };
@@ -104,7 +104,7 @@ export class Dictionary<T> implements IDictionary<T> {
     if (!this.cache) {
       this.cache = {
         keys: null,
-        values: [],
+        values: null,
         count: null
       };
       fillCache = true;

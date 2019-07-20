@@ -75,7 +75,6 @@ interface Data {
   activeSlot: number|null;
   scheduleName: string;
   editScheduleName: boolean;
-  selectedPlanId: number|null;
   showModel: boolean;
 }
 
@@ -91,7 +90,6 @@ export default Vue.extend({
       activeSlot: null,
       scheduleName: '',
       editScheduleName: false,
-      selectedPlanId: -1,
       showModel: false
     };
   },
@@ -99,6 +97,14 @@ export default Vue.extend({
     this.scheduleName = `Week of ${this.getSunday()}`;
   },
   computed: {
+    selectedPlanId: {
+      get: function(): number {
+        return this.$store.getters['mealPlans/selectedPlanId'];
+      },
+      set: function(newId: number) {
+        this.$store.commit('mealPlans/setSelectedPlanId', newId);
+      }
+    },
     mealSlots(): MealSlot[] {
       return this.$store.state.schedule.mealSlots;
     },
@@ -146,7 +152,7 @@ export default Vue.extend({
       this.editScheduleName = !this.editScheduleName;
     },
 
-    loadMealPlan() {
+    loadMealPlan(planId: number) {
       if (this.selectedPlanId === -1) {
         this.scheduleName = `Week of ${this.getSunday()}`;
         this.$store.dispatch('schedule/setSchedule', CreateEmptySchedule());

@@ -18,6 +18,10 @@ const getters = {
 
   getMealPlanByIndex: (state: MealPlansState) => (index: number): MealPlan => {
     return state.mealPlans.Values()[index];
+  },
+
+  selectedPlanId: (state: MealPlansState): number => {
+    return state.selectedPlanId;
   }
 };
 
@@ -44,6 +48,10 @@ const mutations = {
 
   resetMealPlans: (state: MealPlansState): void => {
     state.mealPlans = new Dictionary<MealPlan>();
+  },
+
+  setSelectedPlanId: (state: MealPlansState, id: number): void => {
+    state.selectedPlanId = id;
   }
 };
 
@@ -84,6 +92,7 @@ const actions = {
     {commit, state, rootGetters}: {commit: Commit, state: MealPlansState, rootGetters: any},
     id: number
   ): Promise<void> => {
+    console.log(id);
     commit('removeMealPlan', id);
     await LambdaAPI.saveMealPlans(rootGetters['identity/user'], state.mealPlans.Values());
   }

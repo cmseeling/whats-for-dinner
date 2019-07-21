@@ -38,8 +38,8 @@ const mutations = {
 const actions = {
   init: async ({commit, dispatch}: {commit: Commit, dispatch: Dispatch}): Promise<void> => {
     const user = netlifyIdentity.currentUser();
-    commit('setUser', user);
     if (user && user.token && user.token.expires_at > Date.now()) {
+      commit('setUser', user);
       dispatch('loadUserData');
     } else {
       logout();

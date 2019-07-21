@@ -99,10 +99,10 @@ export default Vue.extend({
   },
   computed: {
     selectedPlanId: {
-      get: function(): number {
+      get(): number {
         return this.$store.getters['mealPlans/selectedPlanId'];
       },
-      set: function(newId: number) {
+      set(newId: number) {
         this.$store.commit('mealPlans/setSelectedPlanId', newId);
       }
     },

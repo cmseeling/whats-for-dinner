@@ -73,7 +73,7 @@ describe('RecipeList.vue', () => {
     // wait for the component to update the list
     await wrapper.vm.$nextTick();
 
-    wrapper.findAll('.remove-ingredient-button').wrappers[0].trigger('click');
+    wrapper.findAll('.remove-item-button').wrappers[0].trigger('click');
 
     expect(wrapper.findAll('.ingredient-name').length).toBe(1);
   });

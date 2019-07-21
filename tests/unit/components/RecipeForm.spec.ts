@@ -56,7 +56,7 @@ describe('RecipeList.vue', () => {
     expect(wrapper.find('.form-header').text()).toBe('Recipe - New');
     const textInput = wrapper.find('.recipe-name').find('input').element as HTMLInputElement;
     expect(textInput.value).toBe('');
-    expect(wrapper.findAll('.recipe-ingredient-item').length).toBe(0);
+    expect(wrapper.findAll('.rline-item').length).toBe(0);
   });
 
   it('renders recipe data', () => {
@@ -67,7 +67,7 @@ describe('RecipeList.vue', () => {
     expect(wrapper.find('.form-header').text()).toBe('Recipe - Edit');
     const textInput = wrapper.find('.recipe-name').find('input').element as HTMLInputElement;
     expect(textInput.value).toBe(mockRecipe.name);
-    expect(wrapper.findAll('.recipe-ingredient-item').length).toBe(1);
+    expect(wrapper.findAll('.rline-item').length).toBe(1);
   });
 
   it('shows an ingredient input', () => {
@@ -96,7 +96,7 @@ describe('RecipeList.vue', () => {
     wrapper.find('.add-ingredient-confirm').trigger('click');
 
     expect(wrapper.contains('.add-ingredient-inputs')).toBe(false);
-    expect(wrapper.findAll('.recipe-ingredient-item').length).toBe(2);
+    expect(wrapper.findAll('.rline-item').length).toBe(2);
   });
 
   it('removes an ingredient from the list', () => {
@@ -104,9 +104,9 @@ describe('RecipeList.vue', () => {
       mocks: { $store: mockStore, $route: mockRoute }
     });
 
-    wrapper.find('.remove-ingredient-button').trigger('click');
+    wrapper.find('.remove-item-button').trigger('click');
 
-    expect(wrapper.contains('.recipe-ingredient-item')).toBe(false);
+    expect(wrapper.contains('.rline-item')).toBe(false);
   });
 
   it('saves the recipe', () => {

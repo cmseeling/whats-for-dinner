@@ -19,24 +19,16 @@
           <v-icon small class="mr-2">fa fa-plus</v-icon>Add Item
         </v-btn>
       </li>
-      <v-container v-for="(ingredient, index) in ingredientsList" :key="index" tag="li" class="pa-0 ingredient-container" fill-height>
-        <v-layout align-center>
-          <v-flex shrink>
-            <v-btn class="remove-ingredient-button" color="error" @click="removeIngredient(index)" flat icon>
-              <v-icon small>fa fa-times</v-icon>
-            </v-btn>
-          </v-flex>
-          <v-flex class="ingredient-name">
-            {{ingredient}}
-          </v-flex>
-        </v-layout>
-      </v-container>
+      <LineItem v-for="(ingredient, index) in ingredientsList" :key="index" :index="index" :text="ingredient" label="Ingredient Name"
+        v-on:line-item:remove="removeIngredient"
+        v-on:line-item:update="updateIngredient"/>
     </ul>
   </v-card-text>
 </template>
 
 <script lang="ts">
 import Vue from 'vue';
+import LineItem from '@/components/LineItem.vue';
 
 interface Data {
   ingredientsList: string[];
@@ -46,6 +38,9 @@ interface Data {
 
 export default Vue.extend({
   name: 'GroceryList',
+  components: {
+    LineItem
+  },
   data(): Data {
     return {
       ingredientsList: [],
@@ -65,6 +60,9 @@ export default Vue.extend({
     this.ingredientsList = this.getIngredientsFromRecipeIds(this.getAllUniqueRecipeIdsFromMealSlots);
   },
   methods: {
+    updateIngredient({text, index}: {text: string, index: number}) {
+      this.ingredientsList[index] = text;
+    },
     removeIngredient(index: number) {
       this.ingredientsList.splice(index, 1);
     },

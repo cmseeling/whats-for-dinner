@@ -67,7 +67,7 @@ describe('RecipeList.vue', () => {
     expect(wrapper.find('.form-header').text()).toBe('Recipe - Edit');
     const textInput = wrapper.find('.recipe-name').find('input').element as HTMLInputElement;
     expect(textInput.value).toBe(mockRecipe.name);
-    expect(wrapper.findAll('.rline-item').length).toBe(1);
+    expect(wrapper.findAll('.line-item').length).toBe(1);
   });
 
   it('shows an ingredient input', () => {
@@ -96,7 +96,7 @@ describe('RecipeList.vue', () => {
     wrapper.find('.add-ingredient-confirm').trigger('click');
 
     expect(wrapper.contains('.add-ingredient-inputs')).toBe(false);
-    expect(wrapper.findAll('.rline-item').length).toBe(2);
+    expect(wrapper.findAll('.line-item').length).toBe(2);
   });
 
   it('removes an ingredient from the list', () => {

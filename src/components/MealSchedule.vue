@@ -42,14 +42,15 @@
       </v-container>
       <v-layout row>
         <v-flex>
-          <small class="text-xs-center">Don't forget to save your plan! You can save up to 10.</small>
+          <p>Don't forget to save your plan! You can save up to 10.</p>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
-        <v-btn class="schedule-save-button" color="primary" @click="saveMealPlan">Save</v-btn>
-        <v-btn class="schedule-delete-button" color="error" :disabled="selectedPlanId === -1" @click.prevent="showModel = true">Delete</v-btn>
-        <v-spacer></v-spacer>
-        <v-btn to="/groceries" color="success">Generate Grocery List<v-icon small right>fa fa-arrow-right</v-icon></v-btn>
+        <v-flex>
+        <v-btn class="schedule-save-button" color="primary" @click="saveMealPlan">Save Plan</v-btn>
+        <v-btn class="schedule-delete-button" color="error" :disabled="selectedPlanId === -1" @click.prevent="showModel = true">Delete Plan</v-btn>
+        <v-btn to="/groceries" color="success">Grocery List<v-icon small right>fa fa-arrow-right</v-icon></v-btn>
+        </v-flex>
       </v-layout>
       <ConfirmDeleteDialog
         :isOpen="showModel"

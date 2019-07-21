@@ -99,10 +99,7 @@ const actions = {
     commit('resetRecipes');
   },
 
-  saveRecipe: async (
-      {commit, state, rootGetters}: {commit: Commit, state: RecipesState, rootGetters: any},
-      recipe: Recipe
-  ): Promise<void> => {
+  saveRecipe: async ({commit, state}: {commit: Commit, state: RecipesState}, recipe: Recipe): Promise<void> => {
     let recipeData;
     if (recipe.id) {
       recipeData = {...recipe};
@@ -118,15 +115,12 @@ const actions = {
     }
 
     commit('updateRecipe', recipeData);
-    await LambdaAPI.saveRecipes(rootGetters['identity/user'], state.recipes.Values());
+    await LambdaAPI.saveRecipes(state.recipes.Values());
   },
 
-  deleteRecipe: async (
-    {commit, state, rootGetters}: {commit: Commit, state: RecipesState, rootGetters: any},
-    id: number
-  ): Promise<void> => {
+  deleteRecipe: async ({commit, state}: {commit: Commit, state: RecipesState}, id: number): Promise<void> => {
     commit('removeRecipe', id);
-    await LambdaAPI.saveRecipes(rootGetters['identity/user'], state.recipes.Values());
+    await LambdaAPI.saveRecipes(state.recipes.Values());
   }
 };
 

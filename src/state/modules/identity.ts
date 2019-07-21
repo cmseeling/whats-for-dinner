@@ -1,6 +1,6 @@
 import { Commit, Dispatch } from 'vuex';
 import { DefaultIdentityState, IdentityState } from '../interfaces/Identity';
-import { User, logout } from 'netlify-identity-widget';
+import netlifyIdentity, { User, logout } from 'netlify-identity-widget';
 import LambdaAPI from '@/api/LambdaAPI';
 
 const getters = {
@@ -37,16 +37,12 @@ const mutations = {
 
 const actions = {
   init: async ({commit, dispatch}: {commit: Commit, dispatch: Dispatch}): Promise<void> => {
-    const json = window.localStorage.getItem('gotrue.user');
-    if (json) {
-      const user: User = JSON.parse(json);
-      if (user.token && user.token.expires_at > Date.now()) {
-        commit('setUser', user);
-        dispatch('loadUserData');
-      } else {
-        commit('setUser', null);
-        logout();
-      }
+    const user = netlifyIdentity.currentUser();
+    commit('setUser', user);
+    if (user && user.token && user.token.expires_at > Date.now()) {
+      dispatch('loadUserData');
+    } else {
+      logout();
     }
   },
 
@@ -61,23 +57,22 @@ const actions = {
   },
 
   loadUserData: async ({state, dispatch}: {state: IdentityState, dispatch: Dispatch}): Promise<void> => {
-    if (state.user) {
-      try {
-        const data = await LambdaAPI.getData(state.user);
-        if (data.recipes) {
-          dispatch('recipes/setRecipes', data.recipes, {root: true});
-        }
-        if (data.mealPlans) {
-          dispatch('mealPlans/setMealPlans', data.mealPlans, {root: true});
-        }
-      } catch (error) {
-        let message = 'Could not retrieve your data. ';
-        if (error.response) {
-          message = message +
-            `Server responded with a ${error.response.status} status code and message "${error.response.data.message}"`;
-        }
-        dispatch('app/setNewErrorMessage', message, {root: true});
+    try {
+      const data = await LambdaAPI.getData();
+      if (data.recipes) {
+        dispatch('recipes/setRecipes', data.recipes, {root: true});
       }
+      if (data.mealPlans) {
+        dispatch('mealPlans/setMealPlans', data.mealPlans, {root: true});
+      }
+    } catch (error) {
+      console.log(error);
+      let message = 'Could not retrieve your data. ';
+      if (error.response) {
+        message = message +
+          `Server responded with a ${error.response.status} status code and message "${error.response.data.message}"`;
+      }
+      dispatch('app/setNewErrorMessage', message, {root: true});
     }
   }
 };

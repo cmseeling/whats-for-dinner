@@ -135,7 +135,7 @@ describe('mealPlans.ts', () => {
   it('deletes a meal plan by id', async () => {
     const mockSave = jest.spyOn(LambdaAPI, 'saveMealPlans').mockImplementation();
 
-    await mealPlans.actions.deleteMealPlan({commit, state,}, 1);
+    await mealPlans.actions.deleteMealPlan({commit, state}, 1);
 
     expect(commit).toHaveBeenCalledTimes(1);
     expect(commit).toHaveBeenCalledWith('removeMealPlan', 1);

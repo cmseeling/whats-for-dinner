@@ -1,12 +1,14 @@
-import { createLocalVue, mount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
+import Vue from 'vue';
 import Vuetify from 'vuetify';
 import flatten from 'lodash/flatten';
 import GroceryList from '@/components/GroceryList.vue';
 import { Recipe } from '@/models/Recipe';
 import { generateRecipe } from '../../helpers/recipe';
 
-const localVue = createLocalVue();
-localVue.use(Vuetify);
+// this should really be localVue but Vuetify pollutes the Vue prototype and causes the tests to throw bad exceptions.
+// See https://github.com/vuetifyjs/vuetify/issues/4861 and https://github.com/vuetifyjs/vuetify/issues/6046
+Vue.use(Vuetify);
 
 let mockRecipe1: Recipe;
 let mockRecipe2: Recipe;
@@ -35,20 +37,18 @@ describe('RecipeList.vue', () => {
 
   it('renders the list of ingredients', async () => {
     const wrapper = mount(GroceryList, {
-      mocks: { $store: mockStore },
-      localVue
+      mocks: { $store: mockStore }
     });
 
     // wait for the component to update the list
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.findAll('.ingredient-name').length).toBe(2);
+    expect(wrapper.findAll('.line-item').length).toBe(2);
   });
 
   it('adds an ingredient', async () => {
     const wrapper = mount(GroceryList, {
-      mocks: { $store: mockStore },
-      localVue
+      mocks: { $store: mockStore }
     });
 
     // wait for the component to update the list
@@ -61,13 +61,12 @@ describe('RecipeList.vue', () => {
     wrapper.find('.add-ingredient-confirm').trigger('click');
 
     expect(wrapper.contains('.add-ingredient-inputs')).toBe(false);
-    expect(wrapper.findAll('.ingredient-name').length).toBe(3);
+    expect(wrapper.findAll('.line-item').length).toBe(3);
   });
 
   it('removes an ingredient', async () => {
     const wrapper = mount(GroceryList, {
-      mocks: { $store: mockStore },
-      localVue
+      mocks: { $store: mockStore }
     });
 
     // wait for the component to update the list
@@ -75,6 +74,6 @@ describe('RecipeList.vue', () => {
 
     wrapper.findAll('.remove-item-button').wrappers[0].trigger('click');
 
-    expect(wrapper.findAll('.ingredient-name').length).toBe(1);
+    expect(wrapper.findAll('.line-item').length).toBe(1);
   });
 });

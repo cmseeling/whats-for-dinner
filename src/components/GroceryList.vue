@@ -14,7 +14,7 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <li v-if="!isAddingItem">
+      <li v-else>
         <v-btn class="add-ingredient-button" color="success" @click.prevent="toggleAddItem" small>
           <v-icon small class="mr-2">fa fa-plus</v-icon>Add Item
         </v-btn>

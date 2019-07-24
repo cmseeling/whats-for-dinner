@@ -15,7 +15,7 @@
                   :class="(index % 2 === 0) ? 'pa-0 recipe-item' : 'pa-0 recipe-item-striped'">
               <v-layout align-center>
                 <v-flex shrink>
-                  <v-btn class="recipe-list-remove-button" color="error" @click="removeFromMealSlot(recipeId)" small flat icon>
+                  <v-btn class="recipe-list-remove-button" color="error" @click="removeFromMealSlot(recipeId)" small text icon>
                     <v-icon size="14">fa fa-times</v-icon>
                   </v-btn>
                 </v-flex>

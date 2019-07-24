@@ -1,5 +1,5 @@
 <template>
-  <v-card-text class="text-xs-left">
+  <v-card-text class="text-left">
     <ul>
       <v-container v-if="isAddingItem" tag="li" class="pa-0 add-ingredient-inputs" fill-height>
         <v-layout align-center row wrap>
@@ -85,5 +85,9 @@ export default Vue.extend({
 
   .ingredient-name {
     padding-bottom: 2px;
+  }
+
+  .v-btn {
+    margin: 8px;
   }
 </style>

@@ -2,7 +2,7 @@
   <v-container tag="li" class="pa-0 line-item" fill-height>
     <v-layout align-center v-if="!isEditing">
       <v-flex shrink>
-        <v-btn class="remove-item-button" color="error" @click="$emit('line-item:remove', index)" flat icon>
+        <v-btn class="remove-item-button" color="error" @click="$emit('line-item:remove', index)" text icon>
           <v-icon small>fa fa-times</v-icon>
         </v-btn>
       </v-flex>
@@ -10,7 +10,7 @@
         {{itemText}}
       </v-flex>
       <v-flex shrink>
-        <v-btn class="edit-item-button" small flat icon @click="isEditing = !isEditing">
+        <v-btn class="edit-item-button" small text icon @click="isEditing = !isEditing">
           <v-icon small>fa fa-edit</v-icon>
         </v-btn>
       </v-flex>
@@ -18,7 +18,7 @@
 
     <v-layout align-center v-else>
       <v-flex shrink>
-        <v-btn class="remove-item-button" color="error" @click="$emit('line-item:remove', index)" flat icon>
+        <v-btn class="remove-item-button" color="error" @click="$emit('line-item:remove', index)" text icon>
           <v-icon small>fa fa-times</v-icon>
         </v-btn>
       </v-flex>
@@ -30,10 +30,10 @@
         </v-layout>
       </v-flex>
       <v-flex shrink>
-        <v-btn class="edit-item-confirm" color="success" @click="saveChanges" small flat icon>
+        <v-btn class="edit-item-confirm" color="success" @click="saveChanges" small text icon>
           <v-icon small>fa fa-save</v-icon>
         </v-btn>
-        <v-btn class="edit-item-button" small flat icon @click="isEditing = !isEditing">
+        <v-btn class="edit-item-button" small text icon @click="isEditing = !isEditing">
           <v-icon small>fa fa-edit</v-icon>
         </v-btn>
       </v-flex>

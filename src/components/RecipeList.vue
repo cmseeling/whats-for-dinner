@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      <v-toolbar flat v-if="!showMobileHeader">
+      <v-toolbar flat v-if="!showMobileHeader" color="#f5f5f5">
         <v-toolbar-title>
           Recipes
         </v-toolbar-title>

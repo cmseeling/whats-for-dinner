@@ -3,14 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "clean": "rimraf dist functions",
-    "serve:app": "vue-cli-service serve",
-    "serve:functions": "netlify-lambda serve src/lambdas",
-    "prebuild": "node ./prebuild.js",
-    "build:app": "vue-cli-service build",
-    "build:functions": "netlify-lambda build src/lambdas",
     "build": "npm run prebuild & npm run build:functions && npm run build:app",
     "lint": "vue-cli-service lint",
+    "build:app": "vue-cli-service build",
+    "build:functions": "netlify-lambda build src/lambdas",
+    "clean": "rimraf dist functions",
+    "prebuild": "node ./prebuild.js",
+    "serve:app": "vue-cli-service serve",
+    "serve:functions": "netlify-lambda serve src/lambdas",
     "test:unit": "vue-cli-service test:unit",
     "test:unit-single": "vue-cli-service test:unit tests/unit/lambdas/upsertItem.spec.ts"
   },
@@ -40,7 +40,13 @@
     "vue": "^2.6.6",
     "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.5.21",
-    "vuetify": "^1.5.9",
+    "vuetify": "^2.0.0",
     "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "sass": "^1.17.4",
+    "sass-loader": "^7.1.0",
+    "vue-cli-plugin-vuetify": "^0.6.1",
+    "vuetify-loader": "^1.2.2"
   }
 }

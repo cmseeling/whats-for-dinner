@@ -8,7 +8,7 @@
         <v-container v-for="recipeId in mealSlot.recipeIds" :key="recipeId" tag="li" class="pa-0" fill-height>
           <v-layout align-center>
             <v-flex shrink>
-              <v-btn color="error" class="recipe-list-remove-button" @click="removeFromMealSlot(recipeId)" small flat icon>
+              <v-btn color="error" class="recipe-list-remove-button" @click="removeFromMealSlot(recipeId)" small text icon>
                 <v-icon size="14">fa fa-times</v-icon>
               </v-btn>
             </v-flex>

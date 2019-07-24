@@ -1,21 +1,21 @@
 <template>
   <v-app>
-    <v-toolbar app dark color="gray" clipped-left dense>
-      <v-toolbar-side-icon @click="visible = !visible"></v-toolbar-side-icon>
+    <v-navigation-drawer app clipped v-model="visible">
+      <AppNavList/>
+    </v-navigation-drawer>
+    <v-app-bar app dark color="gray" clipped-left dense>
+      <v-app-bar-nav-icon @click="visible = !visible"></v-app-bar-nav-icon>
       <v-toolbar-title class="white-text">What's For Dinner?</v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-md-and-down" v-if="isLoggedIn">
         <v-btn class="wfd-user-name" disabled>{{userName}}</v-btn>
-        <v-btn class="logout-button" flat @click="triggerNetlifyIdentityAction('logout')">Log Out</v-btn>
+        <v-btn class="logout-button" text @click="triggerNetlifyIdentityAction('logout')">Log Out</v-btn>
       </v-toolbar-items>
       <v-toolbar-items class="hidden-md-and-down" v-else>
-        <v-btn class="login-button" flat @click="triggerNetlifyIdentityAction('login')">Log In</v-btn>
-        <v-btn class="signup-button" flat @click="triggerNetlifyIdentityAction('signup')">Sign Up</v-btn>
+        <v-btn class="login-button" text @click="triggerNetlifyIdentityAction('login')">Log In</v-btn>
+        <v-btn class="signup-button" text @click="triggerNetlifyIdentityAction('signup')">Sign Up</v-btn>
       </v-toolbar-items>
-    </v-toolbar>
-    <v-navigation-drawer app clipped v-model="visible">
-      <AppNavList/>
-    </v-navigation-drawer>
+    </v-app-bar>
     <v-content>
       <v-container fluid>
         <router-view></router-view>
@@ -26,7 +26,7 @@
       :bottom="true"
       :timeout="0">
       <span class="application-error-message">{{errorMessage}}</span>
-      <v-btn color="pink" flat @click="dismissErrorMessage">
+      <v-btn color="pink" text @click="dismissErrorMessage">
         <v-icon small>fa fa-times</v-icon>
       </v-btn>
     </v-snackbar>

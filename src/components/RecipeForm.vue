@@ -10,7 +10,7 @@
     <v-card-text>
       <v-form>
         <v-text-field class="recipe-name" label="Recipe Name" v-model="recipe.name" />
-        <div class="text-xs-left">
+        <div class="text-left">
           <label class="font-weight-bold">Ingredients</label>
           <ul>
             <LineItem v-for="(item, index) in recipe.ingredients" :key="index" :index="index" :text="item" label="Ingredient Name"
@@ -49,13 +49,17 @@
           <hr/>
           <br/>
           <v-container class="pa-0">
-            <v-layout column>
-              <v-flex>
-                <v-btn class="save-button" color="primary" @click.prevent="saveRecipeForm" small>Save</v-btn>
+            <v-layout row>
+              <v-flex xs1>
+                <v-btn block class="save-button action-button" color="primary" @click.prevent="saveRecipeForm" small>Save</v-btn>
               </v-flex>
-              <v-flex>
-                <v-btn class="cancel-button" color="error" v-if="isNewRecipe" @click.prevent="goBack">Cancel</v-btn>
-                <v-btn class="delete-button" color="error" v-else @click.prevent="showModel = true">Delete</v-btn>
+            </v-layout>
+            <v-layout row>
+              <v-flex xs1 v-if="isNewRecipe">
+                <v-btn block class="cancel-button action-button" color="error" @click.prevent="goBack">Cancel</v-btn>
+              </v-flex>
+              <v-flex xs1 v-else>
+                <v-btn block class="delete-button action-button" color="error" @click.prevent="showModel = true">Delete</v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -176,5 +180,9 @@ export default Vue.extend({
 <style scoped>
   li {
     list-style-type: none;
+  }
+
+  .v-btn {
+    margin: 8px;
   }
 </style>

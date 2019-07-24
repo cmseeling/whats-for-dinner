@@ -8,7 +8,7 @@
         <v-list-item-title>{{ item.title }}</v-list-item-title>
       </v-list-item-content>
     </v-list-item>
-    <div >
+    <div class="hidden-lg-and-up">
       <v-divider/>
       <div v-if="isLoggedIn" >
         <v-list-item @click="triggerNetlifyIdentityAction('logout')">

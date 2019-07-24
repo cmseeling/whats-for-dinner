@@ -13,18 +13,9 @@
         <div class="text-xs-left">
           <label class="font-weight-bold">Ingredients</label>
           <ul>
-            <v-container v-for="(item, index) in recipe.ingredients" :key="index" tag="li" class="pa-0 recipe-ingredient-item" fill-height>
-              <v-layout align-center>
-                <v-flex shrink>
-                  <v-btn class="remove-ingredient-button" color="error" @click="removeIngredient(index)" flat icon>
-                    <v-icon small>fa fa-times</v-icon>
-                  </v-btn>
-                </v-flex>
-                <v-flex class="ingredient-text">
-                  {{item}}
-                </v-flex>
-              </v-layout>
-            </v-container>
+            <LineItem v-for="(item, index) in recipe.ingredients" :key="index" :index="index" :text="item" label="Ingredient Name"
+              v-on:line-item:remove="removeIngredient"
+              v-on:line-item:update="updateIngredient"/>
             <v-container v-if="isAddingIngredient" tag="li" class="pa-0 add-ingredient-inputs" fill-height>
               <v-layout align-center row wrap>
                 <v-flex>
@@ -87,6 +78,7 @@ import toLower from 'lodash/toLower';
 import { Recipe } from '@/models/Recipe';
 import { Route } from 'vue-router';
 import ConfirmDeleteDialog from '@/components/ConfirmDeleteDialog.vue';
+import LineItem from '@/components/LineItem.vue';
 
 interface Data {
   recipe: Recipe;
@@ -99,7 +91,8 @@ interface Data {
 export default Vue.extend({
   name: 'RecipeForm',
   components: {
-    ConfirmDeleteDialog
+    ConfirmDeleteDialog,
+    LineItem
   },
   data(): Data {
     return {
@@ -128,7 +121,14 @@ export default Vue.extend({
       deep: true,
       handler(newRoute: Route, oldRoute: Route) {
         if (newRoute.params.id) {
-          this.recipe = this.getRecipeById(Number(newRoute.params.id));
+          const storedRecipe = this.getRecipeById(Number(newRoute.params.id));
+
+          this.recipe = {
+            id: storedRecipe.id,
+            name: storedRecipe.name,
+            ingredients: [...storedRecipe.ingredients],
+            instructions: storedRecipe.instructions
+          };
           this.isNewRecipe = false;
         }
       }
@@ -159,6 +159,9 @@ export default Vue.extend({
     goBack() {
       this.$router.push('/recipes');
     },
+    updateIngredient({text, index}: {text: string, index: number}) {
+      this.recipe.ingredients[index] = text;
+    },
     removeIngredient(index: number) {
       this.recipe.ingredients.splice(index, 1);
     },
@@ -173,9 +176,5 @@ export default Vue.extend({
 <style scoped>
   li {
     list-style-type: none;
-  }
-
-  .ingredient-text {
-    padding-bottom: 2px;
   }
 </style>

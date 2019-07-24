@@ -18,6 +18,10 @@ const getters = {
 
   getMealPlanByIndex: (state: MealPlansState) => (index: number): MealPlan => {
     return state.mealPlans.Values()[index];
+  },
+
+  selectedPlanId: (state: MealPlansState): number => {
+    return state.selectedPlanId;
   }
 };
 
@@ -44,6 +48,10 @@ const mutations = {
 
   resetMealPlans: (state: MealPlansState): void => {
     state.mealPlans = new Dictionary<MealPlan>();
+  },
+
+  setSelectedPlanId: (state: MealPlansState, id: number): void => {
+    state.selectedPlanId = id;
   }
 };
 
@@ -58,7 +66,7 @@ const actions = {
   },
 
   saveMealPlan: async (
-      {commit, state, rootGetters}: {commit: Commit, state: MealPlansState, rootGetters: any},
+      {commit, state}: {commit: Commit, state: MealPlansState},
       mealPlan: MealPlan
   ): Promise<number> => {
     let mealPlanData;
@@ -76,16 +84,13 @@ const actions = {
     }
 
     commit('updateMealPlan', mealPlanData);
-    await LambdaAPI.saveMealPlans(rootGetters['identity/user'], state.mealPlans.Values());
+    await LambdaAPI.saveMealPlans(state.mealPlans.Values());
     return (mealPlanData.id as number);
   },
 
-  deleteMealPlan: async (
-    {commit, state, rootGetters}: {commit: Commit, state: MealPlansState, rootGetters: any},
-    id: number
-  ): Promise<void> => {
+  deleteMealPlan: async ({commit, state}: {commit: Commit, state: MealPlansState}, id: number): Promise<void> => {
     commit('removeMealPlan', id);
-    await LambdaAPI.saveMealPlans(rootGetters['identity/user'], state.mealPlans.Values());
+    await LambdaAPI.saveMealPlans(state.mealPlans.Values());
   }
 };
 

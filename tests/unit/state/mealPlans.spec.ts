@@ -9,7 +9,6 @@ let state: MealPlansState;
 let testPlan1: MealPlan;
 let testPlan2: MealPlan;
 let commit: jest.Mock;
-let rootGetters: any;
 let mockUser: any;
 
 describe('mealPlans.ts', () => {
@@ -25,10 +24,6 @@ describe('mealPlans.ts', () => {
 
     mockUser = {
       email: 'test@test.com'
-    };
-
-    rootGetters = {
-      ['identity/user']: mockUser
     };
   });
 
@@ -120,7 +115,7 @@ describe('mealPlans.ts', () => {
 
     const mockSave = jest.spyOn(LambdaAPI, 'saveMealPlans').mockImplementation();
 
-    await mealPlans.actions.saveMealPlan({commit, state, rootGetters}, newPlan);
+    await mealPlans.actions.saveMealPlan({commit, state}, newPlan);
 
     expect(mockSave).toHaveBeenCalledTimes(1);
     expect(commit).toHaveBeenCalledTimes(1);
@@ -130,7 +125,7 @@ describe('mealPlans.ts', () => {
   it('saves an updated meal plan', async () => {
     const mockSave = jest.spyOn(LambdaAPI, 'saveMealPlans').mockImplementation();
 
-    await mealPlans.actions.saveMealPlan({commit, state, rootGetters}, testPlan1);
+    await mealPlans.actions.saveMealPlan({commit, state}, testPlan1);
 
     expect(mockSave).toHaveBeenCalledTimes(1);
     expect(commit).toHaveBeenCalledTimes(1);
@@ -140,7 +135,7 @@ describe('mealPlans.ts', () => {
   it('deletes a meal plan by id', async () => {
     const mockSave = jest.spyOn(LambdaAPI, 'saveMealPlans').mockImplementation();
 
-    await mealPlans.actions.deleteMealPlan({commit, state, rootGetters}, 1);
+    await mealPlans.actions.deleteMealPlan({commit, state}, 1);
 
     expect(commit).toHaveBeenCalledTimes(1);
     expect(commit).toHaveBeenCalledWith('removeMealPlan', 1);

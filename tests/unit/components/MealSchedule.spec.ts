@@ -20,6 +20,7 @@ let mealSlots: MealSlot[];
 let testPlan1: MealPlan;
 let testPlan2: MealPlan;
 let mockDispatch: jest.Mock;
+let mockCommit: jest.Mock;
 
 const generateStore = (mealPlans: MealPlan[]) => {
   return {
@@ -29,6 +30,7 @@ const generateStore = (mealPlans: MealPlan[]) => {
       }
     },
     getters: {
+      'mealPlans/selectedPlanId': -1,
       'mealPlans/mealPlans': mealPlans,
       'mealPlans/getMealPlanById': (id: number) => {
         if (id === 1) {
@@ -40,7 +42,8 @@ const generateStore = (mealPlans: MealPlan[]) => {
         }
       }
     },
-    dispatch: mockDispatch
+    dispatch: mockDispatch,
+    commit: mockCommit
   };
 };
 
@@ -53,6 +56,11 @@ describe('MealSchedule.vue', () => {
 
     mockDispatch = jest.fn();
     mockStore = generateStore([testPlan1, testPlan2]);
+    mockCommit = jest.fn().mockImplementation((action: string, value: any) => {
+      if (action === 'mealPlans/setSelectedPlanId') {
+        mockStore.getters['mealPlans/selectedPlanId'] = value;
+      }
+    });
   });
 
   afterEach(() => {
@@ -109,8 +117,6 @@ describe('MealSchedule.vue', () => {
     const slots = CreateEmptySchedule();
     slots[2].recipeIds = [1];
     testPlan2.slots = slots;
-
-    // console.log(testPlan2);
 
     mockStore = generateStore([testPlan1, testPlan2]);
 

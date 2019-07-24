@@ -5,7 +5,6 @@ import { Recipe } from '@/models/Recipe';
 import { AugmentedSlot } from '@/models/AugmentedSlot';
 import { generateRecipe } from '../../helpers/recipe';
 
-
 const localVue = createLocalVue();
 localVue.use(Vuetify);
 
@@ -59,7 +58,8 @@ describe('MobileSlot.vue', () => {
     const wrapper = shallowMount(MobileSlot, {
       propsData: {mealSlot, setActive},
       mocks: { $store: mockStore },
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
 
     expect(wrapper.find('.mobile-slot-title').text()).toBe('Breakfast');
@@ -77,7 +77,8 @@ describe('MobileSlot.vue', () => {
     const wrapper = shallowMount(MobileSlot, {
       propsData: {mealSlot, setActive},
       mocks: { $store: mockStore },
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
 
     expect(wrapper.findAll('.recipe-list-name').length).toBe(2);
@@ -97,7 +98,8 @@ describe('MobileSlot.vue', () => {
     let wrapper = shallowMount(MobileSlot, {
       propsData: {mealSlot, setActive},
       mocks: { $store: mockStore },
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
     expect(wrapper.contains('.selected')).toBe(false);
 
@@ -105,7 +107,8 @@ describe('MobileSlot.vue', () => {
     wrapper = shallowMount(MobileSlot, {
       propsData: {mealSlot, setActive},
       mocks: { $store: mockStore },
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
     expect(wrapper.contains('.selected')).toBe(true);
   });
@@ -122,7 +125,8 @@ describe('MobileSlot.vue', () => {
     const wrapper = mount(MobileSlot, {
       propsData: {mealSlot, setActive},
       mocks: { $store: mockStore },
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
 
     wrapper.trigger('click');
@@ -141,7 +145,8 @@ describe('MobileSlot.vue', () => {
     const wrapper = mount(MobileSlot, {
       propsData: {mealSlot, setActive},
       mocks: { $store: mockStore },
-      localVue
+      localVue,
+      stubs: ['router-link']
     });
 
     const expectedValue = {

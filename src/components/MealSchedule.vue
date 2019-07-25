@@ -180,7 +180,6 @@ export default Vue.extend({
 
     showConfirmationModal() {
       this.showModel = true;
-      console.log(this.showModel);
     },
 
     removePlan() {

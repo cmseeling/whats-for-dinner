@@ -12,6 +12,8 @@ Vue.use(Vuetify);
 // https://forum.vuejs.org/t/vuetify-data-app-true-and-problems-rendering-v-dialog-in-unit-tests/27495/9
 document.body.setAttribute('data-app', 'true');
 
+let vuetify: any;
+
 let mockRecipe: Recipe;
 let mockStore: any;
 let mockDispatch: jest.Mock;
@@ -20,6 +22,8 @@ let mockRoute: any;
 
 describe('RecipeList.vue', () => {
   beforeEach(() => {
+    vuetify = new Vuetify();
+
     mockRecipe = generateRecipe(1, 'test recipe 1', ['ingredient 1']);
 
     mockDispatch = jest.fn();
@@ -50,7 +54,8 @@ describe('RecipeList.vue', () => {
   it('renders an empty form', () => {
     mockRoute.params.id = null;
     const wrapper = mount(RecipeForm, {
-      mocks: { $store: mockStore, $route: mockRoute }
+      mocks: { $store: mockStore, $route: mockRoute },
+      vuetify
     });
 
     expect(wrapper.find('.form-header').text()).toBe('Recipe - New');
@@ -61,7 +66,8 @@ describe('RecipeList.vue', () => {
 
   it('renders recipe data', () => {
     const wrapper = mount(RecipeForm, {
-      mocks: { $store: mockStore, $route: mockRoute }
+      mocks: { $store: mockStore, $route: mockRoute },
+      vuetify
     });
 
     expect(wrapper.find('.form-header').text()).toBe('Recipe - Edit');
@@ -72,7 +78,8 @@ describe('RecipeList.vue', () => {
 
   it('shows an ingredient input', () => {
     const wrapper = mount(RecipeForm, {
-      mocks: { $store: mockStore, $route: mockRoute }
+      mocks: { $store: mockStore, $route: mockRoute },
+      vuetify
     });
 
     expect(wrapper.contains('.add-ingredient-button')).toBe(true);
@@ -86,7 +93,8 @@ describe('RecipeList.vue', () => {
 
   it('adds an ingredient to the list', () => {
     const wrapper = mount(RecipeForm, {
-      mocks: { $store: mockStore, $route: mockRoute }
+      mocks: { $store: mockStore, $route: mockRoute },
+      vuetify
     });
 
     wrapper.find('.add-ingredient-button').trigger('click');
@@ -101,7 +109,8 @@ describe('RecipeList.vue', () => {
 
   it('removes an ingredient from the list', () => {
     const wrapper = mount(RecipeForm, {
-      mocks: { $store: mockStore, $route: mockRoute }
+      mocks: { $store: mockStore, $route: mockRoute },
+      vuetify
     });
 
     wrapper.find('.remove-item-button').trigger('click');
@@ -111,7 +120,8 @@ describe('RecipeList.vue', () => {
 
   it('saves the recipe', () => {
     const wrapper = mount(RecipeForm, {
-      mocks: { $store: mockStore, $route: mockRoute, $router: mockRouter }
+      mocks: { $store: mockStore, $route: mockRoute, $router: mockRouter },
+      vuetify
     });
 
     const expectedRecipe = {
@@ -129,7 +139,8 @@ describe('RecipeList.vue', () => {
 
   it('deletes the recipe', () => {
     const wrapper = mount(RecipeForm, {
-      mocks: { $store: mockStore, $route: mockRoute, $router: mockRouter }
+      mocks: { $store: mockStore, $route: mockRoute, $router: mockRouter },
+      vuetify
     });
 
     wrapper.find('.delete-button').trigger('click');

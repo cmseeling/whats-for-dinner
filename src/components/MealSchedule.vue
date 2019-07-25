@@ -11,7 +11,7 @@
               v-model="scheduleName"
               :disabled="!editScheduleName" />
           </v-flex>
-          <v-flex xs1 class="pt-2">
+          <v-flex xs2 md1 class="pt-2">
             <v-btn class="toggle-schedule-name-button" text right icon @click="toggleScheduleNameEdit">
               <v-icon small>fa fa-edit</v-icon>
             </v-btn>
@@ -48,7 +48,7 @@
       <v-layout row wrap>
         <v-flex>
         <v-btn class="schedule-save-button schedule-button" color="primary" @click="saveMealPlan">Save Plan</v-btn>
-        <v-btn class="schedule-delete-button schedule-button" color="error" :disabled="selectedPlanId === -1" @click.prevent="showModel = true">Delete Plan</v-btn>
+        <v-btn class="schedule-delete-button schedule-button" color="error" :disabled="selectedPlanId === -1" @click.prevent="showConfirmationModal">Delete Plan</v-btn>
         <v-btn class="schedule-button" to="/groceries" color="success">Grocery List<v-icon small right>fa fa-arrow-right</v-icon></v-btn>
         </v-flex>
       </v-layout>
@@ -176,6 +176,11 @@ export default Vue.extend({
         };
         this.selectedPlanId = await this.$store.dispatch('mealPlans/saveMealPlan', plan);
       }
+    },
+
+    showConfirmationModal() {
+      this.showModel = true;
+      console.log(this.showModel);
     },
 
     removePlan() {

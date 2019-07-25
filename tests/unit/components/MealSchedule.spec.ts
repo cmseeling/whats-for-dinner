@@ -1,4 +1,4 @@
-import { mount } from '@vue/test-utils';
+import { createLocalVue, mount } from '@vue/test-utils';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import MealSchedule from '@/components/MealSchedule.vue';
@@ -10,6 +10,9 @@ import { generateMealPlan } from '../../helpers/mealPlan';
 // this should really be localVue but Vuetify pollutes the Vue prototype and causes the tests to throw bad exceptions.
 // See https://github.com/vuetifyjs/vuetify/issues/4861 and https://github.com/vuetifyjs/vuetify/issues/6046
 Vue.use(Vuetify);
+
+// const localVue = createLocalVue();
+let vuetify: any;
 
 // suppress warning about data-app attribute:
 // https://forum.vuejs.org/t/vuetify-data-app-true-and-problems-rendering-v-dialog-in-unit-tests/27495/9
@@ -49,6 +52,8 @@ const generateStore = (mealPlans: MealPlan[]) => {
 
 describe('MealSchedule.vue', () => {
   beforeEach(() => {
+    vuetify = new Vuetify();
+
     mealSlots = DefaultScheduleState().mealSlots;
 
     testPlan1 = generateMealPlan(1, 'test plan 1');
@@ -70,7 +75,8 @@ describe('MealSchedule.vue', () => {
   it('renders', () => {
     const wrapper = mount(MealSchedule, {
       mocks: { $store: mockStore },
-      stubs: ['router-link']
+      stubs: ['router-link'],
+      vuetify
     });
 
     expect(wrapper.find('.schedule-title').text()).toBe('Meal Plan');
@@ -79,7 +85,8 @@ describe('MealSchedule.vue', () => {
   it('toggles name editing', () => {
     const wrapper = mount(MealSchedule, {
       mocks: { $store: mockStore },
-      stubs: ['router-link']
+      stubs: ['router-link'],
+      vuetify
     });
 
     expect(wrapper.find('.schedule-name').find('input').attributes('disabled')).toBe('disabled');
@@ -90,7 +97,8 @@ describe('MealSchedule.vue', () => {
   it('saves a meal plan', () => {
     const wrapper = mount(MealSchedule, {
       mocks: { $store: mockStore },
-      stubs: ['router-link']
+      stubs: ['router-link'],
+      vuetify
     });
 
     wrapper.find('.schedule-save-button').trigger('click');
@@ -103,7 +111,8 @@ describe('MealSchedule.vue', () => {
 
     const wrapper = mount(MealSchedule, {
       mocks: { $store: mockStore },
-      stubs: ['router-link']
+      stubs: ['router-link'],
+      vuetify
     });
 
     wrapper.find('.schedule-save-button').trigger('click');
@@ -122,33 +131,30 @@ describe('MealSchedule.vue', () => {
 
     const wrapper = mount(MealSchedule, {
       mocks: { $store: mockStore },
-      stubs: ['router-link']
+      stubs: ['router-link'],
+      vuetify
     });
 
-    wrapper.find('.mealplan-select').find('input').setValue(2);
-    wrapper.find('.mealplan-select').find('.v-list__tile__title').trigger('click');
+    wrapper.find('.v-select__selection').trigger('click');
+    wrapper.find('.v-menu__content').findAll('.v-list-item__content').wrappers[2].trigger('click');
     expect(mockDispatch).toHaveBeenCalledTimes(1);
-
-    /*
-     * TODO: change the second parameter for the expect to be the actual meal slots for testPlan2
-     * The documentation for v-select does not show how to set the selected value using Jest/vue-test-utils
-     * and calling wrapper.vm.setData() doesn't seem to update the value that the component's loadMealPlan depends on.
-     */
-    expect(mockDispatch).toHaveBeenCalledWith('schedule/setSchedule', expect.anything());
+    expect(mockDispatch).toHaveBeenCalledWith('schedule/setSchedule', slots);
   });
 
   it('deletes a meal plan', () => {
+    mockStore.getters['mealPlans/selectedPlanId'] = 2
     const wrapper = mount(MealSchedule, {
       mocks: { $store: mockStore },
-      stubs: ['router-link']
+      stubs: ['router-link'],
+      vuetify
     });
 
     wrapper.find('.schedule-delete-button').trigger('click');
 
-    expect(wrapper.contains('.confirmation-dialog')).toBe(true);
+    expect(wrapper.contains('.v-dialog--active')).toBe(true);
 
     wrapper.find('.dialog-confirmation-button').trigger('click');
 
-    expect(mockDispatch).toHaveBeenCalledWith('mealPlans/deleteMealPlan', -1);
+    expect(mockDispatch).toHaveBeenCalledWith('mealPlans/deleteMealPlan', 2);
   });
 });

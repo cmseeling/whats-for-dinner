@@ -10,10 +10,17 @@ Vue.use(Vuetify);
 // https://forum.vuejs.org/t/vuetify-data-app-true-and-problems-rendering-v-dialog-in-unit-tests/27495/9
 document.body.setAttribute('data-app', 'true');
 
+let vuetify: any;
+
 describe('ConfirmDeleteDialog.vue', () => {
+  beforeEach(() => {
+    vuetify = new Vuetify();
+  });
+
   it('renders', () => {
     const wrapper = mount(ConfirmDeleteDialog, {
-      propsData: { isOpen: true }
+      propsData: { isOpen: true },
+      vuetify
     });
 
     expect(wrapper.find('.headline').text()).toBe('Are you sure you want to delete this item?');
@@ -21,7 +28,8 @@ describe('ConfirmDeleteDialog.vue', () => {
 
   it('emits success', () => {
     const wrapper = mount(ConfirmDeleteDialog, {
-      propsData: { isOpen: true }
+      propsData: { isOpen: true },
+      vuetify
     });
 
     wrapper.find('.dialog-confirmation-button').trigger('click');
@@ -31,7 +39,8 @@ describe('ConfirmDeleteDialog.vue', () => {
 
   it('emits cancel', () => {
     const wrapper = mount(ConfirmDeleteDialog, {
-      propsData: { isOpen: true }
+      propsData: { isOpen: true },
+      vuetify
     });
 
     wrapper.find('.dialog-cancel-button').trigger('click');

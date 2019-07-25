@@ -1,4 +1,4 @@
-import { createLocalVue, mount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
 import Vue from 'vue';
 import Vuetify from 'vuetify';
 import MealSchedule from '@/components/MealSchedule.vue';
@@ -11,7 +11,6 @@ import { generateMealPlan } from '../../helpers/mealPlan';
 // See https://github.com/vuetifyjs/vuetify/issues/4861 and https://github.com/vuetifyjs/vuetify/issues/6046
 Vue.use(Vuetify);
 
-// const localVue = createLocalVue();
 let vuetify: any;
 
 // suppress warning about data-app attribute:

@@ -1,10 +1,10 @@
 <template>
   <v-card-text class="text-left">
-    <ul>
+    <v-list>
       <v-container v-if="isAddingItem" tag="li" class="pa-0 add-ingredient-inputs" fill-height>
         <v-layout align-center row wrap>
           <v-flex>
-            <v-text-field class="add-ingredient-input" label="Ingredient Name" v-model="newItem" autofocus/>
+            <v-text-field class="ml-5 add-ingredient-input" label="Ingredient Name" v-model="newItem" autofocus/>
           </v-flex>
           <v-flex shrink>
             <v-btn class="add-ingredient-confirm" color="success" @click="addIngredient" small>Add</v-btn>
@@ -14,15 +14,15 @@
           </v-flex>
         </v-layout>
       </v-container>
-      <li v-else>
+      <v-list-item v-else>
         <v-btn class="add-ingredient-button" color="success" @click.prevent="toggleAddItem" small>
           <v-icon small class="mr-2">fa fa-plus</v-icon>Add Item
         </v-btn>
-      </li>
+      </v-list-item>
       <LineItem v-for="(ingredient, index) in ingredientsList" :key="index" :index="index" :text="ingredient" label="Ingredient Name"
         v-on:line-item:remove="removeIngredient"
         v-on:line-item:update="updateIngredient"/>
-    </ul>
+    </v-list>
   </v-card-text>
 </template>
 
@@ -79,10 +79,6 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  li {
-    list-style-type: none;
-  }
-
   .ingredient-name {
     padding-bottom: 2px;
   }

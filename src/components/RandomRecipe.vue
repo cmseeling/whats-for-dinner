@@ -81,14 +81,6 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  ul{
-    padding: 0px;
-  }
-
-  li {
-    list-style-type: none;
-  }
-
   .add-random-button {
     margin: 0px 8px;
   }

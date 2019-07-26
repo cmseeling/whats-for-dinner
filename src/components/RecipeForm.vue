@@ -12,29 +12,29 @@
         <v-text-field class="recipe-name" label="Recipe Name" v-model="recipe.name" />
         <div class="text-left">
           <label class="font-weight-bold">Ingredients</label>
-          <ul>
+          <v-list>
             <LineItem v-for="(item, index) in recipe.ingredients" :key="index" :index="index" :text="item" label="Ingredient Name"
               v-on:line-item:remove="removeIngredient"
               v-on:line-item:update="updateIngredient"/>
-            <v-container v-if="isAddingIngredient" tag="li" class="pa-0 add-ingredient-inputs" fill-height>
-              <v-layout align-center row wrap>
-                <v-flex>
-                  <v-text-field class="add-ingredient-input" label="Ingredient Name" v-model="newIngredient" autofocus @keyup.enter="addIngredient"/>
-                </v-flex>
-                <v-flex shrink>
-                  <v-btn class="add-ingredient-confirm" color="success" @click="addIngredient" small>Add</v-btn>
-                </v-flex>
-                <v-flex shrink>
-                  <v-btn class="add-ingredient-cancel" color="error" @click="cancelAddIngredient" small>Cancel</v-btn>
-                </v-flex>
-              </v-layout>
-            </v-container>
-            <li v-if="!isAddingIngredient">
+            <v-list-item v-if="isAddingIngredient" class="add-ingredient-inputs">
+              <v-list-item-content>
+                <v-layout align-center row wrap>
+                  <v-flex>
+                    <v-text-field class="ml-5 add-ingredient-input" label="Ingredient Name" v-model="newIngredient" autofocus @keyup.enter="addIngredient"/>
+                  </v-flex>
+                  <v-flex shrink>
+                    <v-btn class="add-ingredient-confirm" color="success" @click="addIngredient" small>Add</v-btn>
+                    <v-btn class="add-ingredient-cancel" color="error" @click="cancelAddIngredient" small>Cancel</v-btn>
+                  </v-flex>
+                </v-layout>
+              </v-list-item-content>
+            </v-list-item>
+            <v-list-item v-if="!isAddingIngredient">
               <v-btn class="add-ingredient-button" color="success" @click.prevent="addItem" small>
                 <v-icon small class="mr-2">fa fa-plus</v-icon>Add Ingredient
               </v-btn>
-            </li>
-          </ul>
+            </v-list-item>
+          </v-list>
           <br/>
           <hr/>
           <br/>
@@ -178,10 +178,6 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  li {
-    list-style-type: none;
-  }
-
   .v-btn {
     margin: 8px;
   }

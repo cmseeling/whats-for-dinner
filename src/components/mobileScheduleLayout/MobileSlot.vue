@@ -4,20 +4,22 @@
       {{meals[mealSlot.mealIndex]}}
     </v-card-title>
     <v-card-text>
-      <ul>
-        <v-container v-for="recipeId in mealSlot.recipeIds" :key="recipeId" tag="li" class="pa-0" fill-height>
-          <v-layout align-center>
-            <v-flex shrink>
-              <v-btn color="error" class="recipe-list-remove-button" @click="removeFromMealSlot(recipeId)" small text icon>
-                <v-icon size="14">fa fa-times</v-icon>
-              </v-btn>
-            </v-flex>
-            <v-flex class="recipe-list-name">
-              <router-link :to="{path: `recipes/item/${recipeId}`}">{{getRecipeName(recipeId)}}</router-link>
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </ul>
+      <v-list class="pa-0 recipe-list">
+        <v-list-item v-for="recipeId in mealSlot.recipeIds" :key="recipeId" class="pa-0" fill-height>
+          <v-list-item-content class="pa-0">
+            <v-layout align-center>
+              <v-flex shrink>
+                <v-btn color="error" class="recipe-list-remove-button" @click="removeFromMealSlot(recipeId)" small text icon>
+                  <v-icon size="14">fa fa-times</v-icon>
+                </v-btn>
+              </v-flex>
+              <v-flex class="recipe-list-name text-left">
+                <router-link :to="{path: `recipes/item/${recipeId}`}">{{getRecipeName(recipeId)}}</router-link>
+              </v-flex>
+            </v-layout>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
     </v-card-text>
   </v-card>
 </template>
@@ -62,12 +64,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  li {
-    list-style-type: none;
-    text-align: left;
-  }
-
-  .selected {
+  .selected, .selected .recipe-list {
     background-color: lightblue !important;
   }
 </style>

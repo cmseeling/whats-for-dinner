@@ -2,7 +2,7 @@
   <v-container class="pa-2">
     <v-layout v-bind="layoutBinding">
       <v-flex md4>
-        <div class="recipe-title">
+        <div class="recipe-title text-left">
           <v-btn class="recipe-title-button" text color="primary" @click="$emit('recipe-click', recipe.id)">
             {{recipe.name}}
           </v-btn>
@@ -11,7 +11,7 @@
       <v-flex md8>
         <v-expansion-panels>
           <v-expansion-panel>
-            <v-expansion-panel-header>
+            <v-expansion-panel-header ripple>
               Ingredients
             </v-expansion-panel-header>
             <v-expansion-panel-content>

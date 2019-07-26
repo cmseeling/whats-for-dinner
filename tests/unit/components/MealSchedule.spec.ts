@@ -141,7 +141,7 @@ describe('MealSchedule.vue', () => {
   });
 
   it('deletes a meal plan', () => {
-    mockStore.getters['mealPlans/selectedPlanId'] = 2
+    mockStore.getters['mealPlans/selectedPlanId'] = 2;
     const wrapper = mount(MealSchedule, {
       mocks: { $store: mockStore },
       stubs: ['router-link'],

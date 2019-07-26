@@ -42,7 +42,7 @@
       </v-container>
       <v-layout row>
         <v-flex>
-          <p>Don't forget to save your plan! You can save up to 10.</p>
+          <strong>Don't forget to save your plan! You can save up to 10.</strong>
         </v-flex>
       </v-layout>
       <v-layout row wrap>

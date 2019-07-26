@@ -1,6 +1,5 @@
 <template>
-  <!-- <v-layout column v-touch="{left: goToNextDay, right: goToPrevDay}"> -->
-  <v-layout column>
+  <v-layout column v-touch="{left: goToNextDay, right: goToPrevDay}">
     <v-flex>
       <v-toolbar dense>
         <v-layout row>

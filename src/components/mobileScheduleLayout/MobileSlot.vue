@@ -4,19 +4,17 @@
       {{meals[mealSlot.mealIndex]}}
     </v-card-title>
     <v-card-text>
-      <v-list class="pa-0 recipe-list">
+      <v-list dense class="pa-0 recipe-list">
         <v-list-item v-for="recipeId in mealSlot.recipeIds" :key="recipeId" class="pa-0" fill-height>
+          <v-list-item-icon class="ma-0">
+            <v-btn color="error" class="recipe-list-remove-button" @click.stop="removeFromMealSlot(recipeId)" small text icon>
+              <v-icon size="14">fa fa-times</v-icon>
+            </v-btn>
+          </v-list-item-icon>
           <v-list-item-content class="pa-0">
-            <v-layout align-center>
-              <v-flex shrink>
-                <v-btn color="error" class="recipe-list-remove-button" @click="removeFromMealSlot(recipeId)" small text icon>
-                  <v-icon size="14">fa fa-times</v-icon>
-                </v-btn>
-              </v-flex>
-              <v-flex class="recipe-list-name text-left">
-                <router-link :to="{path: `recipes/item/${recipeId}`}">{{getRecipeName(recipeId)}}</router-link>
-              </v-flex>
-            </v-layout>
+            <div class="recipe-list-name text-left">
+              <router-link :to="{path: `recipes/item/${recipeId}`}">{{getRecipeName(recipeId)}}</router-link>
+            </div>
           </v-list-item-content>
         </v-list-item>
       </v-list>

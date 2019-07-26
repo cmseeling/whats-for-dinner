@@ -1,6 +1,6 @@
 <template>
   <v-card-text class="text-left">
-    <v-list>
+    <v-list dense>
       <v-list-item v-if="isAddingItem" class="add-ingredient-inputs">
         <v-list-item-content>
           <v-layout align-center row wrap>

@@ -13,7 +13,7 @@
         <div class="text-left">
           <div class="mx-5">
             <label class="font-weight-bold">Ingredients</label>
-            <v-list>
+            <v-list dense>
               <LineItem v-for="(item, index) in recipe.ingredients" :key="index" :index="index" :text="item" label="Ingredient Name"
                 v-on:line-item:remove="removeIngredient"
                 v-on:line-item:update="updateIngredient"/>

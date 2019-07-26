@@ -9,20 +9,18 @@
       <div v-show="expanded" :class="mealSlot.selected ? 'meal-slot selected' : 'meal-slot'">
         <div v-show="expanded" class="expanded-display">
           <div class="empty-slot" v-if="mealSlot.recipeIds.length === 0">None Selected</div>
-          <v-list class="pa-0 recipe-list" v-else>
+          <v-list class="pa-0 recipe-list" dense v-else>
             <v-list-item v-for="(recipeId, index) in mealSlot.recipeIds" :key="recipeId" fill-height
                   :class="(index % 2 === 0) ? 'pa-0 recipe-item' : 'pa-0 recipe-item-striped'">
+              <v-list-item-icon class="ma-0">
+                <v-btn class="recipe-list-remove-button" color="error" @click="removeFromMealSlot(recipeId)" small text icon>
+                  <v-icon size="14">fa fa-times</v-icon>
+                </v-btn>
+              </v-list-item-icon>
               <v-list-item-content class="pa-0">
-                <v-layout align-center>
-                  <v-flex shrink>
-                    <v-btn class="recipe-list-remove-button" color="error" @click="removeFromMealSlot(recipeId)" small text icon>
-                      <v-icon size="14">fa fa-times</v-icon>
-                    </v-btn>
-                  </v-flex>
-                  <v-flex class="recipe-list-name text-left">
-                    <router-link :to="{path: `recipes/item/${recipeId}`}">{{getRecipeName(recipeId)}}</router-link>
-                  </v-flex>
-                </v-layout>
+                <div class="recipe-list-name text-left">
+                  <router-link :to="{path: `recipes/item/${recipeId}`}">{{getRecipeName(recipeId)}}</router-link>
+                </div>
               </v-list-item-content>
             </v-list-item>
           </v-list>

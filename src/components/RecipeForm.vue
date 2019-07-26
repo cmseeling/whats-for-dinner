@@ -10,52 +10,48 @@
     <v-card-text>
       <v-form>
         <v-text-field class="recipe-name" label="Recipe Name" v-model="recipe.name" />
-        <div class="text-xs-left">
-          <label class="font-weight-bold">Ingredients</label>
-          <ul>
-            <LineItem v-for="(item, index) in recipe.ingredients" :key="index" :index="index" :text="item" label="Ingredient Name"
-              v-on:line-item:remove="removeIngredient"
-              v-on:line-item:update="updateIngredient"/>
-            <v-container v-if="isAddingIngredient" tag="li" class="pa-0 add-ingredient-inputs" fill-height>
-              <v-layout align-center row wrap>
-                <v-flex>
-                  <v-text-field class="add-ingredient-input" label="Ingredient Name" v-model="newIngredient" autofocus @keyup.enter="addIngredient"/>
-                </v-flex>
-                <v-flex shrink>
-                  <v-btn class="add-ingredient-confirm" color="success" @click="addIngredient" small>Add</v-btn>
-                </v-flex>
-                <v-flex shrink>
-                  <v-btn class="add-ingredient-cancel" color="error" @click="cancelAddIngredient" small>Cancel</v-btn>
-                </v-flex>
-              </v-layout>
-            </v-container>
-            <li v-if="!isAddingIngredient">
-              <v-btn class="add-ingredient-button" color="success" @click.prevent="addItem" small>
-                <v-icon small class="mr-2">fa fa-plus</v-icon>Add Ingredient
-              </v-btn>
-            </li>
-          </ul>
-          <br/>
-          <hr/>
-          <br/>
-          <v-container>
+        <div class="text-left">
+          <div class="mx-5">
+            <label class="font-weight-bold">Ingredients</label>
+            <v-list dense>
+              <LineItem v-for="(item, index) in recipe.ingredients" :key="index" :index="index" :text="item" label="Ingredient Name"
+                v-on:line-item:remove="removeIngredient"
+                v-on:line-item:update="updateIngredient"/>
+              <v-list-item v-if="isAddingIngredient" class="add-ingredient-inputs">
+                <v-list-item-content>
+                  <v-layout align-center row wrap>
+                    <v-flex>
+                      <v-text-field class="ml-5 add-ingredient-input" label="Ingredient Name" v-model="newIngredient" autofocus @keyup.enter="addIngredient"/>
+                    </v-flex>
+                    <v-flex shrink>
+                      <v-btn class="add-ingredient-confirm" color="success" @click="addIngredient" small>Add</v-btn>
+                      <v-btn class="add-ingredient-cancel" color="error" @click="cancelAddIngredient" small>Cancel</v-btn>
+                    </v-flex>
+                  </v-layout>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item v-if="!isAddingIngredient">
+                <v-btn class="add-ingredient-button" color="success" @click.prevent="addItem" small>
+                  <v-icon small class="mr-2">fa fa-plus</v-icon>Add Ingredient
+                </v-btn>
+              </v-list-item>
+            </v-list>
+          </div>
+          <v-divider/>
+          <v-container class="mx-5">
             <v-layout row>
               <v-flex>
                 <v-textarea label="Instructions" auto-grow v-model="recipe.instructions"/>
               </v-flex>
             </v-layout>
           </v-container>
-          <br/>
-          <hr/>
-          <br/>
+          <v-divider/>
           <v-container class="pa-0">
-            <v-layout column>
+            <v-layout row>
               <v-flex>
-                <v-btn class="save-button" color="primary" @click.prevent="saveRecipeForm" small>Save</v-btn>
-              </v-flex>
-              <v-flex>
-                <v-btn class="cancel-button" color="error" v-if="isNewRecipe" @click.prevent="goBack">Cancel</v-btn>
-                <v-btn class="delete-button" color="error" v-else @click.prevent="showModel = true">Delete</v-btn>
+                <v-btn class="save-button action-button" color="primary" @click.prevent="saveRecipeForm">Save</v-btn>
+                <v-btn v-if="isNewRecipe" class="cancel-button action-button" color="error" @click.prevent="goBack">Cancel</v-btn>
+                <v-btn v-else class="delete-button action-button" color="error" @click.prevent="showModel = true">Delete</v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -174,7 +170,7 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  li {
-    list-style-type: none;
+  .v-btn {
+    margin: 8px;
   }
 </style>

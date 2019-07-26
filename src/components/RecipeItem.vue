@@ -2,31 +2,27 @@
   <v-container class="pa-2">
     <v-layout v-bind="layoutBinding">
       <v-flex md4>
-        <div class="recipe-title">
-          <v-btn class="recipe-title-button" flat color="primary" @click="$emit('recipe-click', recipe.id)">
+        <div class="recipe-title text-left">
+          <v-btn class="recipe-title-button" text color="primary" @click="$emit('recipe-click', recipe.id)">
             {{recipe.name}}
           </v-btn>
         </div>
       </v-flex>
       <v-flex md8>
-        <v-expansion-panel>
-          <v-expansion-panel-content>
-            <template v-slot:header>
-              <div>
-                Ingredients
-              </div>
-            </template>
-            <v-card>
-              <v-card-text>
-                <ul>
-                  <li class="recipe-ingredient-name" v-for="(ingredient, index) in recipe.ingredients" :key="index">
-                    {{ingredient}}
-                  </li>
-                </ul>
-              </v-card-text>
-            </v-card>
-          </v-expansion-panel-content>
-        </v-expansion-panel>
+        <v-expansion-panels>
+          <v-expansion-panel>
+            <v-expansion-panel-header ripple>
+              Ingredients
+            </v-expansion-panel-header>
+            <v-expansion-panel-content>
+              <ul>
+                <li class="recipe-ingredient-name text-left" v-for="(ingredient, index) in recipe.ingredients" :key="index">
+                  {{ingredient}}
+                </li>
+              </ul>
+            </v-expansion-panel-content>
+          </v-expansion-panel>
+        </v-expansion-panels>
       </v-flex>
     </v-layout>
   </v-container>
@@ -58,10 +54,6 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  .recipe-title {
-    text-align: left;
-  }
-
   .recipe-title-button {
     text-transform: none;
   }

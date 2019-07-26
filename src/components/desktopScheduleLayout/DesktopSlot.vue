@@ -9,22 +9,21 @@
       <div v-show="expanded" :class="mealSlot.selected ? 'meal-slot selected' : 'meal-slot'">
         <div v-show="expanded" class="expanded-display">
           <div class="empty-slot" v-if="mealSlot.recipeIds.length === 0">None Selected</div>
-          <ul class="pa-0 recipe-list" v-else>
-            <v-container v-for="(recipeId, index) in mealSlot.recipeIds" :key="recipeId"
-                  tag="li" fill-height
+          <v-list class="pa-0 recipe-list" dense v-else>
+            <v-list-item v-for="(recipeId, index) in mealSlot.recipeIds" :key="recipeId" fill-height
                   :class="(index % 2 === 0) ? 'pa-0 recipe-item' : 'pa-0 recipe-item-striped'">
-              <v-layout align-center>
-                <v-flex shrink>
-                  <v-btn class="recipe-list-remove-button" color="error" @click="removeFromMealSlot(recipeId)" small flat icon>
-                    <v-icon size="14">fa fa-times</v-icon>
-                  </v-btn>
-                </v-flex>
-                <v-flex class="recipe-list-name">
+              <v-list-item-icon class="ma-0">
+                <v-btn class="recipe-list-remove-button" color="error" @click="removeFromMealSlot(recipeId)" small text icon>
+                  <v-icon size="14">fa fa-times</v-icon>
+                </v-btn>
+              </v-list-item-icon>
+              <v-list-item-content class="pa-0">
+                <div class="recipe-list-name text-left">
                   <router-link :to="{path: `recipes/item/${recipeId}`}">{{getRecipeName(recipeId)}}</router-link>
-                </v-flex>
-              </v-layout>
-            </v-container>
-          </ul>
+                </div>
+              </v-list-item-content>
+            </v-list-item>
+          </v-list>
         </div>
       </div>
     </v-slide-y-transition>
@@ -108,7 +107,7 @@ export default Vue.extend({
     background-color: lightskyblue;
   }
 
-  .recipe-list:hover, .recipe-list:hover li {
+  .recipe-list:hover, .recipe-list:hover div {
     background-color: gray;
   }
 
@@ -130,10 +129,5 @@ export default Vue.extend({
 
   .selected {
     border: 2px solid lightseagreen;
-  }
-
-  li {
-    list-style-type: none;
-    text-align: left;
   }
 </style>

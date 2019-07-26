@@ -2,7 +2,7 @@
   <div class="grocery-list">
     <v-card>
       <v-card-title>
-        <v-toolbar flat>
+        <v-toolbar flat color="#f5f5f5">
           <v-toolbar-title>
             Grocery List
           </v-toolbar-title>

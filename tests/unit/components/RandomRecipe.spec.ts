@@ -1,12 +1,16 @@
-import { createLocalVue, mount } from '@vue/test-utils';
+import { mount } from '@vue/test-utils';
+import Vue from 'vue';
 import Vuetify from 'vuetify';
 import RandomRecipe from '@/components/RandomRecipe.vue';
 import RecipeItem from '@/components/RecipeItem.vue';
 import { Recipe } from '@/models/Recipe';
 import { generateRecipe } from '../../helpers/recipe';
 
-const localVue = createLocalVue();
-localVue.use(Vuetify);
+// this should really be localVue but Vuetify pollutes the Vue prototype and causes the tests to throw bad exceptions.
+// See https://github.com/vuetifyjs/vuetify/issues/4861 and https://github.com/vuetifyjs/vuetify/issues/6046
+Vue.use(Vuetify);
+
+let vuetify: any;
 
 let mockRecipe1: Recipe;
 let mockRecipe2: Recipe;
@@ -16,6 +20,8 @@ let mockGetRecipeByIndex: jest.Mock;
 
 describe('RandomRecipe.vue', () => {
   beforeEach(() => {
+    vuetify = new Vuetify();
+
     mockRecipe1 = generateRecipe(1, 'test recipe 1', ['ingredient 1']);
     mockRecipe2 = generateRecipe(2, 'test recipe 2', ['ingredient 1']);
     recipes = [mockRecipe1, mockRecipe2];
@@ -40,7 +46,7 @@ describe('RandomRecipe.vue', () => {
   it('renders a random recipe', () => {
     const wrapper = mount(RandomRecipe, {
       mocks: { $store: mockStore },
-      localVue
+      vuetify
     });
 
     expect(wrapper.findAll(RecipeItem).length).toBe(1);
@@ -49,7 +55,7 @@ describe('RandomRecipe.vue', () => {
   it('gets the next random recipe', () => {
     const wrapper = mount(RandomRecipe, {
       mocks: { $store: mockStore },
-      localVue
+      vuetify
     });
 
     wrapper.find('.next-random-recipe').trigger('click');
@@ -65,7 +71,7 @@ describe('RandomRecipe.vue', () => {
 
     const wrapper = mount(RandomRecipe, {
       mocks: { $store: mockStore },
-      localVue
+      vuetify
     });
 
     wrapper.find('.recipe-title-button').trigger('click');

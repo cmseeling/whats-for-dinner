@@ -51,8 +51,8 @@ export default Vue.extend({
       days: dayList,
       meals: mealList,
       panelState: {
-        Breakfast: false,
-        Lunch: false,
+        Breakfast: true,
+        Lunch: true,
         Dinner: true
       }
     };

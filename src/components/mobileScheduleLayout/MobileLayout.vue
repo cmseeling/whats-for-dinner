@@ -4,7 +4,7 @@
       <v-toolbar dense>
         <v-layout row>
           <v-flex xs2>
-            <v-btn color="primary" class="prev-button" @click="goToPrevDay" small flat icon>
+            <v-btn color="primary" class="prev-button" @click="goToPrevDay" small text icon>
               <v-icon small>fa fa-arrow-left</v-icon>
             </v-btn>
           </v-flex>
@@ -14,7 +14,7 @@
             </v-toolbar-title>
           </v-flex>
           <v-flex xs2>
-            <v-btn color="primary" class="next-button" @click="goToNextDay" small flat icon>
+            <v-btn color="primary" class="next-button" @click="goToNextDay" small text icon>
               <v-icon small>fa fa-arrow-right</v-icon>
             </v-btn>
           </v-flex>

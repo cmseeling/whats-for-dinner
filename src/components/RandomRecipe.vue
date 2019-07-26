@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      <v-toolbar flat>
+      <v-toolbar flat color="#f5f5f5">
         <v-toolbar-title>
           Random Recipe
         </v-toolbar-title>
@@ -13,10 +13,10 @@
         v-on:recipe-click="handleRecipeSelected"/>
       <v-container>
         <v-layout>
-          <v-flex sm6 class="text-xs-right">
-            <v-btn color="success" @click="$emit('recipe-add-click', recipe.id)">Add</v-btn>
+          <v-flex sm6 class="text-right">
+            <v-btn color="success add-random-button" @click="$emit('recipe-add-click', recipe.id)">Add</v-btn>
           </v-flex>
-          <v-flex sm6 class="text-xs-left">
+          <v-flex sm6 class="text-left">
             <v-btn color="warning" class="next-random-recipe" @click="nextRecipe">Next</v-btn>
           </v-flex>
         </v-layout>
@@ -31,7 +31,7 @@ import filter from 'lodash/filter';
 import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
 import RecipeItem from '@/components/RecipeItem.vue';
-import { Recipe } from '@/models/Recipe';
+import { Recipe } from '@/models/Recipe.ts';
 
 interface Data {
   recipe: Recipe|null;
@@ -81,11 +81,11 @@ export default Vue.extend({
 </script>
 
 <style scoped>
-  ul{
-    padding: 0px;
+  .add-random-button {
+    margin: 0px 8px;
   }
 
-  li {
-    list-style-type: none;
+  .next-random-recipe {
+    margin: 0px 8px;
   }
 </style>

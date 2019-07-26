@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title class="pb-0">
-      <v-toolbar flat dense>
+      <v-toolbar flat dense color="#f5f5f5">
         <v-layout row>
           <v-flex md2 hidden-sm-and-down>
             <v-toolbar-title class="schedule-title text-xs-left">Meal Plan</v-toolbar-title>
@@ -11,8 +11,8 @@
               v-model="scheduleName"
               :disabled="!editScheduleName" />
           </v-flex>
-          <v-flex xs1 class="pt-2">
-            <v-btn class="toggle-schedule-name-button" flat right icon @click="toggleScheduleNameEdit">
+          <v-flex xs2 md1 class="pt-2">
+            <v-btn class="toggle-schedule-name-button" text right icon @click="toggleScheduleNameEdit">
               <v-icon small>fa fa-edit</v-icon>
             </v-btn>
           </v-flex>
@@ -42,14 +42,14 @@
       </v-container>
       <v-layout row>
         <v-flex>
-          <p>Don't forget to save your plan! You can save up to 10.</p>
+          <strong>Don't forget to save your plan! You can save up to 10.</strong>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
         <v-flex>
-        <v-btn class="schedule-save-button" color="primary" @click="saveMealPlan">Save Plan</v-btn>
-        <v-btn class="schedule-delete-button" color="error" :disabled="selectedPlanId === -1" @click.prevent="showModel = true">Delete Plan</v-btn>
-        <v-btn to="/groceries" color="success">Grocery List<v-icon small right>fa fa-arrow-right</v-icon></v-btn>
+        <v-btn class="schedule-save-button schedule-button" color="primary" @click="saveMealPlan">Save Plan</v-btn>
+        <v-btn class="schedule-delete-button schedule-button" color="error" :disabled="selectedPlanId === -1" @click.prevent="showConfirmationModal">Delete Plan</v-btn>
+        <v-btn class="schedule-button" to="/groceries" color="success">Grocery List<v-icon small right>fa fa-arrow-right</v-icon></v-btn>
         </v-flex>
       </v-layout>
       <ConfirmDeleteDialog
@@ -178,6 +178,10 @@ export default Vue.extend({
       }
     },
 
+    showConfirmationModal() {
+      this.showModel = true;
+    },
+
     removePlan() {
       this.showModel = false;
       this.$store.dispatch('mealPlans/deleteMealPlan', this.selectedPlanId);
@@ -191,5 +195,14 @@ export default Vue.extend({
   .schedule-title {
     height: 100%;
     line-height: 60px;
+  }
+  
+  .schedule-name {
+    position: relative;
+    top: 16px;
+  }
+
+  .schedule-button {
+    margin: 8px;
   }
 </style>

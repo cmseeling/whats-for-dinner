@@ -1,44 +1,29 @@
 <template>
-  <v-container tag="li" class="pa-0 line-item" fill-height>
-    <v-layout align-center v-if="!isEditing">
-      <v-flex shrink>
-        <v-btn class="remove-item-button" color="error" @click="$emit('line-item:remove', index)" flat icon>
-          <v-icon small>fa fa-times</v-icon>
-        </v-btn>
-      </v-flex>
-      <v-flex class="item-text">
+  <v-list-item tag="li" class="pa-0 line-item">
+    <v-list-item-icon class="ma-0">
+      <v-btn class="remove-item-button" color="error" @click="$emit('line-item:remove', index)" text icon>
+        <v-icon small>fa fa-times</v-icon>
+      </v-btn>
+    </v-list-item-icon>
+    <v-list-item-content class="pa-0">
+      <div class="item-text" v-if="!isEditing">
         {{itemText}}
-      </v-flex>
-      <v-flex shrink>
-        <v-btn class="edit-item-button" small flat icon @click="isEditing = !isEditing">
-          <v-icon small>fa fa-edit</v-icon>
-        </v-btn>
-      </v-flex>
-    </v-layout>
-
-    <v-layout align-center v-else>
-      <v-flex shrink>
-        <v-btn class="remove-item-button" color="error" @click="$emit('line-item:remove', index)" flat icon>
-          <v-icon small>fa fa-times</v-icon>
-        </v-btn>
-      </v-flex>
-      <v-flex class="item-text">
-        <v-layout align-center row>
-          <v-flex>
-            <v-text-field class="edit-item-input" :label="label" v-model="itemText" autofocus @keyup.enter="saveChanges"/>
-          </v-flex>
-        </v-layout>
-      </v-flex>
-      <v-flex shrink>
-        <v-btn class="edit-item-confirm" color="success" @click="saveChanges" small flat icon>
-          <v-icon small>fa fa-save</v-icon>
-        </v-btn>
-        <v-btn class="edit-item-button" small flat icon @click="isEditing = !isEditing">
-          <v-icon small>fa fa-edit</v-icon>
-        </v-btn>
-      </v-flex>
-    </v-layout>
-  </v-container>
+      </div>
+      <div class="item-text" v-else>
+        <v-text-field class="edit-item-input" :label="label" v-model="itemText" autofocus @keyup.enter="saveChanges"/>
+      </div>
+    </v-list-item-content>
+    <v-list-item-action class="ma-0">
+      <v-btn class="edit-item-confirm" color="success" @click="saveChanges" small text icon v-if="isEditing">
+        <v-icon small>fa fa-save</v-icon>
+      </v-btn>
+    </v-list-item-action>
+    <v-list-item-action class="ma-0">
+      <v-btn class="edit-item-button" small text icon @click="isEditing = !isEditing">
+        <v-icon small>fa fa-edit</v-icon>
+      </v-btn>
+    </v-list-item-action>
+  </v-list-item>
 </template>
 
 <script lang="ts">

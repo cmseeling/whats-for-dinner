@@ -1,6 +1,6 @@
 <template>
   <div class="recipes-management">
-    <v-btn color="success" @click="handleNewClicked"><v-icon small left>fa fa-plus</v-icon>Create New</v-btn>
+    <v-btn class="new-recipe-button" color="success" @click="handleNewClicked"><v-icon small left>fa fa-plus</v-icon>Create New</v-btn>
     <RecipeList v-on:recipe-list-click="handleRecipeSelected"/>
   </div>
 </template>
@@ -29,5 +29,9 @@ export default Vue.extend({
 <style scoped>
   .recipes-management {
     text-align: left;
+  }
+
+  .new-recipe-button {
+    margin: 8px 0px;
   }
 </style>

@@ -6,6 +6,7 @@ import includes from 'lodash/includes';
 import toLower from 'lodash/toLower';
 import flatMap from 'lodash/flatMap';
 import forEach from 'lodash/forEach';
+import map from 'lodash/map';
 import max from 'lodash/max';
 import uniq from 'lodash/uniq';
 import reduce from 'lodash/reduce';
@@ -104,7 +105,7 @@ const actions = {
     if (recipe.id) {
       recipeData = {...recipe};
     } else {
-      const maxId = max(state.recipes.Keys());
+      const maxId = max(map(state.recipes.Keys(), (id: string) => parseInt(id, 10)));
       let newId;
       if (maxId) {
         newId = +maxId + 1;

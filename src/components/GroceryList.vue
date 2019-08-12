@@ -5,7 +5,7 @@
         <v-list-item-content>
           <v-layout align-center row wrap>
             <v-flex>
-              <v-text-field class="ml-5 add-ingredient-input" label="Ingredient Name" v-model="newItem" autofocus/>
+              <v-text-field class="ml-5 add-ingredient-input" label="Ingredient Name" v-model="newItem" autofocus @keyup.enter="addIngredient"/>
             </v-flex>
             <v-flex shrink>
               <v-btn class="add-ingredient-confirm" color="success" @click="addIngredient" small>Add</v-btn>
@@ -19,7 +19,7 @@
           <v-icon small class="mr-2">fa fa-plus</v-icon>Add Item
         </v-btn>
       </v-list-item>
-      <LineItem v-for="(ingredient, index) in ingredientsList" :key="index" :index="index" :text="ingredient" label="Ingredient Name"
+      <LineItem v-for="(ingredient, index) in ingredientsList" :key="ingredient.id" :index="index" :text="ingredient.value" label="Ingredient Name"
         v-on:line-item:remove="removeIngredient"
         v-on:line-item:update="updateIngredient"/>
     </v-list>
@@ -28,10 +28,13 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import map from 'lodash/map';
+import { Ingredient } from '@/models/Ingredient';
+import uuidv1 from 'uuid/v1';
 import LineItem from '@/components/LineItem.vue';
 
 interface Data {
-  ingredientsList: string[];
+  ingredientsList: Ingredient[];
   isAddingItem: boolean;
   newItem: string;
 }
@@ -57,17 +60,24 @@ export default Vue.extend({
     }
   },
   mounted() {
-    this.ingredientsList = this.getIngredientsFromRecipeIds(this.getAllUniqueRecipeIdsFromMealSlots);
+    this.ingredientsList =
+    map(this.getIngredientsFromRecipeIds(this.getAllUniqueRecipeIdsFromMealSlots), (ingredient) => {
+      return {
+        id: uuidv1(),
+        value: ingredient
+      };
+    });
   },
   methods: {
     updateIngredient({text, index}: {text: string, index: number}) {
-      this.ingredientsList[index] = text;
+      // console.log(text);
+      this.ingredientsList[index].value = text;
     },
     removeIngredient(index: number) {
       this.ingredientsList.splice(index, 1);
     },
     addIngredient() {
-      this.ingredientsList.push(this.newItem);
+      this.ingredientsList.push({ id: uuidv1(), value: this.newItem });
       this.newItem = '';
       this.isAddingItem = false;
     },

@@ -47,10 +47,14 @@ export default Vue.extend({
       itemText: this.text
     };
   },
+  // mounted() {
+  //   console.log('line item: ' + this.index);
+  // },
   methods: {
     saveChanges() {
-      console.log(this.itemText);
+      // console.log(this.itemText);
       this.$emit('line-item:update', {text: this.itemText, index: this.index});
+      this.isEditing = false;
     }
   }
 });
